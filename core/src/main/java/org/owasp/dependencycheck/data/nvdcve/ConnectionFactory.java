@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.annotation.concurrent.ThreadSafe;
+import org.anarres.jdiagnostics.DefaultQuery;
 import org.apache.commons.io.IOUtils;
 import org.owasp.dependencycheck.utils.DBUtils;
 import org.owasp.dependencycheck.utils.DependencyVersion;
@@ -331,6 +332,8 @@ public final class ConnectionFactory {
             }
         } catch (IOException ex) {
             throw new DatabaseException("Unable to create database schema", ex);
+        } catch (NoSuchMethodError ex) {
+            LOGGER.debug(new DefaultQuery(ex).call().toString());
         }
     }
 
