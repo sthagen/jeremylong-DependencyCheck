@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CveItemOperator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Dependency-Check Core</a> &gt; <a href="index.source.html" class="el_package">org.owasp.dependencycheck.data.nvdcve</a> &gt; <span class="el_source">CveItemOperator.java</span></div><h1>CveItemOperator.java</h1><pre class="source lang-java linenums">/*
+ * This file is part of dependency-check-core.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Copyright (c) 2020 OWASP Foundation. All Rights Reserved.
+ */
+package org.owasp.dependencycheck.data.nvdcve;
+
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.owasp.dependencycheck.analyzer.AbstractNpmAnalyzer;
+import org.owasp.dependencycheck.analyzer.CMakeAnalyzer;
+import org.owasp.dependencycheck.analyzer.ComposerLockAnalyzer;
+import org.owasp.dependencycheck.analyzer.JarAnalyzer;
+import org.owasp.dependencycheck.analyzer.NodeAuditAnalyzer;
+import org.owasp.dependencycheck.analyzer.PythonPackageAnalyzer;
+import org.owasp.dependencycheck.analyzer.RubyBundleAuditAnalyzer;
+import org.owasp.dependencycheck.analyzer.RubyGemspecAnalyzer;
+import org.owasp.dependencycheck.data.nvd.json.DefCveItem;
+import org.owasp.dependencycheck.data.nvd.json.Reference;
+import org.owasp.dependencycheck.dependency.VulnerableSoftware;
+
+/**
+ *
+ * Utility for processing {@linkplain DefCveItem} in order to extract key values
+ * like textual description and ecosystem type.
+ *
+ * @author skjolber
+ */
+<span class="fc" id="L42">public class CveItemOperator {</span>
+
+    /**
+     * Utility method to extract the &quot;english&quot; description from a given CVE
+     * entry.
+     *
+     * @param cve a reference to a CVE object
+     * @return the english description of the CVE entry
+     */
+    public String extractDescription(DefCveItem cve) {
+<span class="fc" id="L52">        return cve.getCve().getDescription().getDescriptionData().stream().filter((desc)</span>
+<span class="fc" id="L53">                -&gt; &quot;en&quot;.equals(desc.getLang())).map(d</span>
+<span class="fc" id="L54">                -&gt; d.getValue()).collect(Collectors.joining(&quot; &quot;));</span>
+    }
+
+    /**
+     * Analyzes the description to determine if the vulnerability/software is
+     * for a specific known ecosystem.The ecosystem can be used later for
+     * filtering CPE matches.
+     *
+     * @param cve a reference to the CVE
+     * @param description the description to analyze
+     * @return the ecosystem if one could be identified; otherwise
+     * &lt;code&gt;null&lt;/code&gt;
+     */
+    public String extractBaseEcosystem(DefCveItem cve, String description) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (description == null) {</span>
+<span class="nc" id="L69">            return extractBaseEcosystemFromReferences(cve);</span>
+        }
+<span class="fc" id="L71">        int idx = StringUtils.indexOfIgnoreCase(description, &quot;.php&quot;);</span>
+<span class="fc bfc" id="L72" title="All 6 branches covered.">        if ((idx &gt; 0 &amp;&amp; (idx + 4 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 4))))</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;wordpress&quot;)</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;drupal&quot;)</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;joomla&quot;)</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;moodle&quot;)</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;typo3&quot;)) {</span>
+<span class="fc" id="L78">            return ComposerLockAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (StringUtils.containsIgnoreCase(description, &quot; npm &quot;)</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">                || (StringUtils.containsIgnoreCase(description, &quot;node module&quot;) &amp;&amp; StringUtils.containsIgnoreCase(description, &quot;.js&quot;))</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot; node.js&quot;)) {</span>
+<span class="fc" id="L83">            return AbstractNpmAnalyzer.NPM_DEPENDENCY_ECOSYSTEM;</span>
+        }
+<span class="fc" id="L85">        idx = StringUtils.indexOfIgnoreCase(description, &quot;.pm&quot;);</span>
+<span class="pc bpc" id="L86" title="1 of 6 branches missed.">        if (idx &gt; 0 &amp;&amp; (idx + 3 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 3)))) {</span>
+<span class="fc" id="L87">            return &quot;perl&quot;;</span>
+        } else {
+<span class="fc" id="L89">            idx = StringUtils.indexOfIgnoreCase(description, &quot;.pl&quot;);</span>
+<span class="pc bpc" id="L90" title="1 of 6 branches missed.">            if (idx &gt; 0 &amp;&amp; (idx + 3 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 3)))) {</span>
+<span class="fc" id="L91">                return &quot;perl&quot;;</span>
+            }
+        }
+<span class="fc" id="L94">        idx = StringUtils.indexOfIgnoreCase(description, &quot;.java&quot;);</span>
+<span class="pc bpc" id="L95" title="2 of 6 branches missed.">        if (idx &gt; 0 &amp;&amp; (idx + 5 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 5)))) {</span>
+<span class="fc" id="L96">            return JarAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        } else {
+<span class="fc" id="L98">            idx = StringUtils.indexOfIgnoreCase(description, &quot;.jsp&quot;);</span>
+<span class="pc bpc" id="L99" title="1 of 6 branches missed.">            if (idx &gt; 0 &amp;&amp; (idx + 4 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 4)))) {</span>
+<span class="fc" id="L100">                return JarAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+            }
+        }
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (StringUtils.containsIgnoreCase(description, &quot; grails &quot;)) {</span>
+<span class="fc" id="L104">            return JarAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+
+<span class="fc" id="L107">        idx = StringUtils.indexOfIgnoreCase(description, &quot;.rb&quot;);</span>
+<span class="pc bpc" id="L108" title="2 of 6 branches missed.">        if (idx &gt; 0 &amp;&amp; (idx + 3 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 3)))) {</span>
+<span class="fc" id="L109">            return RubyBundleAuditAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (StringUtils.containsIgnoreCase(description, &quot;ruby gem&quot;)) {</span>
+<span class="fc" id="L112">            return RubyBundleAuditAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+
+<span class="fc" id="L115">        idx = StringUtils.indexOfIgnoreCase(description, &quot;.py&quot;);</span>
+<span class="pc bpc" id="L116" title="2 of 6 branches missed.">        if ((idx &gt; 0 &amp;&amp; (idx + 3 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 3))))</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                || StringUtils.containsIgnoreCase(description, &quot;django&quot;)) {</span>
+<span class="fc" id="L118">            return PythonPackageAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (StringUtils.containsIgnoreCase(description, &quot;buffer overflow&quot;)</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                &amp;&amp; !StringUtils.containsIgnoreCase(description, &quot;android&quot;)) {</span>
+<span class="fc" id="L123">            return CMakeAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        }
+<span class="fc" id="L125">        idx = StringUtils.indexOfIgnoreCase(description, &quot;.c&quot;);</span>
+<span class="fc bfc" id="L126" title="All 6 branches covered.">        if (idx &gt; 0 &amp;&amp; (idx + 2 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 2)))) {</span>
+<span class="fc" id="L127">            return CMakeAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+        } else {
+<span class="fc" id="L129">            idx = StringUtils.indexOfIgnoreCase(description, &quot;.cpp&quot;);</span>
+<span class="pc bpc" id="L130" title="2 of 6 branches missed.">            if (idx &gt; 0 &amp;&amp; (idx + 4 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 4)))) {</span>
+<span class="fc" id="L131">                return CMakeAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+            } else {
+<span class="fc" id="L133">                idx = StringUtils.indexOfIgnoreCase(description, &quot;.h&quot;);</span>
+<span class="pc bpc" id="L134" title="1 of 6 branches missed.">                if (idx &gt; 0 &amp;&amp; (idx + 2 == description.length() || !Character.isLetterOrDigit(description.charAt(idx + 2)))) {</span>
+<span class="fc" id="L135">                    return CMakeAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+                }
+            }
+        }
+<span class="fc" id="L139">        return extractBaseEcosystemFromReferences(cve);</span>
+    }
+
+    protected String extractBaseEcosystemFromReferences(DefCveItem cve) {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (Reference r : cve.getCve().getReferences().getReferenceData()) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (r.getUrl().contains(&quot;elixir-security-advisories&quot;)) {</span>
+<span class="fc" id="L145">                return &quot;elixir&quot;;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;ruby-lang.org&quot;)) {</span>
+<span class="fc" id="L147">                return RubyGemspecAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;python.org&quot;)) {</span>
+<span class="fc" id="L149">                return PythonPackageAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;drupal.org&quot;)) {</span>
+<span class="fc" id="L151">                return PythonPackageAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;npm&quot;)) {</span>
+<span class="fc" id="L153">                return NodeAuditAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;nodejs.org&quot;)) {</span>
+<span class="fc" id="L155">                return NodeAuditAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;nodesecurity.io&quot;)) {</span>
+<span class="fc" id="L157">                return NodeAuditAnalyzer.DEPENDENCY_ECOSYSTEM;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            } else if (r.getUrl().contains(&quot;rustsec.org&quot;)) {</span>
+<span class="fc" id="L159">                return &quot;rust&quot;;</span>
+            }
+<span class="fc" id="L161">        }</span>
+<span class="fc" id="L162">        return null;</span>
+    }
+
+    /**
+     * Attempts to determine the ecosystem based on the vendor, product and
+     * targetSw.
+     *
+     * @param baseEcosystem the base ecosystem
+     * @param vendor the vendor
+     * @param product the product
+     * @param targetSw the target software
+     * @return the ecosystem if one is identified
+     */
+    private String extractEcosystem(String baseEcosystem, String vendor, String product, String targetSw) {
+<span class="fc bfc" id="L176" title="All 4 branches covered.">        if (&quot;ibm&quot;.equals(vendor) &amp;&amp; &quot;java&quot;.equals(product)) {</span>
+<span class="fc" id="L177">            return &quot;c/c++&quot;;</span>
+        }
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">        if (&quot;oracle&quot;.equals(vendor) &amp;&amp; &quot;vm&quot;.equals(product)) {</span>
+<span class="nc" id="L180">            return &quot;c/c++&quot;;</span>
+        }
+<span class="fc bfc" id="L182" title="All 4 branches covered.">        if (&quot;*&quot;.equals(targetSw) || baseEcosystem != null) {</span>
+<span class="fc" id="L183">            return baseEcosystem;</span>
+        }
+<span class="fc" id="L185">        return targetSw;</span>
+    }
+
+    /**
+     * Attempts to determine the ecosystem based on the vendor, product and
+     * targetSw.
+     *
+     * @param baseEcosystem the base ecosystem
+     * @param parsedCpe the CPE identifier
+     * @return the ecosystem if one is identified
+     */
+    public String extractEcosystem(String baseEcosystem, VulnerableSoftware parsedCpe) {
+<span class="fc" id="L197">        return extractEcosystem(baseEcosystem, parsedCpe.getVendor(), parsedCpe.getProduct(), parsedCpe.getTargetSw());</span>
+    }
+
+    /**
+     * Determines if the CVE description includes the ** REJECT ** text
+     * indicating that the CVE was requested but ultimately rejected.
+     *
+     * @param description the CVE text
+     * @return &lt;code&gt;true&lt;/code&gt; if the CVE text includes `** REFECT **`;
+     * otherwise &lt;code&gt;false&lt;/code&gt;
+     */
+    public boolean isRejected(String description) {
+<span class="fc" id="L209">        return description.startsWith(&quot;** REJECT **&quot;);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

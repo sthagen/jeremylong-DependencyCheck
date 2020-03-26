@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MixAuditResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Dependency-Check Core</a> &gt; <a href="index.source.html" class="el_package">org.owasp.dependencycheck.data.elixir</a> &gt; <span class="el_source">MixAuditResult.java</span></div><h1>MixAuditResult.java</h1><pre class="source lang-java linenums">/*
+ * This file is part of dependency-check-core.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Copyright (c) 2020 OWASP Foundation. All Rights Reserved.
+ */
+package org.owasp.dependencycheck.data.elixir;
+
+import java.util.List;
+
+/**
+ * Represents a single vulnerability result from `mix_audit --format json`.
+ *
+ * @author defsprite
+ */
+public class MixAuditResult {
+
+    private final String id;
+    private final String cve;
+    private final String title;
+    private final String description;
+    private final String disclosureDate;
+    private final String url;
+    private final List&lt;String&gt; patchedVersions;
+
+    private final String dependencyLockfile;
+    private final String dependencyPackage;
+    private final String dependencyVersion;
+
+    public MixAuditResult(String id, String cve, String title, String description, String disclosureDate,
+            String url, List&lt;String&gt; patchedVersions, String dependencyLockfile, String dependencyPackage,
+<span class="fc" id="L43">            String dependencyVersion) {</span>
+<span class="fc" id="L44">        this.id = id;</span>
+<span class="fc" id="L45">        this.cve = cve;</span>
+<span class="fc" id="L46">        this.title = title;</span>
+<span class="fc" id="L47">        this.description = description;</span>
+<span class="fc" id="L48">        this.disclosureDate = disclosureDate;</span>
+<span class="fc" id="L49">        this.url = url;</span>
+<span class="fc" id="L50">        this.patchedVersions = patchedVersions;</span>
+<span class="fc" id="L51">        this.dependencyLockfile = dependencyLockfile;</span>
+<span class="fc" id="L52">        this.dependencyPackage = dependencyPackage;</span>
+<span class="fc" id="L53">        this.dependencyVersion = dependencyVersion;</span>
+<span class="fc" id="L54">    }</span>
+
+    public String getId() {
+<span class="fc" id="L57">        return id;</span>
+    }
+
+    public String getCve() {
+<span class="fc" id="L61">        return cve;</span>
+    }
+
+    public String getTitle() {
+<span class="fc" id="L65">        return title;</span>
+    }
+
+    public String getDescription() {
+<span class="fc" id="L69">        return description;</span>
+    }
+
+    public String getDisclosureDate() {
+<span class="nc" id="L73">        return disclosureDate;</span>
+    }
+
+    public String getUrl() {
+<span class="fc" id="L77">        return url;</span>
+    }
+
+    public List&lt;String&gt; getPatchedVersions() {
+<span class="nc" id="L81">        return patchedVersions;</span>
+    }
+
+    public String getDependencyLockfile() {
+<span class="fc" id="L85">        return dependencyLockfile;</span>
+    }
+
+    public String getDependencyPackage() {
+<span class="fc" id="L89">        return dependencyPackage;</span>
+    }
+
+    public String getDependencyVersion() {
+<span class="fc" id="L93">        return dependencyVersion;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
