@@ -294,15 +294,13 @@ public class App {
     private int determineReturnCode(Engine engine, float cvssFailScore) {
         int retCode = 0;
         //Set the exit code based on whether we found a high enough vulnerability
-        for (Dependency dep : engine.getDependencies()) {
-            if (!dep.getVulnerabilities().isEmpty()) {
-                for (Vulnerability vuln : dep.getVulnerabilities()) {
-                    LOGGER.debug("VULNERABILITY FOUND {}", dep.getDisplayFileName());
-                    if ((vuln.getCvssV2() != null && vuln.getCvssV2().getScore() >= cvssFailScore)
-                            || (vuln.getCvssV3() != null && vuln.getCvssV3().getBaseScore() >= cvssFailScore)
-                            || (vuln.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(vuln.getUnscoredSeverity()) >= cvssFailScore)) {
-                        retCode = 1;
-                    }
+        for (Dependency d : engine.getDependencies()) {
+            for (Vulnerability v : d.getVulnerabilities()) {
+                if ((v.getCvssV2() != null && v.getCvssV2().getScore() >= cvssFailScore)
+                        || (v.getCvssV3() != null && v.getCvssV3().getBaseScore() >= cvssFailScore)
+                        || (v.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(v.getUnscoredSeverity()) >= cvssFailScore)
+                        || (cvssFailScore <= 0.0f)) { //safety net to fail on any if for some reason the above misses on 0
+                    retCode = 1;
                 }
             }
         }
@@ -335,7 +333,8 @@ public class App {
                 baseDir = new File(tmpBase, tmpInclude);
                 include = "**/*";
             }
-
+            LOGGER.debug("BaseDir: " + baseDir);
+            LOGGER.debug("Include: " + include);
             scanner.setBasedir(baseDir);
             final String[] includes = {include};
             scanner.setIncludes(includes);
@@ -344,6 +343,9 @@ public class App {
                 scanner.setFollowSymlinks(false);
             }
             if (excludes != null && excludes.length > 0) {
+                for (String e : excludes) {
+                    LOGGER.debug("Exclude: " + e);
+                }
                 scanner.addExcludes(excludes);
             }
             scanner.scan();
@@ -412,7 +414,8 @@ public class App {
             final File dataDir = new File(System.getProperty("basedir"), "data");
             settings.setString(Settings.KEYS.DATA_DIRECTORY, dataDir.getAbsolutePath());
         } else {
-            final File jarPath = new File(App.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+            final File jarPath = new File(App.class
+                    .getProtectionDomain().getCodeSource().getLocation().getPath());
             final File base = jarPath.getParentFile();
             final String sub = settings.getString(Settings.KEYS.DATA_DIRECTORY);
             final File dataDir = new File(base, sub);
@@ -463,6 +466,8 @@ public class App {
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_AUTOCONF, Settings.KEYS.ANALYZER_AUTOCONF_ENABLED));
         settings.setBoolean(Settings.KEYS.ANALYZER_PIP_ENABLED,
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_PIP, Settings.KEYS.ANALYZER_PIP_ENABLED));
+        settings.setBoolean(Settings.KEYS.ANALYZER_PIPFILE_ENABLED,
+                !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_PIPFILE, Settings.KEYS.ANALYZER_PIPFILE_ENABLED));
         settings.setBoolean(Settings.KEYS.ANALYZER_CMAKE_ENABLED,
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_CMAKE, Settings.KEYS.ANALYZER_CMAKE_ENABLED));
         settings.setBoolean(Settings.KEYS.ANALYZER_NUSPEC_ENABLED,

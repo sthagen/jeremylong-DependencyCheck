@@ -2,6 +2,74 @@
 
 Please see the [dependency-check google group](https://groups.google.com/forum/#!forum/dependency-check) for the release notes on versions not listed below.
 
+## [Version 6.0.4](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.4) (2020-12-31)
+
+### Changes
+
+- Minor bug fixes and reduction of false positives. 
+- See the full listing of 
+  [changes](https://github.com/jeremylong/DependencyCheck/milestone/18?closed=1).
+
+## [Version 6.0.3](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.3) (2020-11-03)
+
+### Changes
+
+- Added a bash command completion script (see #2916); to add completion to your shell
+  `completion-for-dependency-check.sh` can be found in the bin directory of the CLI:
+   ```bash
+   $ source completion-for-dependency-check.sh
+   ```
+- An experimental PIP File Analyzer was added (see #2877).
+- Analysis of Node JS produced several false positives (see #2796); the analysis has
+  been updated to reduce the number of false positives.
+  - If analyzing Node JS projects it is highly recommended to disable the Node JS Analyzer
+    and solely rely on the Node Audit Analyzer. There are plans to rework Node JS analysis
+    in a future release.
+- Support for external Oracle databases has been add for the 6.x releases (see #2899) 
+- Resolved several reported false positives.
+- Several other bug fixes have been implemented; see the full listing of 
+  [changes](https://github.com/jeremylong/DependencyCheck/milestone/17?closed=1).
+
+## [Version 6.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.2) (2020-09-27)
+
+### Changes
+
+- The project is migrating from hosting the release archives on Bintray and moving them to Github under the assets for each [release](https://github.com/jeremylong/DependencyCheck/releases)
+  - **Please update any automation you have to point to the new location.**
+- Npm Audit Analyzer now correctly skips dev dependencies (`--nodeAuditSkipDevDependencies`); see #2482.
+- GoLang Analyzer now scans transitive dependencies; see #2680.
+- Several bug fixes found in 6.0.1.
+
+- Full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/16?closed=1).
+
+## [Version 6.0.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.1) (2020-09-13)
+
+### Changes
+
+- Improved error messages when upgrading from 5.x to 6.x; due to breaking database changes if the old
+  database schema is detected an error message is produced indicating that the old database should be purged.
+- Fixed the database path for the Ant and Gradle plugins.
+- Added locking around the RetireJS updates to resolve read/write conflicts in CI environments.
+
+- Full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/15?closed=1).
+
+## [Version 6.0.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.0) (2020-09-07)
+
+### Changes
+
+- Updated database schema; this is a *breaking change* and anyone using an external database or those whom
+  specify the data directory will need recreate the database (including users of the docker image). The schema 
+  changes were made to:
+  - Improve the CVSS data, when available, per #2547
+  - Improve the way that ecosystems are determined
+  - Improve the update performance of external databases
+- Users with an **external Oracle** database will not be able to upgrade as https://github.com/jeremylong/DependencyCheck/issues/2755 
+  has not been resolved - as such, version 6.0.0 does not support Oracle.
+- Users mirroring the NVD - ODC 6.0.0 requires the use of the version 1.1 data feeds - 
+  please ensure you are using 1.1 not the 1.0 data feed.
+  
+- Full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/14?closed=1).
+
 ## [Version 5.3.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v5.3.2) (2020-03-26)
 
 ### Changes

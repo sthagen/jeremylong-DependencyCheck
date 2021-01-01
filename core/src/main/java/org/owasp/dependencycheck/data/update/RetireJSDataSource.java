@@ -25,10 +25,12 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import org.owasp.dependencycheck.Engine;
 import org.owasp.dependencycheck.data.update.exception.UpdateException;
+import org.owasp.dependencycheck.exception.WriteLockException;
 import org.owasp.dependencycheck.utils.Downloader;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.Settings;
 import org.owasp.dependencycheck.utils.TooManyRequestsException;
+import org.owasp.dependencycheck.utils.WriteLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +83,7 @@ public class RetireJSDataSource implements CachedWebDataSource {
             final URL url = new URL(configuredUrl);
             final File filepath = new File(url.getPath());
             final File repoFile = new File(settings.getDataDirectory(), filepath.getName());
-            final boolean proceed = enabled && (autoupdate || forceupdate) && shouldUpdate(repoFile);
+            final boolean proceed = enabled && (forceupdate || (autoupdate && shouldUpdate(repoFile)));
             if (proceed) {
                 LOGGER.debug("Begin RetireJS Update");
                 initializeRetireJsRepo(settings, url, repoFile);
@@ -130,17 +132,18 @@ public class RetireJSDataSource implements CachedWebDataSource {
      * initialization
      */
     private void initializeRetireJsRepo(Settings settings, URL repoUrl, File repoFile) throws UpdateException {
-        try {
+        try (WriteLock lock = new WriteLock(settings, true, repoFile.getName() + ".lock")) {
             LOGGER.debug("RetireJS Repo URL: {}", repoUrl.toExternalForm());
             final Downloader downloader = new Downloader(settings);
             downloader.fetchFile(repoUrl, repoFile);
-        } catch (IOException | TooManyRequestsException | ResourceNotFoundException ex) {
+        } catch (IOException | TooManyRequestsException | ResourceNotFoundException | WriteLockException ex) {
             throw new UpdateException("Failed to initialize the RetireJS repo", ex);
         }
     }
 
     @Override
     public boolean purge(Engine engine) {
+        this.settings = engine.getSettings();
         boolean result = true;
         try {
             final File dataDir = engine.getSettings().getDataDirectory();
@@ -148,14 +151,16 @@ public class RetireJSDataSource implements CachedWebDataSource {
             final String filename = repoUrl.getFile().substring(repoUrl.getFile().lastIndexOf("/") + 1);
             final File repo = new File(dataDir, filename);
             if (repo.exists()) {
-                if (repo.delete()) {
-                    LOGGER.info("RetireJS repo removed successfully");
-                } else {
-                    LOGGER.error("Unable to delete '{}'; please delete the file manually", repo.getAbsolutePath());
-                    result = false;
+                try (WriteLock lock = new WriteLock(settings, true, filename + ".lock")) {
+                    if (repo.delete()) {
+                        LOGGER.info("RetireJS repo removed successfully");
+                    } else {
+                        LOGGER.error("Unable to delete '{}'; please delete the file manually", repo.getAbsolutePath());
+                        result = false;
+                    }
                 }
             }
-        } catch (IOException ex) {
+        } catch (WriteLockException | IOException ex) {
             LOGGER.error("Unable to delete the RetireJS repo - invalid configuration");
             result = false;
         }

@@ -78,6 +78,15 @@ public class HttpResourceConnection implements AutoCloseable {
     private boolean usesProxy;
 
     /**
+     * The settings key for the username to be used.
+     */
+    private String userKey = null;
+    /**
+     * The settings key for the password to be used.
+     */
+    private String passwordKey = null;
+
+    /**
      * Constructs a new HttpResourceConnection object.
      *
      * @param settings the configured settings
@@ -96,6 +105,22 @@ public class HttpResourceConnection implements AutoCloseable {
         this.settings = settings;
         this.connFactory = new URLConnectionFactory(settings);
         this.usesProxy = usesProxy;
+    }
+
+    /**
+     * Constructs a new HttpResourceConnection object.
+     *
+     * @param settings the configured settings
+     * @param usesProxy control whether this conn will use the defined proxy
+     * @param userKey the settings key for the username to be used
+     * @param passwordKey the settings key for the password to be used
+     */
+    public HttpResourceConnection(Settings settings, boolean usesProxy, String userKey, String passwordKey) {
+        this.settings = settings;
+        this.connFactory = new URLConnectionFactory(settings);
+        this.usesProxy = usesProxy;
+        this.userKey = userKey;
+        this.passwordKey = passwordKey;
     }
 
     /**
@@ -174,9 +199,13 @@ public class HttpResourceConnection implements AutoCloseable {
         try {
             LOGGER.debug("Attempting retrieval of {}", url.toString());
             conn = connFactory.createHttpURLConnection(url, this.usesProxy);
+            if (userKey != null && passwordKey != null) {
+                connFactory.addBasicAuthentication(conn, userKey, passwordKey);
+            }
             conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
             conn.connect();
             int status = conn.getResponseCode();
+            final String message = conn.getResponseMessage();
             int redirectCount = 0;
             // TODO - should this get replaced by using the conn.setInstanceFollowRedirects(true);
             while ((status == HttpURLConnection.HTTP_MOVED_TEMP
@@ -215,7 +244,7 @@ public class HttpResourceConnection implements AutoCloseable {
                 } finally {
                     conn = null;
                 }
-                final String msg = format("Error retrieving %s; received response code %s.", url.toString(), status);
+                final String msg = format("Error retrieving %s; received response code %s; %s", url.toString(), status, message);
                 LOGGER.error(msg);
                 throw new DownloadFailedException(msg);
             }

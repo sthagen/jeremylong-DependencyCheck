@@ -66,6 +66,8 @@ import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.dependency.Evidence;
 import org.owasp.dependencycheck.dependency.EvidenceType;
 import org.owasp.dependencycheck.dependency.naming.CpeIdentifier;
+import org.owasp.dependencycheck.dependency.naming.Identifier;
+import org.owasp.dependencycheck.dependency.naming.PurlIdentifier;
 import org.owasp.dependencycheck.exception.InitializationException;
 import org.owasp.dependencycheck.utils.DependencyVersion;
 import org.owasp.dependencycheck.utils.DependencyVersionUtil;
@@ -377,7 +379,7 @@ public class CPEAnalyzer extends AbstractAnalyzer {
     protected List<IndexEntry> searchCPE(Map<String, MutableInt> vendor, Map<String, MutableInt> product,
             Set<String> vendorWeightings, Set<String> productWeightings, String ecosystem) {
 
-        int maxQueryResults = ecosystemTools.getLuceneMaxQueryLimitFor(ecosystem);
+        final int maxQueryResults = ecosystemTools.getLuceneMaxQueryLimitFor(ecosystem);
         final List<IndexEntry> ret = new ArrayList<>(maxQueryResults);
 
         final String searchString = buildSearch(vendor, product, vendorWeightings, productWeightings);
@@ -579,15 +581,37 @@ public class CPEAnalyzer extends AbstractAnalyzer {
      */
     private boolean verifyEntry(final IndexEntry entry, final Dependency dependency) {
         boolean isValid = false;
-
         //TODO - does this nullify some of the fuzzy matching that happens in the lucene search?
         // for instance CPE some-component and in the evidence we have SomeComponent.
-        if (collectionContainsString(dependency.getEvidence(EvidenceType.PRODUCT), entry.getProduct())
+
+        //TODO - should this have a package manager only flag instead of just looking for NPM
+        if (Ecosystem.NODEJS.equals(dependency.getEcosystem())) {
+            for (Identifier i : dependency.getSoftwareIdentifiers()) {
+                if (i instanceof PurlIdentifier) {
+                    final PurlIdentifier p = (PurlIdentifier) i;
+                    if (cleanPackageName(p.getName()).equals(cleanPackageName(entry.getProduct()))) {
+                        isValid = true;
+                    }
+                }
+            }
+        } else if (collectionContainsString(dependency.getEvidence(EvidenceType.PRODUCT), entry.getProduct())
                 && collectionContainsString(dependency.getEvidence(EvidenceType.VENDOR), entry.getVendor())) {
-            //&& collectionContainsVersion(dependency.getVersionEvidence(), entry.getVersion())
             isValid = true;
         }
         return isValid;
+    }
+
+    /**
+     * Only returns alpha numeric characters contained in a given package name.
+     *
+     * @param name the package name to cleanse
+     * @return the cleansed packaage name
+     */
+    private String cleanPackageName(String name) {
+        if (name == null) {
+            return "";
+        }
+        return name.replaceAll("[^a-zA-Z0-9]+", "");
     }
 
     /**
@@ -736,18 +760,6 @@ public class CPEAnalyzer extends AbstractAnalyzer {
         String bestGuessURL = null;
         final Set<IdentifierMatch> collected = new HashSet<>();
 
-//        int maxDepth = 0;
-//        boolean maxDepthHasUpdate = false;
-//        for (Cpe cpe : cpes) {
-//            final DependencyVersion dbVer = DependencyVersionUtil.parseVersion(cpe.getVersion(), true);
-//            if (dbVer != null) {
-//                final int count = dbVer.getVersionParts().size();
-//                if (count > maxDepth) {
-//                    maxDepthHasUpdate = "*".equals(cpe.getUpdate()) ? false : true;
-//                    maxDepth = count;
-//                }
-//            }
-//        }
         if (dependency.getVersion() != null && !dependency.getVersion().isEmpty()) {
             //we shouldn't always use the dependency version - in some cases this causes FP
             boolean useDependencyVersion = true;
@@ -765,11 +777,9 @@ public class CPEAnalyzer extends AbstractAnalyzer {
                 final DependencyVersion depVersion = new DependencyVersion(dependency.getVersion());
                 if (depVersion.getVersionParts().size() > 0) {
                     cpeBuilder.part(Part.APPLICATION).vendor(vendor).product(product);
-                    //removed these conditions from the below if
-                    //(maxDepth == 3 || (maxDepthHasUpdate && maxDepth==4)) && depVersion.getVersionParts().size() == 4 &&
                     final int idx = depVersion.getVersionParts().size() - 1;
                     if (idx > 0 && depVersion.getVersionParts().get(idx)
-                            .matches("^(v|release|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
+                            .matches("^(v|final|release|snapshot|r|b|beta|a|alpha|u|rc|sp|dev|revision|service|build|pre|p|patch|update|m|20\\d\\d).*$")) {
                         cpeBuilder.version(StringUtils.join(depVersion.getVersionParts().subList(0, idx), "."));
                         //when written - no update versions in the NVD start with v### - they all strip the v off
                         if (depVersion.getVersionParts().get(idx).matches("^v\\d.*$")) {
@@ -804,13 +814,12 @@ public class CPEAnalyzer extends AbstractAnalyzer {
                 }
                 DependencyVersion evBaseVer = null;
                 String evBaseVerUpdate = null;
-                //if (maxDepth == 3 && evVer.getVersionParts().size() == 4) {
                 final int idx = evVer.getVersionParts().size() - 1;
                 if (evVer.getVersionParts().get(idx)
-                        .matches("^(v|release|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
+                        .matches("^(v|release|final|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
                     //store the update version
                     final String checkUpdate = evVer.getVersionParts().get(idx);
-                    if (checkUpdate.matches("^(v|release|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
+                    if (checkUpdate.matches("^(v|release|final|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
                         evBaseVerUpdate = checkUpdate;
                         evBaseVer = new DependencyVersion();
                         evBaseVer.setVersionParts(evVer.getVersionParts().subList(0, idx));
@@ -876,11 +885,9 @@ public class CPEAnalyzer extends AbstractAnalyzer {
         }
 
         cpeBuilder.part(Part.APPLICATION).vendor(vendor).product(product);
-//        if (maxDepth == 3 && bestGuess.getVersionParts().size() == 4
-//                && bestGuess.getVersionParts().get(3).matches("^(v|release|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
         final int idx = bestGuess.getVersionParts().size() - 1;
         if (bestGuess.getVersionParts().get(idx)
-                .matches("^(v|release|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
+                .matches("^(v|release|final|snapshot|beta|alpha|u|rc|m|20\\d\\d).*$")) {
             cpeBuilder.version(StringUtils.join(bestGuess.getVersionParts().subList(0, idx), "."));
             //when written - no update versions in the NVD start with v### - they all strip the v off
             if (bestGuess.getVersionParts().get(idx).matches("^v\\d.*$")) {

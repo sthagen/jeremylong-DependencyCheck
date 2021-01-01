@@ -28,16 +28,31 @@ import com.h3xstream.retirejs.repo.ScannerFacade;
 import com.h3xstream.retirejs.repo.VulnerabilitiesRepository;
 import com.h3xstream.retirejs.repo.VulnerabilitiesRepositoryLoader;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
+import org.json.JSONException;
 import org.owasp.dependencycheck.Engine;
 import org.owasp.dependencycheck.analyzer.exception.AnalysisException;
+import org.owasp.dependencycheck.data.nvd.ecosystem.Ecosystem;
+import org.owasp.dependencycheck.data.nvdcve.DatabaseException;
+import org.owasp.dependencycheck.data.update.RetireJSDataSource;
+import org.owasp.dependencycheck.data.update.exception.UpdateException;
 import org.owasp.dependencycheck.dependency.Confidence;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.dependency.EvidenceType;
+import org.owasp.dependencycheck.dependency.Reference;
 import org.owasp.dependencycheck.dependency.Vulnerability;
+import org.owasp.dependencycheck.dependency.naming.GenericIdentifier;
+import org.owasp.dependencycheck.dependency.naming.PurlIdentifier;
+import org.owasp.dependencycheck.exception.InitializationException;
+import org.owasp.dependencycheck.exception.WriteLockException;
 import org.owasp.dependencycheck.utils.FileFilterBuilder;
 import org.owasp.dependencycheck.utils.Settings;
+import org.owasp.dependencycheck.utils.WriteLock;
+import org.owasp.dependencycheck.utils.search.FileContentSearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.concurrent.ThreadSafe;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -45,21 +60,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.concurrent.ThreadSafe;
-import org.apache.commons.validator.routines.UrlValidator;
-import org.json.JSONException;
-import org.owasp.dependencycheck.data.nvd.ecosystem.Ecosystem;
-import org.owasp.dependencycheck.data.nvdcve.DatabaseException;
-import org.owasp.dependencycheck.data.update.RetireJSDataSource;
-import org.owasp.dependencycheck.data.update.exception.UpdateException;
-import org.owasp.dependencycheck.dependency.Reference;
-import org.owasp.dependencycheck.dependency.naming.GenericIdentifier;
-import org.owasp.dependencycheck.dependency.naming.PurlIdentifier;
-import org.owasp.dependencycheck.exception.InitializationException;
-import org.owasp.dependencycheck.utils.search.FileContentSearch;
 
 /**
  * The RetireJS analyzer uses the manually curated list of vulnerabilities from
@@ -74,14 +78,14 @@ import org.owasp.dependencycheck.utils.search.FileContentSearch;
 public class RetireJsAnalyzer extends AbstractFileTypeAnalyzer {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(RetireJsAnalyzer.class);
-    /**
      * A descriptor for the type of dependencies processed or added by this
      * analyzer.
      */
     public static final String DEPENDENCY_ECOSYSTEM = Ecosystem.JAVASCRIPT;
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetireJsAnalyzer.class);
     /**
      * The name of the analyzer.
      */
@@ -174,9 +178,30 @@ public class RetireJsAnalyzer extends AbstractFileTypeAnalyzer {
      */
     @Override
     protected void prepareFileTypeAnalyzer(Engine engine) throws InitializationException {
+
+        File repoFile = null;
+        boolean repoEmpty = false;
+        try {
+            final String configuredUrl = getSettings().getString(Settings.KEYS.ANALYZER_RETIREJS_REPO_JS_URL, RetireJSDataSource.DEFAULT_JS_URL);
+            final URL url = new URL(configuredUrl);
+            final File filepath = new File(url.getPath());
+            repoFile = new File(getSettings().getDataDirectory(), filepath.getName());
+            if (!repoFile.isFile() || repoFile.length() <= 1L) {
+                    LOGGER.warn("Retire JS repository is empty or missing - attempting to force the update");
+                repoEmpty = true;
+                getSettings().setBoolean(Settings.KEYS.ANALYZER_RETIREJS_FORCEUPDATE, true);
+            }
+        } catch (FileNotFoundException ex) {
+            this.setEnabled(false);
+            throw new InitializationException(String.format("RetireJS repo does not exist locally (%s)", repoFile), ex);
+        } catch (IOException ex) {
+            this.setEnabled(false);
+            throw new InitializationException("Failed to initialize the RetireJS", ex);
+        }
+
         final boolean autoupdate = getSettings().getBoolean(Settings.KEYS.AUTO_UPDATE, true);
         final boolean forceupdate = getSettings().getBoolean(Settings.KEYS.ANALYZER_RETIREJS_FORCEUPDATE, false);
-        if (!autoupdate && forceupdate) {
+        if ((!autoupdate && forceupdate) || (autoupdate && repoEmpty)) {
             final RetireJSDataSource ds = new RetireJSDataSource();
             try {
                 ds.update(engine);
@@ -185,18 +210,16 @@ public class RetireJsAnalyzer extends AbstractFileTypeAnalyzer {
             }
         }
 
-        File repoFile = null;
-        try {
-            final String configuredUrl = getSettings().getString(Settings.KEYS.ANALYZER_RETIREJS_REPO_JS_URL, RetireJSDataSource.DEFAULT_JS_URL);
-            final URL url = new URL(configuredUrl);
-            final File filepath = new File(url.getPath());
-            repoFile = new File(getSettings().getDataDirectory(), filepath.getName());
-        } catch (FileNotFoundException ex) {
+        //several users are reporting that the retire js repository is getting corrupted.
+        try (WriteLock lock = new WriteLock(getSettings(), true, repoFile.getName() + ".lock")) {
+            final File temp = getSettings().getTempDirectory();
+            final File tempRepo = new File(temp, repoFile.getName());
+            LOGGER.debug("copying retireJs repo {} to {}", repoFile.toPath(), tempRepo.toPath());
+            Files.copy(repoFile.toPath(), tempRepo.toPath());
+            repoFile = tempRepo;
+        } catch (WriteLockException | IOException ex) {
             this.setEnabled(false);
-            throw new InitializationException(String.format("RetireJS repo does not exist locally (%s)", repoFile), ex);
-        } catch (IOException ex) {
-            this.setEnabled(false);
-            throw new InitializationException("Failed to initialize the RetireJS repo - data directory could not be created", ex);
+            throw new InitializationException("Failed to copy the RetireJS repo", ex);
         }
         try (FileInputStream in = new FileInputStream(repoFile)) {
             this.jsRepository = new VulnerabilitiesRepositoryLoader().loadFromInputStream(in);

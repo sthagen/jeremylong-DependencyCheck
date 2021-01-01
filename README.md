@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.owasp/dependency-check-maven.svg)](https://mvnrepository.com/artifact/org.owasp/dependency-check-maven) [![Build Status](https://travis-ci.org/jeremylong/DependencyCheck.svg?branch=master)](https://travis-ci.org/jeremylong/DependencyCheck) [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/1654.svg)](https://scan.coverity.com/projects/dependencycheck) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b6021d481dc41a888c5da0d9ecf9494)](https://www.codacy.com/app/jeremylong/DependencyCheck?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jeremylong/DependencyCheck&amp;utm_campaign=Badge_Grade) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/843/badge)](https://bestpractices.coreinfrastructure.org/projects/843) [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
+[![Maven Central](https://img.shields.io/maven-central/v/org.owasp/dependency-check-maven.svg)](https://mvnrepository.com/artifact/org.owasp/dependency-check-maven) ![Build and Deploy](https://github.com/jeremylong/DependencyCheck/workflows/Build%20and%20Deploy/badge.svg?branch=main) [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/1654.svg)](https://scan.coverity.com/projects/dependencycheck) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b6021d481dc41a888c5da0d9ecf9494)](https://www.codacy.com/app/jeremylong/DependencyCheck?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jeremylong/DependencyCheck&amp;utm_campaign=Badge_Grade) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/843/badge)](https://bestpractices.coreinfrastructure.org/projects/843) [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 [![Black Hat Arsenal](https://raw.githubusercontent.com/toolswatch/badges/master/arsenal/usa/2018.svg?sanitize=true)](http://www.toolswatch.org/2018/05/black-hat-arsenal-usa-2018-the-w0w-lineup/) [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2015.svg)](https://www.toolswatch.org/2015/06/black-hat-arsenal-usa-2015-speakers-lineup/) [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2014.svg)](https://www.toolswatch.org/2014/06/black-hat-usa-2014-arsenal-tools-speaker-list/) [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2013.svg)](https://www.toolswatch.org/2013/06/announcement-blackhat-arsenal-usa-2013-selected-tools/)
 
@@ -8,6 +8,16 @@ Dependency-Check
 Dependency-Check is a Software Composition Analysis (SCA) tool that attempts to detect publicly disclosed vulnerabilities contained within a project's dependencies. It does this by determining if there is a Common Platform Enumeration (CPE) identifier for a given dependency. If found, it will generate a report linking to the associated CVE entries.
 
 Documentation and links to production binary releases can be found on the [github pages](http://jeremylong.github.io/DependencyCheck/). Additionally, more information about the architecture and ways to extend dependency-check can be found on the [wiki].
+
+6.0.0 Upgrade Notice
+--------------
+If upgrading to 6.0.0 or higher, there were breaking changes. If you get an error indicating you can't connect
+to the database you will need to run the purge command to remove the old database:
+- gradle: `./gradlew dependencyCheckPurge`
+- maven: `mvn org.owasp:dependency-check-maven:6.0.0:purge`
+- cli: `dependency-check.sh --purge`
+
+Homebrew users upgrading to dependency-check 6.0.0 will need to purge their old database.
 
 Current Releases
 -------------
@@ -19,8 +29,7 @@ For instructions on the use of the Jenkins plugin please see the [OWASP Dependen
 
 More detailed instructions can be found on the
 [dependency-check github pages](http://jeremylong.github.io/DependencyCheck/dependency-check-cli/).
-The latest CLI can be downloaded from bintray's
-[dependency-check page](https://bintray.com/jeremy-long/owasp/dependency-check).
+The latest CLI can be downloaded from github in the [releases section](https://github.com/jeremylong/DependencyCheck/releases).
 
 On *nix
 ```
@@ -33,6 +42,7 @@ On Windows
 > .\bin\dependency-check.bat --out . --scan [path to jar files to be scanned]
 ```
 On Mac with [Homebrew](http://brew.sh)
+Note - homebrew users upgrading from 5.x to 6.0.0 will need to run `dependency-check.sh --purge`.
 ```
 $ brew update && brew install dependency-check
 $ dependency-check -h
@@ -74,6 +84,14 @@ The dependency-check plugin can be configured using the following:
 ### Ant Task
 
 For instructions on the use of the Ant Task, please see the [dependency-check-ant github page](http://jeremylong.github.io/DependencyCheck/dependency-check-ant).
+
+Development Prerequisites
+-------------
+
+For installation to pass, you must have the following components installed:
+* Go: `go version` 1.12 and higher
+* Java: `java --version` 1.8.0 and higher
+* Maven: `mvn --version` 3.5.0 and higher
 
 Development Usage
 -------------

@@ -194,7 +194,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      */
     @SuppressWarnings("CanBeFinal")
     @Parameter(property = "failBuildOnCVSS", defaultValue = "11", required = true)
-    private float failBuildOnCVSS = 11;
+    private float failBuildOnCVSS = 11f;
     /**
      * Specifies the CVSS score that is considered a "test" failure when
      * generating a jUnit style report. The default value is 0 - all
@@ -205,9 +205,13 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     private float junitFailOnCVSS = 0;
     /**
      * Fail the build if any dependency has a vulnerability listed.
+     *
+     * @deprecated use {@link BaseDependencyCheckMojo#failBuildOnCVSS} with a
+     * value of 0 instead
      */
     @SuppressWarnings("CanBeFinal")
     @Parameter(property = "failBuildOnAnyVulnerability", defaultValue = "false", required = true)
+    @Deprecated
     private boolean failBuildOnAnyVulnerability = false;
     /**
      * Sets whether auto-updating of the NVD CVE/CPE data is enabled. It is not
@@ -387,6 +391,12 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @SuppressWarnings("CanBeFinal")
     @Parameter(property = "pipAnalyzerEnabled")
     private Boolean pipAnalyzerEnabled;
+    /**
+     * Sets whether or not the pipfile Analyzer should be used.
+     */
+    @SuppressWarnings("CanBeFinal")
+    @Parameter(property = "pipfileAnalyzerEnabled")
+    private Boolean pipfileAnalyzerEnabled;
     /**
      * Sets whether or not the PHP Composer Lock File Analyzer should be used.
      */
@@ -768,7 +778,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @Parameter(property = "cveServerId")
     private String cveServerId;
     /**
-    /**
+     * /**
      * Optionally skip excessive CVE update checks for a designated duration in
      * hours.
      */
@@ -820,21 +830,22 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     private Filter<String> artifactTypeExcluded;
 
     /**
-     * An collection of <code>fileSet</code>s that specify additional files and/or
-     * directories (from the basedir) to analyze as part of the scan. If not
-     * specified, defaults to Maven conventions of: src/main/resources,
+     * An collection of <code>fileSet</code>s that specify additional files
+     * and/or directories (from the basedir) to analyze as part of the scan. If
+     * not specified, defaults to Maven conventions of: src/main/resources,
      * src/main/filters, and src/main/webapp. Note, this cannot be set via the
      * command line - use `scanDirectory` instead.
      */
-    @Parameter()
+    @Parameter
     private List<FileSet> scanSet;
     /**
-     * A list of directories to scan. Note, this should only be used
-     * via the command line - if configuring the directories to scan
-     * consider using the `scanSet` instead.
+     * A list of directories to scan. Note, this should only be used via the
+     * command line - if configuring the directories to scan consider using the
+     * `scanSet` instead.
      */
     @Parameter(property = "scanDirectory")
     private List<String> scanDirectory;
+
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Base Maven implementation">
     /**
@@ -1194,17 +1205,25 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
             String version = null;
             List<ArtifactVersion> availableVersions = null;
             if (org.apache.maven.artifact.Artifact.SCOPE_SYSTEM.equals(dependencyNode.getArtifact().getScope())) {
-                for (org.apache.maven.model.Dependency d : project.getDependencies()) {
-                    final Artifact a = dependencyNode.getArtifact();
-                    if (d.getSystemPath() != null && artifactsMatch(d, a)) {
-
-                        artifactFile = new File(d.getSystemPath());
-                        isResolved = artifactFile.isFile();
-                        groupId = a.getGroupId();
-                        artifactId = a.getArtifactId();
-                        version = a.getVersion();
-                        availableVersions = a.getAvailableVersions();
-                        break;
+                final Artifact a = dependencyNode.getArtifact();
+                if (a.isResolved() && a.getFile().isFile()) {
+                    artifactFile = a.getFile();
+                    isResolved = artifactFile.isFile();
+                    groupId = a.getGroupId();
+                    artifactId = a.getArtifactId();
+                    version = a.getVersion();
+                    availableVersions = a.getAvailableVersions();
+                } else {
+                    for (org.apache.maven.model.Dependency d : project.getDependencies()) {
+                        if (d.getSystemPath() != null && artifactsMatch(d, a)) {
+                            artifactFile = new File(d.getSystemPath());
+                            isResolved = artifactFile.isFile();
+                            groupId = a.getGroupId();
+                            artifactId = a.getArtifactId();
+                            version = a.getVersion();
+                            availableVersions = a.getAvailableVersions();
+                            break;
+                        }
                     }
                 }
                 if (!isResolved) {
@@ -1358,19 +1377,19 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         exCol = collectMavenDependencies(engine, project, nodes, buildingRequest, aggregate);
 
         final List<FileSet> projectScan;
-        
-        if (scanDirectory!=null && !scanDirectory.isEmpty()) {
-            if (scanSet==null) {
+
+        if (scanDirectory != null && !scanDirectory.isEmpty()) {
+            if (scanSet == null) {
                 scanSet = new ArrayList<>();
             }
             scanDirectory.stream().forEach(d -> {
-                FileSet fs = new FileSet();
+                final FileSet fs = new FileSet();
                 fs.setDirectory(d);
                 fs.addInclude(INCLUDE_ALL);
                 scanSet.add(fs);
             });
         }
-        
+
         if (scanSet == null || scanSet.isEmpty()) {
             // Define the default FileSets
             final FileSet resourcesSet = new FileSet();
@@ -1489,12 +1508,12 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         for (MavenProject prj : reactorProjects) {
 
             getLog().debug(String.format("Comparing %s:%s:%s to %s:%s:%s",
-                    artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion(),
+                    artifact.getGroupId(), artifact.getArtifactId(), artifact.getBaseVersion(),
                     prj.getGroupId(), prj.getArtifactId(), prj.getVersion()));
 
             if (prj.getArtifactId().equals(artifact.getArtifactId())
                     && prj.getGroupId().equals(artifact.getGroupId())
-                    && prj.getVersion().equals(artifact.getVersion())) {
+                    && prj.getVersion().equals(artifact.getBaseVersion())) {
 
                 final String displayName = String.format("%s:%s:%s",
                         prj.getGroupId(), prj.getArtifactId(), prj.getVersion());
@@ -1508,7 +1527,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
                 } else {
                     d = new Dependency(true);
                 }
-                final String key = String.format("%s:%s:%s", artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion());
+                final String key = String.format("%s:%s:%s", prj.getGroupId(), prj.getArtifactId(), prj.getVersion());
                 d.setSha1sum(Checksum.getSHA1Checksum(key));
                 d.setSha256sum(Checksum.getSHA256Checksum(key));
                 d.setMd5sum(Checksum.getMD5Checksum(key));
@@ -1825,7 +1844,17 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
             settings.setString(Settings.KEYS.PROXY_SERVER, proxy.getHost());
             settings.setString(Settings.KEYS.PROXY_PORT, Integer.toString(proxy.getPort()));
             final String userName = proxy.getUsername();
-            final String password = proxy.getPassword();
+            String password = proxy.getPassword();
+            if (password != null && !password.isEmpty()) {
+                if (settings.getBoolean(Settings.KEYS.PROXY_DISABLE_SCHEMAS, true)) {
+                    System.setProperty("jdk.http.auth.tunneling.disabledSchemes", "");
+                }
+                try {
+                    password = decryptPasswordFromSettings(password);
+                } catch (SecDispatcherException ex) {
+                    password = handleSecDispatcherException("proxy", proxy.getId(), password, ex);
+                }
+            }
             settings.setStringIfNotNull(Settings.KEYS.PROXY_USERNAME, userName);
             settings.setStringIfNotNull(Settings.KEYS.PROXY_PASSWORD, password);
             settings.setStringIfNotNull(Settings.KEYS.PROXY_NON_PROXY_HOSTS, proxy.getNonProxyHosts());
@@ -1871,6 +1900,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_CMAKE_ENABLED, cmakeAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_AUTOCONF_ENABLED, autoconfAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIP_ENABLED, pipAnalyzerEnabled);
+        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIPFILE_ENABLED, pipfileAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, nodeAuditAnalyzerEnabled);
@@ -1939,24 +1969,9 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
                 final String username = server.getUsername();
                 String password = null;
                 try {
-                    password = decryptServerPassword(server);
+                    password = decryptPasswordFromSettings(server.getPassword());
                 } catch (SecDispatcherException ex) {
-                    if (ex.getCause() instanceof FileNotFoundException
-                            || (ex.getCause() != null && ex.getCause().getCause() instanceof FileNotFoundException)) {
-                        //maybe its not encrypted?
-                        final String tmp = server.getPassword();
-                        if (tmp.startsWith("{") && tmp.endsWith("}")) {
-                            getLog().error(String.format(
-                                    "Unable to decrypt the server password for server id '%s' in settings.xml%n\tCause: %s",
-                                    serverId, ex.getMessage()));
-                        } else {
-                            password = tmp;
-                        }
-                    } else {
-                        getLog().error(String.format(
-                                "Unable to decrypt the server password for server id '%s' in settings.xml%n\tCause: %s",
-                                serverId, ex.getMessage()));
-                    }
+                    password = handleSecDispatcherException("server", serverId, server.getPassword(), ex);
                 }
                 settings.setStringIfNotEmpty(userSettingKey, username);
                 settings.setStringIfNotEmpty(passwordSettingKey, password);
@@ -1966,16 +1981,18 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         }
     }
 
+    //CSOFF: LineLength
     /**
-     * Obtains the configured password for the given server.
+     * Decrypts a password from the Maven settings if it needs to be decrypted.
+     * If it's not encrypted the input password will be returned unchanged.
      *
-     * @param server the configured server from the settings.xml
+     * @param password the original password value from the settings.xml
      * @return the decrypted password from the Maven configuration
      * @throws SecDispatcherException thrown if there is an error decrypting the
      * password
      */
-    private String decryptServerPassword(Server server) throws SecDispatcherException {
-        //CSOFF: LineLength
+    private String decryptPasswordFromSettings(String password) throws SecDispatcherException {
+
         //The following fix was copied from:
         //   https://github.com/bsorrentino/maven-confluence-plugin/blob/master/maven-confluence-reporting-plugin/src/main/java/org/bsc/maven/confluence/plugin/AbstractBaseConfluenceMojo.java
         //
@@ -1983,12 +2000,47 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         // org.sonatype.plexus.components.sec.dispatcher.SecDispatcherException:
         // java.io.FileNotFoundException: ~/.settings-security.xml (No such file or directory)
         //
-        //CSON: LineLength
         if (securityDispatcher instanceof DefaultSecDispatcher) {
             ((DefaultSecDispatcher) securityDispatcher).setConfigurationFile("~/.m2/settings-security.xml");
         }
 
-        return securityDispatcher.decrypt(server.getPassword());
+        return securityDispatcher.decrypt(password);
+    }
+    //CSON: LineLength
+
+    /**
+     * Handles a SecDispatcherException that was thrown at an attempt to decrypt
+     * an encrypted password from the Maven settings.
+     *
+     * @param settingsElementName - "server" or "proxy"
+     * @param settingsElementId - value of the id attribute of the proxy resp.
+     * server element to which the password belongs
+     * @param passwordValueFromSettings - original, undecrypted password value
+     * from the settings
+     * @param ex - the Exception to handle
+     * @return the password fallback value to go on with, might be a not working
+     * one.
+     */
+    private String handleSecDispatcherException(String settingsElementName, String settingsElementId, String passwordValueFromSettings,
+            SecDispatcherException ex) {
+        String password = passwordValueFromSettings;
+        if (ex.getCause() instanceof FileNotFoundException
+                || (ex.getCause() != null && ex.getCause().getCause() instanceof FileNotFoundException)) {
+            //maybe its not encrypted?
+            final String tmp = passwordValueFromSettings;
+            if (tmp.startsWith("{") && tmp.endsWith("}")) {
+                getLog().error(String.format(
+                        "Unable to decrypt the %s password for %s id '%s' in settings.xml%n\tCause: %s",
+                        settingsElementName, settingsElementName, settingsElementId, ex.getMessage()));
+            } else {
+                password = tmp;
+            }
+        } else {
+            getLog().error(String.format(
+                    "Unable to decrypt the %s password for %s id '%s' in settings.xml%n\tCause: %s",
+                    settingsElementName, settingsElementName, settingsElementId, ex.getMessage()));
+        }
+        return password;
     }
 
     /**
@@ -2107,7 +2159,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
             }
         });
         invalid.forEach((s) -> {
-            getLog().warn("Invalid format specified: " + s);
+            getLog().warn("Invalid report format specified: " + s);
         });
         if (selectedFormats.contains("true")) {
             selectedFormats.remove("true");
@@ -2165,7 +2217,9 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
             for (Vulnerability v : d.getVulnerabilities()) {
                 if (failBuildOnAnyVulnerability || (v.getCvssV2() != null && v.getCvssV2().getScore() >= failBuildOnCVSS)
                         || (v.getCvssV3() != null && v.getCvssV3().getBaseScore() >= failBuildOnCVSS)
-                        || (v.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(v.getUnscoredSeverity()) >= failBuildOnCVSS)) {
+                        || (v.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(v.getUnscoredSeverity()) >= failBuildOnCVSS)
+                        //safety net to fail on any if for some reason the above misses on 0
+                        || (failBuildOnCVSS <= 0.0f)) {
                     if (addName) {
                         addName = false;
                         ids.append(NEW_LINE).append(d.getFileName()).append(": ");

@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
@@ -88,12 +89,16 @@ public final class FileUtils {
             return false;
         }
 
-        final boolean success = org.apache.commons.io.FileUtils.deleteQuietly(file);
-        if (!success) {
-            LOGGER.debug("Failed to delete file: {}; attempting to delete on exit.", file.getPath());
+        try {
+            org.apache.commons.io.FileUtils.forceDelete(file);
+        } catch (IOException ex) {
+            LOGGER.trace(ex.getMessage(), ex);
+            LOGGER.debug("Failed to delete file: {} (error message: {}); attempting to delete on exit.", file.getPath(), ex.getMessage());
             file.deleteOnExit();
+            return false;
         }
-        return success;
+
+        return true;
     }
 
     /**
@@ -176,9 +181,15 @@ public final class FileUtils {
      */
     public static File getResourceAsFile(final String resource) {
         final ClassLoader classLoader = FileUtils.class.getClassLoader();
-        final String path = classLoader != null
-                ? classLoader.getResource(resource).getFile()
-                : ClassLoader.getSystemResource(resource).getFile();
+        String path = null;
+        if (classLoader != null) {
+            final URL url = classLoader.getResource(resource);
+            if (url != null) {
+                path = url.getFile();
+            }
+        } else {
+            path = ClassLoader.getSystemResource(resource).getFile();
+        }
 
         if (path == null) {
             return new File(resource);

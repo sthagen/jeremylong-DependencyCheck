@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>5.3.3-SNAPSHOT</version>
+        <version>6.0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-cli</artifactId>
@@ -42,6 +42,13 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
                 <includes>
                     <include>logback.xml</include>
                 </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>completion-for-dependency-check.sh</include>
+                </includes>
+                <targetPath>${project.build.directory}/release/bin</targetPath>
             </resource>
             <resource>
                 <directory>${basedir}</directory>

@@ -143,7 +143,7 @@ public class ReportGenerator {
      * NVD CVE data)
      * @param settings a reference to the database settings
      * @deprecated Please use
-     * {@link #ReportGenerator(java.lang.String, java.util.List, java.util.List, org.owasp.dependencycheck.data.nvdcve.DatabaseProperties, org.owasp.dependencycheck.utils.Settings, org.owasp.dependencycheck.exception.ExceptionCollection)}
+     * {@link #ReportGenerator(java.lang.String, java.util.List, java.util.List, DatabaseProperties, Settings, ExceptionCollection)}
      */
     @Deprecated
     public ReportGenerator(String applicationName, List<Dependency> dependencies, List<Analyzer> analyzers,
@@ -182,7 +182,7 @@ public class ReportGenerator {
      * NVD CVE data)
      * @param settings a reference to the database settings
      * @deprecated Please use
-     * {@link #ReportGenerator(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.List, java.util.List, org.owasp.dependencycheck.data.nvdcve.DatabaseProperties, org.owasp.dependencycheck.utils.Settings, org.owasp.dependencycheck.exception.ExceptionCollection)}
+     * {@link #ReportGenerator(String, String, String, String, List, List, DatabaseProperties, Settings, ExceptionCollection)}
      */
     @Deprecated
     public ReportGenerator(String applicationName, String groupID, String artifactID, String version,
@@ -395,6 +395,7 @@ public class ReportGenerator {
     @SuppressFBWarnings(justification = "try with resources will clean up the output stream", value = {"OBL_UNSATISFIED_OBLIGATION"})
     protected void processTemplate(String template, File file) throws ReportException {
         ensureParentDirectoryExists(file);
+        LOGGER.info("Writing report to: " + file.getAbsolutePath());
         try (OutputStream output = new FileOutputStream(file)) {
             processTemplate(template, output);
         } catch (IOException ex) {
@@ -487,7 +488,7 @@ public class ReportGenerator {
         final String outputPath = path + ".pretty";
         final File in = new File(path);
         final File out = new File(outputPath);
-        try {
+        try (OutputStream os = new FileOutputStream(out)) {
             final TransformerFactory transformerFactory = SAXTransformerFactory.newInstance();
             transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             final Transformer transformer = transformerFactory.newTransformer();
@@ -499,11 +500,11 @@ public class ReportGenerator {
             final XMLReader saxReader = XmlUtils.buildSecureSaxParser().getXMLReader();
 
             saxs.setXMLReader(saxReader);
-            transformer.transform(saxs, new StreamResult(new OutputStreamWriter(new FileOutputStream(out), "utf-8")));
+            transformer.transform(saxs, new StreamResult(new OutputStreamWriter(os, "utf-8")));
         } catch (ParserConfigurationException | TransformerConfigurationException ex) {
             LOGGER.debug("Configuration exception when pretty printing", ex);
             LOGGER.error("Unable to generate pretty report, caused by: {}", ex.getMessage());
-        } catch (TransformerException | SAXException | FileNotFoundException | UnsupportedEncodingException ex) {
+        } catch (TransformerException | SAXException | IOException ex) {
             LOGGER.debug("Malformed XML?", ex);
             LOGGER.error("Unable to generate pretty report, caused by: {}", ex.getMessage());
         }
@@ -533,15 +534,18 @@ public class ReportGenerator {
 
         final JsonFactory factory = new JsonFactory();
 
-        try (
-                JsonParser parser = factory.createParser(new FileInputStream(in));
-                JsonGenerator generator = factory.createGenerator(new FileOutputStream(out))) {
+        try (InputStream is = new FileInputStream(in);
+                OutputStream os = new FileOutputStream(out)) {
+
+            final JsonParser parser = factory.createParser(is);
+            final JsonGenerator generator = factory.createGenerator(os);
 
             generator.useDefaultPrettyPrinter();
 
             while (parser.nextToken() != null) {
                 generator.copyCurrentEvent(parser);
             }
+            generator.flush();
         } catch (IOException ex) {
             LOGGER.debug("Malformed JSON?", ex);
             throw new ReportException("Unable to generate json report", ex);

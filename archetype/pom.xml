@@ -21,7 +21,7 @@ Copyright (c) 2017 Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>5.3.3-SNAPSHOT</version>
+        <version>6.0.4-SNAPSHOT</version>
     </parent>
     <artifactId>dependency-check-plugin</artifactId>
     <name>Dependency-Check Plugin Archetype</name>
@@ -34,6 +34,13 @@ Copyright (c) 2017 Jeremy Long. All Rights Reserved.
     </scm>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

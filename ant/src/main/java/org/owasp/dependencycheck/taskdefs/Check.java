@@ -41,6 +41,7 @@ import org.owasp.dependencycheck.reporting.ReportGenerator.Format;
 import org.owasp.dependencycheck.utils.Settings;
 import org.owasp.dependencycheck.utils.SeverityUtil;
 import org.slf4j.impl.StaticLoggerBinder;
+//CSOFF: MethodCount
 
 /**
  * An Ant task definition to execute dependency-check during an Ant build.
@@ -49,6 +50,11 @@ import org.slf4j.impl.StaticLoggerBinder;
  */
 @NotThreadSafe
 public class Check extends Update {
+
+    /**
+     * System specific new line character.
+     */
+    private static final String NEW_LINE = System.getProperty("line.separator", "\n").intern();
 
     /**
      * Whether the ruby gemspec analyzer should be enabled.
@@ -269,6 +275,10 @@ public class Check extends Update {
      * Whether the pip analyzer should be enabled.
      */
     private Boolean pipAnalyzerEnabled;
+    /**
+     * Whether the pipfile analyzer should be enabled.
+     */
+    private Boolean pipfileAnalyzerEnabled;
     /**
      * Sets the path for the mix_audit binary.
      */
@@ -812,6 +822,24 @@ public class Check extends Update {
     }
 
     /**
+     * Get the value of pipfileAnalyzerEnabled.
+     *
+     * @return the value of pipfileAnalyzerEnabled
+     */
+    public Boolean isPipfileAnalyzerEnabled() {
+        return pipfileAnalyzerEnabled;
+    }
+
+    /**
+     * Set the value of pipfileAnalyzerEnabled.
+     *
+     * @param pipfileAnalyzerEnabled new value of pipfileAnalyzerEnabled
+     */
+    public void setPipfileAnalyzerEnabled(Boolean pipfileAnalyzerEnabled) {
+        this.pipfileAnalyzerEnabled = pipfileAnalyzerEnabled;
+    }
+
+    /**
      * Returns if the Bundle Audit Analyzer is enabled.
      *
      * @return if the Bundle Audit Analyzer is enabled.
@@ -992,7 +1020,7 @@ public class Check extends Update {
      * Set the value of nodeAuditSkipDevDependencies.
      *
      * @param nodeAuditSkipDevDependencies new value of
- nodeAuditSkipDevDependencies
+     * nodeAuditSkipDevDependencies
      */
     public void setNodeAuditSkipDevDependencies(Boolean nodeAuditSkipDevDependencies) {
         this.nodeAuditSkipDevDependencies = nodeAuditSkipDevDependencies;
@@ -1160,8 +1188,7 @@ public class Check extends Update {
     /**
      * Set the value of mixAuditAnalyzerEnabled.
      *
-     * @param mixAuditAnalyzerEnabled new value of
-     * mixAuditAnalyzerEnabled
+     * @param mixAuditAnalyzerEnabled new value of mixAuditAnalyzerEnabled
      */
     public void setMixAuditAnalyzerEnabled(Boolean mixAuditAnalyzerEnabled) {
         this.mixAuditAnalyzerEnabled = mixAuditAnalyzerEnabled;
@@ -1640,16 +1667,16 @@ public class Check extends Update {
                 }
             }
             final ExceptionCollection exceptions = callExecuteAnalysis(engine);
-
-            for (String format : getReportFormats()) {
-                engine.writeReports(getProjectName(), new File(reportOutputDirectory), format, exceptions);
-            }
-
-            if (this.failBuildOnCVSS <= 10) {
-                checkForFailure(engine.getDependencies());
-            }
-            if (this.showSummary) {
-                DependencyCheckScanAgent.showSummary(engine.getDependencies());
+            if (exceptions == null || !exceptions.isFatal()) {
+                for (String format : getReportFormats()) {
+                    engine.writeReports(getProjectName(), new File(reportOutputDirectory), format, exceptions);
+                }
+                if (this.failBuildOnCVSS <= 10) {
+                    checkForFailure(engine.getDependencies());
+                }
+                if (this.showSummary) {
+                    DependencyCheckScanAgent.showSummary(engine.getDependencies());
+                }
             }
         } catch (DatabaseException ex) {
             final String msg = "Unable to connect to the dependency-check database; analysis has stopped";
@@ -1749,6 +1776,7 @@ public class Check extends Update {
         getSettings().setStringIfNotNull(Settings.KEYS.ANALYZER_BUNDLE_AUDIT_WORKING_DIRECTORY, bundleAuditWorkingDirectory);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_AUTOCONF_ENABLED, autoconfAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIP_ENABLED, pipAnalyzerEnabled);
+        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIPFILE_ENABLED, pipfileAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, nodeAuditAnalyzerEnabled);
@@ -1798,11 +1826,16 @@ public class Check extends Update {
     private void checkForFailure(Dependency[] dependencies) throws BuildException {
         final StringBuilder ids = new StringBuilder();
         for (Dependency d : dependencies) {
+            boolean addName = true;
             for (Vulnerability v : d.getVulnerabilities()) {
                 if ((v.getCvssV2() != null && v.getCvssV2().getScore() >= failBuildOnCVSS)
                         || (v.getCvssV3() != null && v.getCvssV3().getBaseScore() >= failBuildOnCVSS)
-                        || (v.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(v.getUnscoredSeverity()) >= failBuildOnCVSS)) {
-                    if (ids.length() == 0) {
+                        || (v.getUnscoredSeverity() != null && SeverityUtil.estimateCvssV2(v.getUnscoredSeverity()) >= failBuildOnCVSS)
+                        //safety net to fail on any if for some reason the above misses on 0
+                        || (failBuildOnCVSS <= 0.0f)) {
+                    if (addName) {
+                        addName = false;
+                        ids.append(NEW_LINE).append(d.getFileName()).append(": ");
                         ids.append(v.getName());
                     } else {
                         ids.append(", ").append(v.getName());
@@ -1848,3 +1881,4 @@ public class Check extends Update {
         }
     }
 }
+//CSON: MethodCount

@@ -112,7 +112,7 @@ public class ArchiveAnalyzer extends AbstractFileTypeAnalyzer {
      * dependencies.
      */
     private static final FileFilter REMOVE_FROM_ANALYSIS = FileFilterBuilder.newInstance()
-            .addExtensions("zip", "tar", "gz", "tgz", "bz2", "tbz2").build();
+            .addExtensions("zip", "tar", "gz", "tgz", "bz2", "tbz2", "nupkg").build();
     /**
      * Detects files with .zip extension.
      */
@@ -469,7 +469,7 @@ public class ArchiveAnalyzer extends AbstractFileTypeAnalyzer {
     }
 
     /**
-     * Checks if the file being scanned is a JAR that begins with '#!/bin' which
+     * Checks if the file being scanned is a JAR or WAR that begins with '#!/bin' which
      * indicates it is a fully executable jar. If a fully executable JAR is
      * identified the input stream will be advanced to the start of the actual
      * JAR file ( skipping the script).
@@ -482,7 +482,7 @@ public class ArchiveAnalyzer extends AbstractFileTypeAnalyzer {
      * @throws IOException thrown if there is an error reading the stream
      */
     private void ensureReadableJar(final String archiveExt, BufferedInputStream in) throws IOException {
-        if ("jar".equals(archiveExt) && in.markSupported()) {
+        if (("war".equals(archiveExt) || "jar".equals(archiveExt)) && in.markSupported()) {
             in.mark(7);
             final byte[] b = new byte[7];
             final int read = in.read(b);
@@ -542,6 +542,7 @@ public class ArchiveAnalyzer extends AbstractFileTypeAnalyzer {
                 //final File file = new File(destination, entry.getName());
                 final Path f = d.resolve(entry.getName()).normalize();
                 if (!f.startsWith(d)) {
+                    LOGGER.debug("ZipSlip detected\n-Destination: " + d.toString() + "\n-Path: " + f.toString());
                     final String msg = String.format(
                             "Archive contains a file (%s) that would be extracted outside of the target directory.",
                             entry.getName());

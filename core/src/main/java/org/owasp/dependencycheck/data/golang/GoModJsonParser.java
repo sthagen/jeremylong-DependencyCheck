@@ -17,77 +17,70 @@
  */
 package org.owasp.dependencycheck.data.golang;
 
-import org.owasp.dependencycheck.analyzer.exception.AnalysisException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
 import javax.json.stream.JsonParsingException;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.owasp.dependencycheck.analyzer.exception.AnalysisException;
+import org.owasp.dependencycheck.utils.JsonArrayFixingInputStream;
 
 /**
- * Parses json output from `go mod edit -json`.
+ * Parses json output from `go list -json -m all`.
  *
  * @author Matthijs van den Bos
  */
-@NotThreadSafe
-public class GoModJsonParser {
-
-    /**
-     * The JsonReader for parsing JSON.
-     */
-    private final JsonReader jsonReader;
-
-    /**
-     * The List of ComposerDependencies found.
-     */
-    private final List<GoModDependency> goModDependencies;
+@ThreadSafe
+public final class GoModJsonParser {
 
     /**
      * The LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(GoModJsonParser.class);
 
-    /**
-     * Creates a ComposerLockParser from a JsonReader and an InputStream.
-     *
-     * @param inputStream the InputStream to parse
-     */
-    public GoModJsonParser(InputStream inputStream) {
-        LOGGER.debug("Creating a ComposerLockParser");
-        this.jsonReader = Json.createReader(inputStream);
-        this.goModDependencies = new ArrayList<>();
+    private GoModJsonParser() {
     }
 
     /**
      * Process the input stream to create the list of dependencies.
      *
+     * @param inputStream the InputStream to parse
+     * @return the list of dependencies
      * @throws AnalysisException thrown when there is an error parsing the
      * results of `go mod`
      */
-    public void process() throws AnalysisException {
+    public static List<GoModDependency> process(InputStream inputStream) throws AnalysisException {
         LOGGER.debug("Beginning go.mod processing");
-        try {
-            final JsonObject composer = jsonReader.readObject();
-            if (composer.containsKey("Require") && !composer.isNull("Require")) {
-                LOGGER.debug("Found modules");
-                final JsonArray modules = composer.getJsonArray("Require");
-                for (JsonObject module : modules.getValuesAs(JsonObject.class)) {
+
+        final List<GoModDependency> goModDependencies = new ArrayList<>();
+        try (JsonArrayFixingInputStream jsonStream = new JsonArrayFixingInputStream(inputStream)) {
+            final JsonReaderFactory factory = Json.createReaderFactory(null);
+            try (JsonReader reader = factory.createReader(jsonStream, java.nio.charset.StandardCharsets.UTF_8)) {
+                final JsonArray modules = reader.readArray();
+                modules.getValuesAs(JsonObject.class).forEach((module) -> {
                     final String path = module.getString("Path");
-                    String version = module.getString("Version");
-                    if (version.startsWith("v")) {
+                    String version = module.getString("Version", null);
+                    if (version != null && version.startsWith("v")) {
                         version = version.substring(1);
                     }
-                    goModDependencies.add(new GoModDependency(path, version));
-                }
+                    String dir = null;
+                    if (module.getJsonString("Dir") != null) {
+                        dir = module.getString("Dir");
+                    }
+                    goModDependencies.add(new GoModDependency(path, version, dir));
+                });
             }
         } catch (JsonParsingException jsonpe) {
             throw new AnalysisException("Error parsing stream", jsonpe);
@@ -96,16 +89,10 @@ public class GoModJsonParser {
         } catch (IllegalStateException ise) {
             throw new AnalysisException("Illegal state in go mod stream", ise);
         } catch (ClassCastException cce) {
-            throw new AnalysisException("JSON not exactly matching output of `go mod edit -json`", cce);
+            throw new AnalysisException("JSON not exactly matching output of `go list -json -m all`", cce);
+        } catch (IOException ex) {
+            throw new AnalysisException("Error reading output of `go list -json -m all`", ex);
         }
-    }
-
-    /**
-     * Gets the list of dependencies.
-     *
-     * @return the list of dependencies
-     */
-    public List<GoModDependency> getDependencies() {
         return goModDependencies;
     }
 }

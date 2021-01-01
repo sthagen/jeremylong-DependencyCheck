@@ -2,6 +2,106 @@
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
     <suppress base="true">
         <notes><![CDATA[
+        FP per #3002
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.opencensus/opencensus\-contrib\-grpc\-metrics@.*$</packageUrl>
+        <cpe>cpe:/a:grpc:grpc</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #3002, CVE is for grpc-js and c
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-.*$</packageUrl>
+        <cve>CVE-2020-7768</cve>
+        <cve>CVE-2017-7861</cve>
+        <cve>CVE-2017-8359</cve>
+        <cve>CVE-2017-9431</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #3002, CVE is for grpc-js and c
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.api\.grpc/grpc\-google\-common\-protos@.*$</packageUrl>
+        <cve>CVE-2020-7768</cve>
+        <cve>CVE-2017-7861</cve>
+        <cve>CVE-2017-8359</cve>
+        <cve>CVE-2017-9431</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #3002, CVE is for grpc-js
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.lightstep\.tracer/.*$</packageUrl>
+        <cpe>cpe:/a:grpc:grpc</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #3001
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.http\-client/google\-http\-client@.*$</packageUrl>
+        <cpe>cpe:/a:apache:httpclient</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2999
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.github\.jhipster/jhipster\-framework@.*$</packageUrl>
+        <cve>CVE-2019-16303</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2982
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.mybatis/mybatis\-spring@.*$</packageUrl>
+        <cpe>cpe:/a:mybatis:mybatis</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2978
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.IdentityModel\.Protocols\.OpenIdConnect@.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:identitymodel</cpe>
+        <cpe>cpe:/a:openid:openid</cpe>
+        <cpe>cpe:/a:openid:openid_connect</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2972
+        ]]></notes>
+        <packageUrl regex="true">^pkg:composer/php\-.*$</packageUrl>
+        <cpe>cpe:/a:php:php</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2957
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.jboss\.resteasy/resteasy\-spring\-boot\-starter@.*$</packageUrl>
+        <cpe>cpe:/a:redhat:resteasy</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2956
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.github\.docker\-java/docker\-java.*$</packageUrl>
+        <cpe>cpe:/a:docker:docker</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2940
+        ]]></notes>
+        <packageUrl regex="true">^pkg:npm/cross\-env@.*$</packageUrl>
+        <cpe>cpe:/a:crossenv_project:crossenv</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2955
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.micrometer/micrometer\-core@.*$</packageUrl>
+        <cpe>cpe:/a:vmware:ace</cpe>
+        <cpe>cpe:/a:vmware:vmware_ace</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         FP per #2594
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/ch\.qos\.logback\.contrib/.*$</packageUrl>
@@ -13,6 +113,77 @@
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/be\.sysa\.log\-sanitizer/log\-sanitizer\-logback@.*$</packageUrl>
         <cpe>cpe:/a:logback:logback</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2928
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.graalvm.*$</packageUrl>
+        <cpe>cpe:/a:oracle:openjdk</cpe>
+        <cpe>cpe:/a:sun:openjdk</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2928
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.graalvm\..*$</packageUrl>
+        <cpe>cpe:/a:oracle:graalvm</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2928
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.graalvm/graal\-sdk@.*$</packageUrl>
+        <cpe>cpe:/a:oracle:graalvm</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2928
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.graalvm/launcher\-common@.*$</packageUrl>
+        <cpe>cpe:/a:oracle:graalvm</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2928
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.graalvm/polyglot\-tck@.*$</packageUrl>
+        <cpe>cpe:/a:oracle:graalvm</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2927 & #2931
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.cloud/spring\-cloud\-.*$</packageUrl>
+        <cpe>cpe:/a:vmware:cloud_foundation</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2923
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.netbeans\.external/.*$</packageUrl>
+        <cpe>cpe:/a:apache:netbeans</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1721
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.batch/spring\-batch\-infrastructure@.*$</packageUrl>
+        <cpe>cpe:/a:vmware:infrastructure</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2975
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.itextpdf\.tool/xfa\-.*$</packageUrl>
+        <cpe>cpe:/a:itextpdf:itext</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2974
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.itextpdf/xfa\-.*$</packageUrl>
+        <cpe>cpe:/a:itextpdf:itext</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -59,9 +230,9 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
-        FP per #2499
+        FP per #2499 and #2600
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.kotlinx/kotlinx\-coroutines\-core@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.kotlinx/kotlinx\-coroutines\-.*$</packageUrl>
         <cpe>cpe:/a:jetbrains:kotlin</cpe>
     </suppress>
     <suppress base="true">
@@ -195,6 +366,12 @@
             41. <cpe>cpe:/a:security-framework_project:security-framework</cpe> is a rust library
             42. <cpe>cpe:/a:next:next</cpe> is NeXT system.
             43. <cpe>cpe:/a:property_pro:property_pro</cpe> is classic ASP
+            44. <cve>CVE-2020-10663</cve> is a ruby vulnerability
+            45. Facebook is not a dependency
+            46. gitlab is not a depenency #2567 and is built using ruby
+            47. DeleGate is a C-language application #2435
+            48. thread_project - etherium token (https://nvd.nist.gov/vuln/detail/CVE-2018-13752) #1718
+            49. data_tools is a python library #1667
         ]]></notes>
         <filePath regex="true">.*(\.(dll|jar|ear|war|pom|nupkg|nuspec|aar)|pom\.xml|package.json|packages.config)$</filePath>
         <cpe>cpe:/a:sandbox:sandbox</cpe>
@@ -243,6 +420,12 @@
         <cpe>cpe:/a:security-framework_project:security-framework</cpe>
         <cpe>cpe:/a:next:next</cpe>
         <cpe>cpe:/a:property_pro:property_pro</cpe>
+        <cve>CVE-2020-10663</cve>
+        <cpe>cpe:/a:facebook:facebook</cpe>
+        <cpe>cpe:/a:gitlab:gitlab</cpe>
+        <cpe>cpe:/a:delegate:delegate</cpe>
+        <cpe>cpe:/a:thread_project:thread</cpe>
+        <cpe>cpe:/a:data_tools_project:data_tools</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -282,6 +465,77 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        Suppresses false positives per #2511
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.vaadin/vaadin\-sass\-compiler@.*$</packageUrl>
+        <cpe>cpe:/a:compile-sass_project:compile-sass</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2512
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.poi/ooxml\-schemas@.*$</packageUrl>
+        <cpe>cpe:/a:apache:poi</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2549
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.jboss\.eap/wildfly\-client\-properties@.*$</packageUrl>
+        <cpe>cpe:/a:redhat:wildfly</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives
+        ]]></notes>
+        <packageUrl regex="true">^pkg:npm/rc@.*$</packageUrl>
+        <cpe>cpe:/a:rc_project:rc</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2820
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/(microsoft\.)?jQuery[\.-].*$</packageUrl>
+        <cpe>cpe:/a:jquery:jquery</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        file name: System.Security.Cryptography.OpenSsl.dll
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/System\.Security\.Cryptography\.OpenSsl@.*$</packageUrl>
+        <cpe>cpe:/a:openssl:openssl</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        file name: Microsoft.Bcl.AsyncInterfaces.dll
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.Bcl\.AsyncInterfaces@.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:.net_core</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2819
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.DiaSymReader\.Native\.arm@.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:visual_studio</cpe>
+        <cpe>cpe:/a:microsoft:visual_studio_2017</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2819
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.DiaSymReader\.Native@.*$</packageUrl>
+        <cpe>cpe:/a:dia:dia</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per #2882
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.quarkus/quarkus\-mutiny@.*$</packageUrl>
+        <cpe>cpe:/a:mutiny:mutiny</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         Suppresses false positives per #1396.
         ]]></notes>
         <gav regex="true">^org\.mitre:openid-connect-client:.*$</gav>
@@ -293,6 +547,13 @@
         ]]></notes>
         <gav regex="true">^de\.siegmar:logback-gelf:.*$</gav>
         <cpe>cpe:/a:logback:logback</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive per #2628
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.prometheus\.jmx/.*$</packageUrl>
+        <cve>CVE-2019-3826</cve>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -314,6 +575,14 @@
         ]]></notes>
         <gav regex="true">^org\.springframework\.boot:spring-boot:.*$</gav>
         <cpe>cpe:/a:springsource:spring_framework</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+            FP per #1665
+            ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-rsa@.*$</packageUrl>
+        <cpe>cpe:/a:pivotal:spring_security_oauth</cpe>
+        <cpe>cpe:/a:pivotal_software:spring_security</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -410,10 +679,146 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #2627
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.minio/minio@.*$</packageUrl>
+        <cve>CVE-2018-1000538</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2627
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.minio/minio@.*$</packageUrl>
+        <cve>CVE-2020-11012</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         Suppresses false positives per issue #1587
         ]]></notes>
         <gav regex="true">^org\.apache\.felix:org\.apache\.felix\.configadmin:.*$</gav>
         <cpe>cpe:/a:cm_project:cm</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2859
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.atlassian\.httpclient/atlassian\-httpclient\-library@.*$</packageUrl>
+        <cpe>cpe:/a:apache:httpclient</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2835
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.scanbot/scanbot\-sdk\-imageprocessing@.*$</packageUrl>
+        <cpe>cpe:/a:image_processing_software:image_processing_software</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2794
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/co\.elastic\.apm/apm\-grails\-plugin@.*$</packageUrl>
+        <cpe>cpe:/a:grails:grails</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2673 and #2672
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.geronimo/geronimo\-(health|metrics(-common)?)@.*$</packageUrl>
+        <cpe>cpe:/a:apache:geronimo</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2652
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/net\.sf\.jasperreports/jasperreports@.*$</packageUrl>
+        <cve>CVE-2020-9410</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2756
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/co\.elastic\.logging/logback\-ecs\-encoder@.*$</packageUrl>
+        <cpe>cpe:/a:logback:logback</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2768
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.evolvis\.tartools/rfc822@.*$</packageUrl>
+        <cpe>cpe:/a:man-cgi_project:man-cgi</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2711
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.typesafe\.play/shaded\-oauth@.*$</packageUrl>
+        <cpe>cpe:/a:playframework:play_framework</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2703
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.slf4j/log4j\-over\-slf4j@.*$</packageUrl>
+        <cpe>cpe:/a:apache:log4j</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2768
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+        <cve>CVE-2020-8022</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2683
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.typesafe\.play/cachecontrol_2\.13@.*$</packageUrl>
+        <cpe>cpe:/a:playframework:play_framework</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1664
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-servicenow(\-starter)?@.*$</packageUrl>
+        <cpe>cpe:/a:apache:camel</cpe>
+        <cpe>cpe:/a:servicenow:servicenow</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1664
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/json\-simple\-ordered@.*$</packageUrl>
+        <cpe>cpe:/a:apache:camel</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2678
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-cxf@.*$</packageUrl>
+        <cpe>cpe:/a:apache:cxf</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2678
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-cxf\-transport@.*$</packageUrl>
+        <cpe>cpe:/a:apache:cxf</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2859
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.atlassian\.jira/jira\-rest\-java\-client\-api@.*$</packageUrl>
+        <cpe>cpe:/a:atlassian:jira</cpe>
+        <cpe>cpe:/a:atlassian:jira_core</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2859
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.atlassian\.jira/jira\-rest\-java\-client\-core@.*$</packageUrl>
+        <cpe>cpe:/a:atlassian:jira</cpe>
+        <cpe>cpe:/a:atlassian:jira_core</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -471,6 +876,43 @@
         <gav regex="true">^org\.springframework\.security\.oauth\.boot:spring-security-oauth2-autoconfigure:.*$</gav>
         <cpe>cpe:/a:pivotal_software:spring_security_oauth</cpe>
         <cpe>cpe:/a:pivotal:spring_security_oauth</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per issue #2866
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.nimbusds/oauth2\-oidc\-sdk@.*$</packageUrl>
+        <cpe>cpe:/a:openid:openid</cpe>
+        <cpe>cpe:/a:openid:openid_connect</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses fp identified while testing #2686
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(nuget|generic)/Azure\.Core(_sdk)?@.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:.net_core</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per issue #2865
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.microsoft\.azure/msal4j@.*$</packageUrl>
+        <cpe>cpe:/a:http_authentication_library_project:http_authentication_library</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per issue #2896
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.microsoft\.azure/msal4j@.*$</packageUrl>
+        <cpe>cpe:/a:http_authentication_library_project:http_authentication_library</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        Suppresses false positives per issue #2896
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.nimbusds/oauth2\-oidc\-sdk@.*$</packageUrl>
+        <cpe>cpe:/a:openid:openid</cpe>
+        <cpe>cpe:/a:openid:openid_connect</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -588,6 +1030,13 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        False positives per issue #2821
+        ]]></notes>
+        <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.VisualStudio\.Web\.CodeGenerat.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:visual_studio_code</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         FP per #1968
         ]]></notes>
         <packageUrl regex="true">^pkg:(generic|nuget)/Microsoft\.Win32\.Registry\.AccessControl@.*$</packageUrl>
@@ -642,6 +1091,24 @@
         ]]></notes>
         <gav regex="true">^org\.apache\.httpcomponents:httpmime:.*$</gav>
         <cpe>cpe:/a:apache:httpclient</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2553
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty\.alpn/alpn\-api@.*$</packageUrl>
+        <cpe>cpe:/a:jetty:jetty</cpe>
+        <cpe>cpe:/a:eclipse:jetty</cpe>
+        <cpe>cpe:/a:mortbay_jetty:jetty</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2554
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty\-reactive\-httpclient@.*$</packageUrl>
+        <cpe>cpe:/a:jetty:jetty</cpe>
+        <cpe>cpe:/a:eclipse:jetty</cpe>
+        <cpe>cpe:/a:mortbay_jetty:jetty</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -700,6 +1167,13 @@
         Hazelcast-Kubernetes is not Hazelcast (see #2330)
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.hazelcast/hazelcast\-kubernetes@.*$</packageUrl>
+        <cpe>cpe:/a:hazelcast:hazelcast</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+       FP per #2571
+       ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.hazelcast/hazelcast\-client\-protocol@.*$</packageUrl>
         <cpe>cpe:/a:hazelcast:hazelcast</cpe>
     </suppress>
     <!--suppress base="true">
@@ -944,6 +1418,22 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #2646
+        ]]> </notes>
+        <packageUrl regex="true">^pkg:maven/dev\.miku/r2dbc\-mysql@.*$</packageUrl>
+        <cpe>cpe:/a:mysql:mysql</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2649
+        ]]> </notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat/tomcat\-jni@.*$</packageUrl>
+        <cpe>cpe:/a:apache:tomcat</cpe>
+        <cpe>cpe:/a:apache_tomcat:apache_tomcat</cpe>
+        <cpe>cpe:/a:apache_software_foundation:tomcat</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         This suppresses false positives identified on tomcat-embed-el.
         ]]></notes>
         <gav regex="true">org\.apache\.tomcat\.embed:tomcat-embed-el:.*</gav>
@@ -1153,6 +1643,34 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #1659
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.ops4j\.pax\..*$</packageUrl>
+        <cpe>cpe:/a:pax_project:pax</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1657
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.drizzle\.jdbc/drizzle\-jdbc@.*$</packageUrl>
+        <cpe>cpe:/a:mysql:mysql</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1657
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.kerby/mysql\-backend@.*$</packageUrl>
+        <cpe>cpe:/a:mysql:mysql</cpe>
+    </suppress>  
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1657
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.alibaba/druid@.*$</packageUrl>
+        <cpe>cpe:/a:alibaba:alibaba</cpe>
+    </suppress>  
+    <suppress base="true">
+        <notes><![CDATA[
         drop wizard false positives
         ]]></notes>
         <gav regex="true">io\.dropwizard\.metrics:metrics-httpclient:.*</gav>
@@ -1265,6 +1783,13 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+       FP per #2908
+       ]]></notes>
+        <packageUrl regex="true">^pkg:maven/jakarta\.json/jakarta\.json\-api@.*$</packageUrl>
+        <cpe>cpe:/a:processing:processing</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         https://github.com/ojai/ojai is not mapr
         ]]></notes>
         <gav regex="true">^org\.ojai:ojai:.*$</gav>
@@ -1322,6 +1847,20 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #1755
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.micrometer/micrometer\-spring\-legacy@.*$</packageUrl>
+        <cpe>cpe:/a:pivotal_software:spring_framework</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1755
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.squareup\.retrofit2?/(?!retrofit).*$</packageUrl>
+        <cpe>cpe:/a:squareup:retrofit</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         see https://github.com/jeremylong/DependencyCheck/issues/1927
         ]]></notes>
         <gav regex="true">^io\.prometheus:simpleclient_common:.*$</gav>
@@ -1354,6 +1893,7 @@
         ]]></notes>
         <gav regex="true">^org\.glassfish\.grizzly:grizzly-http-client:.*$</gav>
         <cpe>cpe:/a:async-http-client_project:async-http-client</cpe>
+        <cpe>cpe:/a:asynchttpclient_project:async-http-client</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -1422,8 +1962,51 @@
         <notes><![CDATA[
         ActiveMQ false positives.
         ]]></notes>
-        <gav regex="true">org\.apache\.activemq:activemq-pool.*</gav>
+        <gav regex="true">org\.apache\.activemq:activemq(-jms)?-pool.*</gav>
         <cpe>cpe:/a:apache:activemq</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1681
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.activemq/activemq-(openwire-legacy|spring)@.*$</packageUrl>
+        <cpe>cpe:/a:apache:activemq</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1681
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.activemq/activemq\-client@.*$</packageUrl>
+        <cve>CVE-2015-5182</cve>
+        <cve>CVE-2015-5183</cve>
+        <cve>CVE-2015-5184</cve>
+        <cve>CVE-2019-0222</cve>
+        <cve>CVE-2020-13920</cve>
+        <cve>CVE-2020-1941</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2483
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.activemq/activemq\-all@.*$</packageUrl>
+        <cve>CVE-2015-5182</cve>
+        <cve>CVE-2015-5183</cve>
+        <cve>CVE-2015-5184</cve>
+        <cve>CVE-2019-0222</cve>
+        <cve>CVE-2020-13920</cve>
+        <cve>CVE-2020-1941</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2483
+        ]]></notes>
+        <filePath regex="true">.*activemq-all-5.15.11.jar/META-INF/maven.*/pom.xml</filePath>
+        <cve>CVE-2015-5182</cve>
+        <cve>CVE-2015-5183</cve>
+        <cve>CVE-2015-5184</cve>
+        <cve>CVE-2019-0222</cve>
+        <cve>CVE-2020-13920</cve>
+        <cve>CVE-2020-1941</cve>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -1438,6 +2021,13 @@
         ]]></notes>
         <packageUrl regex="true">.*(?!gradle).*</packageUrl>
         <cpe>cpe:/a:gradle:gradle</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #1740
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.integration/(?!spring\-integration\-(ws|xml)).*$</packageUrl>
+        <cve>CVE-2019-3772</cve>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -1600,10 +2190,24 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        False positives per issue #1720
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-starter\-batch@.*$</packageUrl>
+        <cpe>cpe:/a:pivotal_software:spring_batch</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         False positives per issue #642
         ]]></notes>
         <gav regex="true">^org\.springframework:spring-context:.*$</gav>
         <cpe>cpe:/a:context_project:context</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positives per issue #2873
+        ]]></notes>
+        <packageUrl regex="true">^pkg:npm/faye\-websocket@.*$</packageUrl>
+        <cpe>cpe:/a:faye_project:faye</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -1940,6 +2544,7 @@
         ]]></notes>
         <gav regex="true">^org\.asynchttpclient:async-http-client-netty-utils:.*$</gav>
         <cpe>cpe:/a:async-http-client_project:async-http-client</cpe>
+        <cpe>cpe:/a:asynchttpclient_project:async-http-client</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -2043,6 +2648,13 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #2651
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.vaadin/vaadin[^@]+testbench@.*$</packageUrl>
+        <cpe>cpe:/a:vaadin:vaadin</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         FP per #2191
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.vaadin\.(addon|external).*$</packageUrl>
@@ -2052,7 +2664,7 @@
         <notes><![CDATA[
         FP per #2191
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.vaadin/.*(flow|theme|mixin|style|widget).*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/com\.vaadin/.*(sass|flow|theme|mixin|style|widget).*$</packageUrl>
         <cpe>cpe:/a:vaadin:vaadin</cpe>
     </suppress>
     <suppress base="true">
@@ -2083,6 +2695,7 @@
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.softwaremill\.sttp.*$</packageUrl>
         <cpe>cpe:/a:async-http-client_project:async-http-client</cpe>
+        <cpe>cpe:/a:asynchttpclient_project:async-http-client</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -2107,9 +2720,16 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
-        False positive per issue #1259
+        Fp per #2995
         ]]></notes>
-        <gav regex="true">^com\.google\.api\.grpc:proto-google-common-protos:.*$</gav>
+        <packageUrl regex="true">^pkg:maven/io\.opencensus/opencensus\-contrib\-grpc\-util@.*$</packageUrl>
+        <cpe>cpe:/a:grpc:grpc</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive per issue #1259 and #2991
+        ]]></notes>
+        <gav regex="true">^com\.google\.api\.grpc:proto-.*$</gav>
         <cpe>cpe:/a:grpc:grpc</cpe>
     </suppress>
     <suppress base="true">
@@ -2118,6 +2738,13 @@
         ]]></notes>
         <gav regex="true">^org\.apache\.chemistry\.opencmis:chemistry-opencmis.*$</gav>
         <cpe>cpe:/a:apache:apache_http_server</cpe>
+        <cpe>cpe:/a:apache:http_server</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per issue #1654
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.directory\.server/apacheds.*$</packageUrl>
         <cpe>cpe:/a:apache:http_server</cpe>
     </suppress>
     <suppress base="true">
@@ -2210,6 +2837,13 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        FP per #1652
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.aries\.transaction/org\.apache\.aries\.transaction\.manager@.*$</packageUrl>
+        <cpe>cpe:/a:apache:geronimo</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         general FP cleanup
         ]]></notes>
         <gav regex="true">^org\.eclipse\.jetty\.orbit:javax\.annotation:.*$</gav>
@@ -2240,10 +2874,38 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+        False positive per #2912
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.linguafranca\.pwdb/database@.*$</packageUrl>
+        <cpe>cpe:/a:keepass:keepass</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive per #2912
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.linguafranca\.pwdb/KeePass.*$</packageUrl>
+        <cpe>cpe:/a:keepass:keepass</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive per #2907
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/javax\.enterprise/cdi\-api@.*$</packageUrl>
+        <cve>CVE-2014-8122</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
         FP per #2248
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.zookeeper/zookeeper@.*$</packageUrl>
         <cpe>cpe:/a:apache:hadoop</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2650
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.sonatype\.nexus\.plugins/nexus\-restore\-helm@.*$</packageUrl>
+        <cpe>cpe:/a:sonatype:nexus</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -3151,9 +3813,11 @@
     <suppress base="true">
         <notes><![CDATA[
         FP per issue #999 - instead of suppressing the whole thing, we will just
-            suppress specific CVE that are for the server
+            suppress specific CVE that are for the server. Added CVEs per #2863.
         ]]></notes>
         <gav regex="true">^org\.mariadb\.jdbc:mariadb-java-client:.*$</gav>
+        <cve>CVE-2017-15365</cve>
+        <cve>CVE-2017-15945</cve>
         <cve>CVE-2016-5440</cve>
         <cve>CVE-2016-5584</cve>
         <cve>CVE-2014-6500</cve>
@@ -3393,7 +4057,7 @@
         <gav regex="true">^io\.gitlab\.arturbosch\.detekt:detekt-.+:.*$</gav>
         <cpe>cpe:/a:gitlab:gitlab</cpe>
     </suppress>
-    <suppress>
+    <suppress base="true">
         <notes><![CDATA[
         false positive per #2721 on org.bouncycastle:bcpg-jdk15on
         caused by cpe:/a:openpgp:openpgp, cpe:/a:pgp:openpgp and cpe:/a:pgp:pgp
@@ -3403,7 +4067,7 @@
         <cpe>cpe:/a:pgp:openpgp</cpe>
         <cpe>cpe:/a:pgp:pgp</cpe>
     </suppress>
-    <suppress>
+    <suppress base="true">
         <notes><![CDATA[
           false positive per #2721 on name.neuhalfen.projects.crypto.bouncycastle.openpgp:bouncy-gpg
           caused by cpe:/a:gpg-pgp_project::gpg-pgp and cpe:/a:openpgp:openpgp
@@ -3411,5 +4075,29 @@
         <gav regex="true">^name\.neuhalfen\.projects\.crypto\.bouncycastle\.openpgp:bouncy-gpg:.*$</gav>
         <cpe>cpe:/a:gpg-pgp_project::gpg-pgp</cpe>
         <cpe>cpe:/a:openpgp:openpgp</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive per  #1749
+        JCraft's agentproxy is a proxy to ssh-agent and Pageant, not the pure-Java SSH2 implementation Jsch
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.jcraft/jsch\.agentproxy.*$</packageUrl>
+        <cpe>cpe:/a:jcraft:jsch</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+          false positive per #2977 on org.infinispan.protostream:protostream
+          ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.infinispan\.protostream/protostream@.*$</packageUrl>
+        <cpe>cpe:/a:infinispan:infinispan</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        false positive per #3026 on io.hawtio.hawtio-wildfly
+       ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.hawt/hawtio\-wildfly@.*$</packageUrl>
+        <cpe>cpe:/a:hawt:hawtio</cpe>
+        <cpe>cpe:/a:hawt.io:hawtio</cpe>
+        <cpe>cpe:/a:redhat:wildfly</cpe>
     </suppress>
 </suppressions>
