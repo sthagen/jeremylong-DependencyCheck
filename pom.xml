@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>6.0.4-SNAPSHOT</version>
+    <version>6.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -94,7 +94,7 @@ Copyright (c) 2012 - Jeremy Long
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>
         <url>https://github.com/jeremylong/DependencyCheck</url>
         <developerConnection>scm:git:https://github.com/jeremylong/DependencyCheck.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v6.0.4</tag>
     </scm>
     <issueManagement>
         <system>github</system>
@@ -177,7 +177,7 @@ Copyright (c) 2012 - Jeremy Long
         <com.google.guava.version>30.1-jre</com.google.guava.version>
         
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
-        <surefireArgLine/>
+        <surefireArgLine />
         
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -277,6 +277,11 @@ Copyright (c) 2012 - Jeremy Long
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.8</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -695,7 +700,7 @@ Copyright (c) 2012 - Jeremy Long
                             <target name="copy xsd to site">
                                 <copy todir="target/site/">
                                     <fileset dir="core/src/main/resources/schema/">
-                                        <include name="**/*.xsd"/>
+                                        <include name="**/*.xsd" />
                                     </fileset>
                                 </copy>
                             </target>
@@ -709,6 +714,18 @@ Copyright (c) 2012 - Jeremy Long
                 <configuration>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <arguments>-Dmaven.javadoc.skip=true -DskipTests -DskipITs</arguments>
+                    <updateWorkingCopyVersions>false</updateWorkingCopyVersions>
+                    <pushChanges>false</pushChanges>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusurl>https://oss.sonatype.org/</nexusurl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
@@ -1201,17 +1218,6 @@ Copyright (c) 2012 - Jeremy Long
                                 <arg>--pinentry-mode</arg>
                                 <arg>loopback</arg>
                             </gpgArguments>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusurl>https://oss.sonatype.org/</nexusurl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>
