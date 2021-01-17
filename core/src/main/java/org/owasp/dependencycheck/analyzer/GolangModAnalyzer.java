@@ -205,7 +205,7 @@ public class GolangModAnalyzer extends AbstractFileTypeAnalyzer {
     }
 
     /**
-     * Launches `go list -json -m readonly` in the given folder.
+     * Launches `go list -json -m readonly all` in the given folder.
      *
      * @param folder the working folder
      * @return a reference to the launched process
@@ -221,7 +221,9 @@ public class GolangModAnalyzer extends AbstractFileTypeAnalyzer {
         args.add("list");
         args.add("-json");
         args.add("-m");
+        args.add("-mod");
         args.add("readonly");
+        args.add("all");
 
         final ProcessBuilder builder = new ProcessBuilder(args);
         builder.directory(folder);
