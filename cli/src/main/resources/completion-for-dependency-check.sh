@@ -48,6 +48,7 @@ _odc_completions()
             --disableJar
             --disableMixAudit
             --disableMSBuild
+            --disableYarnAudit
             --disableNodeAudit
             --disableNodeAuditCache
             --disableNodeJS
@@ -123,7 +124,7 @@ _odc_completions()
             return 0
             ;;
         -f|--format)
-            COMPREPLY=( $(compgen -W "HTML XML CSV JSON JUNIT ALL" ${cur}) )
+            COMPREPLY=( $(compgen -W "HTML XML CSV JSON JUNIT SARIF ALL" ${cur}) )
             return 0
             ;;
     esac

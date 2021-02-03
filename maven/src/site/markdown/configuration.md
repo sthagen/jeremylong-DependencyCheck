@@ -16,8 +16,8 @@ Property                    | Description                        | Default Value
 ----------------------------|------------------------------------|------------------
 autoUpdate                  | Sets whether auto-updating of the NVD CVE/CPE data is enabled. It is not recommended that this be turned to false. | true
 cveValidForHours            | Sets the number of hours to wait before checking for new updates from the NVD.                                     | 4
-format                      | The report format to be generated (HTML, XML, CSV, JSON, JUNIT, ALL). This configuration is ignored if `formats` is defined. This configuration option has no affect if using this within the Site plugin unless the externalReport is set to true. | HTML
-formats                     | A list of report formats to be generated (HTML, XML, CSV, JSON, JUNIT, ALL). This configuration overrides the value from `format`. This configuration option has no affect if using this within the Site plugin unless the externalReport is set to true. | &nbsp;
+format                      | The report format to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL). This configuration is ignored if `formats` is defined. This configuration option has no affect if using this within the Site plugin unless the externalReport is set to true. | HTML
+formats                     | A list of report formats to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL). This configuration overrides the value from `format`. This configuration option has no affect if using this within the Site plugin unless the externalReport is set to true. | &nbsp;
 junitFailOnCVSS             | If using the JUNIT report format the junitFailOnCVSS sets the CVSS score threshold that is considered a failure.   | 0
 prettyPrint                 | Whether the XML and JSON formatted reports should be pretty printed.                                               | false
 failBuildOnCVSS             | Specifies if the build should be failed if a CVSS score equal to or above a specified level is identified. The default is 11 which means since the CVSS scores are 0-10, by default the build will never fail. | 11
@@ -80,6 +80,7 @@ autoconfAnalyzerEnabled             | Sets whether the [experimental](../analyze
 pipAnalyzerEnabled                  | Sets whether the [experimental](../analyzers/index.html) pip Analyzer should be used.                                                               | true
 pipfileAnalyzerEnabled              | Sets whether the [experimental](../analyzers/index.html) Pipfile Analyzer should be used.                                                           | true
 composerAnalyzerEnabled             | Sets whether the [experimental](../analyzers/index.html) PHP Composer Lock File Analyzer should be used.                                            | true
+yarnAuditAnalyzerEnabled            | Sets whether the Yarn Audit Analyzer should be used. This analyzer requires yarn and an internet connection.  Use `nodeAuditSkipDevDependencies` to skip dev dependencies. | true
 nodeAnalyzerEnabled                 | Sets whether the [retired](../analyzers/index.html) Node.js Analyzer should be used.                                                                | true
 nodeAuditAnalyzerEnabled            | Sets whether the Node Audit Analyzer should be used. This analyzer requires an internet connection.                                                 | true
 nodeAuditAnalyzerUseCache           | Sets whether the Node Audit Analyzer will cache results. Cached results expire after 24 hours.                                                      | true
@@ -94,6 +95,7 @@ bundleAuditAnalyzerEnabled          | Sets whether the [experimental](../analyze
 bundleAuditPath                     | Sets the path to the bundle audit executable; only used if bundle audit analyzer is enabled and experimental analyzers are enabled.                 | &nbsp;
 swiftPackageManagerAnalyzerEnabled  | Sets whether the [experimental](../analyzers/index.html) Swift Package Analyzer should be used.                                                     | true
 assemblyAnalyzerEnabled             | Sets whether the .NET Assembly Analyzer should be used.                                                                                             | true
+msbuildAnalyzerEnabled              | Sets whether the MSBuild Analyzer should be used.                                                                                                   | true
 pathToCore                          | The path to dotnet core .NET assembly analysis on non-windows systems.                                                                              | &nbsp;
 golangDepEnabled                    | Sets whether or not the [experimental](../analyzers/index.html) Golang Dependency Analyzer should be used.                                          | true
 golangModEnabled                    | Sets whether or not the [experimental](../analyzers/index.html) Goland Module Analyzer should be used; requires `go` to be installed.               | true

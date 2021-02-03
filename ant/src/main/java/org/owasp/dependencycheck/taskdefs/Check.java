@@ -69,6 +69,10 @@ public class Check extends Update {
      */
     private Boolean nodeAuditAnalyzerEnabled;
     /**
+     * Whether or not the Yarn Audit Analyzer is enabled.
+     */
+    private Boolean yarnAuditAnalyzerEnabled;
+    /**
      * Sets whether or not the Node Audit Analyzer should use a local cache.
      */
     private Boolean nodeAuditAnalyzerUseCache;
@@ -205,12 +209,12 @@ public class Check extends Update {
      */
     private Boolean autoUpdate;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, ALL).
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, ALL).
      * Default is HTML.
      */
     private String reportFormat = "HTML";
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, ALL).
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, ALL).
      * Default is HTML.
      */
     private final List<String> reportFormats = new ArrayList<>();
@@ -267,6 +271,10 @@ public class Check extends Update {
      * Whether or not the .NET Assembly Analyzer is enabled.
      */
     private Boolean assemblyAnalyzerEnabled;
+    /**
+     * Whether or not the MS Build Assembly Analyzer is enabled.
+     */
+    private Boolean msbuildAnalyzerEnabled;
     /**
      * Whether the autoconf analyzer should be enabled.
      */
@@ -736,6 +744,23 @@ public class Check extends Update {
      *
      * @return true if the analyzer is enabled
      */
+    public Boolean isMSBuildAnalyzerEnabled() {
+        return msbuildAnalyzerEnabled;
+    }
+
+    /**
+     * Sets whether or not the analyzer is enabled.
+     *
+     * @param msbuildAnalyzerEnabled the value of the new setting
+     */
+    public void setMSBuildAnalyzerEnabled(Boolean msbuildAnalyzerEnabled) {
+        this.msbuildAnalyzerEnabled = msbuildAnalyzerEnabled;
+    }
+    /**
+     * Returns whether or not the analyzer is enabled.
+     *
+     * @return true if the analyzer is enabled
+     */
     public Boolean isNuspecAnalyzerEnabled() {
         return nuspecAnalyzerEnabled;
     }
@@ -988,6 +1013,25 @@ public class Check extends Update {
     public void setNodeAuditAnalyzerEnabled(Boolean nodeAuditAnalyzerEnabled) {
         this.nodeAuditAnalyzerEnabled = nodeAuditAnalyzerEnabled;
     }
+
+    /**
+     * Get the value of yarnAuditAnalyzerEnabled.
+     *
+     * @return the value of yarnAuditAnalyzerEnabled
+     */
+    public Boolean isYarnAuditAnalyzerEnabled() {
+        return yarnAuditAnalyzerEnabled;
+    }
+
+    /**
+     * Set the value of yarnAuditAnalyzerEnabled.
+     *
+     * @param yarnAuditAnalyzerEnabled new value of yarnAuditAnalyzerEnabled
+     */
+    public void setYarnAuditAnalyzerEnabled(Boolean yarnAuditAnalyzerEnabled) {
+        this.yarnAuditAnalyzerEnabled = yarnAuditAnalyzerEnabled;
+    }
+
 
     /**
      * Get the value of nodeAuditAnalyzerUseCache.
@@ -1780,6 +1824,7 @@ public class Check extends Update {
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, nodeAuditAnalyzerEnabled);
+        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_YARN_AUDIT_ENABLED, yarnAuditAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_USE_CACHE, nodeAuditAnalyzerUseCache);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_SKIPDEV, nodeAuditSkipDevDependencies);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_ENABLED, retireJsAnalyzerEnabled);
@@ -1799,6 +1844,7 @@ public class Check extends Update {
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NEXUS_ENABLED, nexusAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_ARCHIVE_ENABLED, archiveAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_ASSEMBLY_ENABLED, assemblyAnalyzerEnabled);
+        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_MSBUILD_PROJECT_ENABLED, msbuildAnalyzerEnabled);
         getSettings().setStringIfNotEmpty(Settings.KEYS.ANALYZER_NEXUS_URL, nexusUrl);
         getSettings().setStringIfNotEmpty(Settings.KEYS.ANALYZER_NEXUS_USER, nexusUser);
         getSettings().setStringIfNotEmpty(Settings.KEYS.ANALYZER_NEXUS_PASSWORD, nexusPassword);
@@ -1860,7 +1906,7 @@ public class Check extends Update {
 
     /**
      * An enumeration of supported report formats: "ALL", "HTML", "XML", "CSV",
-     * "JSON", "JUNIT", etc..
+     * "JSON", "JUNIT", "SARIF", etc..
      */
     public static class ReportFormats extends EnumeratedAttribute {
 
