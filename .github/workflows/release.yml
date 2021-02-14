@@ -28,19 +28,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Local Maven Cache
         id: maven-it-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: maven/target/local-repo
           key: mvn-it-repo
       - name: Check ODC Data Cache
         id: odc-data-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: core/target/data
           key: odc-data
@@ -136,13 +136,13 @@ jobs:
     steps:
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Docker ODC Cache
         id: docker-odc-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/OWASP-Dependency-Check
           key: docker-repo
@@ -193,10 +193,9 @@ jobs:
           release_name: Version ${{ env.VERSION }}
           body: |
             Changes in this Release
-            - Added SARIF file format per [#3081](https://github.com/jeremylong/DependencyCheck/issues/3081).
-            - Added support for Yarn per [#3063](https://github.com/jeremylong/DependencyCheck/pull/3063).
-            - False positive reduction and minor bug fixes.
-            - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/20?closed=1).
+            - Added missing configuration options for yarn and msbuild.
+            - Several bug fixes.
+            - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/21?closed=1).
           draft: false
           prerelease: false
       - name: Upload CLI
@@ -245,18 +244,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: release
       - name: Download Site
         uses: actions/download-artifact@v2
         with:
           name: archive-site
+          path: target/staging
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_MESSAGE: ${{ format('Publishing github pages for release version {0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
-          BRANCH: gh-pages
-          FOLDER: target/staging
-          CLEAN: true
+          branch: gh-pages
+          folder: target/staging
 
   bintray:
     name: Publish to bintray
