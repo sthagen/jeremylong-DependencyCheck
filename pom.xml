@@ -1143,7 +1143,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.sonatype.ossindex</groupId>
                 <artifactId>ossindex-service-client</artifactId>
-                <version>1.6.0</version>
+                <version>1.7.0</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.apache.httpcomponents</groupId>
@@ -1155,8 +1155,6 @@ Copyright (c) 2012 - Jeremy Long
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--Guava is not directly used - but ossindex uses a known vulnerable version
-                to support Java 7-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>

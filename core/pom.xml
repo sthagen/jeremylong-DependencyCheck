@@ -281,8 +281,6 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
             <groupId>org.sonatype.ossindex</groupId>
             <artifactId>ossindex-service-client</artifactId>
         </dependency>
-        <!--Guava is not directly used - but ossindex uses a known vulnerable version
-        to support Java 7-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -518,7 +516,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>42.2.18</version>
+                    <version>42.2.19</version>
                 </dependency>
             </dependencies>
             <build>
