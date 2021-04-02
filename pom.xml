@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>6.1.4-SNAPSHOT</version>
+    <version>6.1.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -94,7 +94,7 @@ Copyright (c) 2012 - Jeremy Long
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>
         <url>https://github.com/jeremylong/DependencyCheck</url>
         <developerConnection>scm:git:https://github.com/jeremylong/DependencyCheck.git</developerConnection>
-        <tag>v6.0.5</tag>
+        <tag>v6.1.5</tag>
     </scm>
     <issueManagement>
         <system>github</system>
@@ -739,17 +739,20 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                    <bottom>Copyright© 2012-19 Jeremy Long. All Rights Reserved.</bottom>
-                    <excludes>**/generated-sources/java/**/*.java</excludes>
-                </configuration>
                 <reportSets>
                     <reportSet>
                         <id>default</id>
                         <reports>
                             <report>javadoc</report>
                         </reports>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                            <bottom>Copyright© 2012-21 Jeremy Long. All Rights Reserved.</bottom>
+                            <sourceFileExcludes>
+                                <exclude>**/generated-sources/**/*.java</exclude>
+                            </sourceFileExcludes>
+                            <source>8</source>
+                        </configuration>
                     </reportSet>
                 </reportSets>
             </plugin>
@@ -1147,12 +1150,16 @@ Copyright (c) 2012 - Jeremy Long
                         <groupId>org.apache.httpcomponents</groupId>
                         <artifactId>httpcore</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>24.1.1-jre</version>
+                <version>30.1.1-jre</version>
             </dependency>
             <dependency>
                 <groupId>com.hankcs</groupId>
