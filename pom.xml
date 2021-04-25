@@ -125,7 +125,7 @@ Copyright (c) 2012 - Jeremy Long
         <github.global.server>github</github.global.server>
         
         <apache.lucene.version>8.8.2</apache.lucene.version>
-        <apache.ant.version>1.10.9</apache.ant.version>
+        <apache.ant.version>1.10.10</apache.ant.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <!-- Note that Maven will use classes from the distro, ignoring declared dependencies for Maven core... -->
@@ -140,7 +140,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <spotbugs.maven.plugin.version>4.2.2</spotbugs.maven.plugin.version>
+        <spotbugs.maven.plugin.version>4.2.3</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>2.4</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
 
@@ -204,7 +204,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.jsonschema2pojo</groupId>
                     <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                    <version>1.1.0</version>
+                    <version>1.1.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
