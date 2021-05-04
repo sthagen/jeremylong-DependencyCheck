@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>6.1.6-SNAPSHOT</version>
+    <version>6.1.7-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -94,7 +94,7 @@ Copyright (c) 2012 - Jeremy Long
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>
         <url>https://github.com/jeremylong/DependencyCheck</url>
         <developerConnection>scm:git:https://github.com/jeremylong/DependencyCheck.git</developerConnection>
-        <tag>v6.1.5</tag>
+        <tag>v6.1.6</tag>
     </scm>
     <issueManagement>
         <system>github</system>
@@ -104,15 +104,6 @@ Copyright (c) 2012 - Jeremy Long
         <system>travis-ci</system>
         <url>https://travis-ci.org/jeremylong/DependencyCheck</url>
     </ciManagement>
-    <mailingLists>
-        <mailingList>
-            <name>Dependency Check</name>
-            <subscribe>dependency-check+subscribe@googlegroups.com</subscribe>
-            <unsubscribe>dependency-check+unsubscribe@googlegroups.com</unsubscribe>
-            <post>dependency-check@googlegroups.com</post>
-            <archive>https://groups.google.com/forum/?fromgroups#!forum/dependency-check</archive>
-        </mailingList>
-    </mailingLists>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -137,7 +128,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
-        <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
         <spotbugs.maven.plugin.version>4.2.3</spotbugs.maven.plugin.version>
@@ -162,7 +153,7 @@ Copyright (c) 2012 - Jeremy Long
         <commons-compress.version>1.20</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.0.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.6.1</maven-plugin-annotations.version>
         <maven-reporting-api.version>3.0</maven-reporting-api.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
@@ -642,7 +633,7 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.8.0.2131</version>
+                <version>3.9.0.2155</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -784,7 +775,6 @@ Copyright (c) 2012 - Jeremy Long
                         <reports>
                             <report>summary</report>
                             <report>issue-management </report>
-                            <report>mailing-lists</report>
                             <report>modules</report>
                             <report>team</report>
                             <report>scm</report>
