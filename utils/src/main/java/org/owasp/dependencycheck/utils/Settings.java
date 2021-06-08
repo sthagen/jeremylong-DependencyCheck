@@ -347,10 +347,15 @@ public final class Settings {
          */
         public static final String ANALYZER_RETIREJS_REPO_VALID_FOR_HOURS = "analyzer.retirejs.repo.validforhours";
         /**
-         * The properties key for whether the composer lock file analyzer is
+         * The properties key for whether the PHP composer lock file analyzer is
          * enabled.
          */
         public static final String ANALYZER_COMPOSER_LOCK_ENABLED = "analyzer.composer.lock.enabled";
+        /**
+         * The properties key for whether the Perl CPAN file file analyzer is
+         * enabled.
+         */
+        public static final String ANALYZER_CPANFILE_ENABLED = "analyzer.cpanfile.enabled";
         /**
          * The properties key for whether the Python Distribution analyzer is
          * enabled.
@@ -487,6 +492,10 @@ public final class Settings {
          * The properties key for whether the Central analyzer is enabled.
          */
         public static final String ANALYZER_CENTRAL_ENABLED = "analyzer.central.enabled";
+        /**
+         * Key for the path to the local Maven repository.
+         */
+        public static final String MAVEN_LOCAL_REPO = "odc.maven.local.repo";
         /**
          * Key for the URL to obtain content from Maven Central.
          */

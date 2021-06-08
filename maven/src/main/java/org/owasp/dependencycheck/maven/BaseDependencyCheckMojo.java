@@ -105,6 +105,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
+//CSOFF: FileLength
 /**
  * @author Jeremy Long
  */
@@ -131,6 +132,10 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      * The configured settings.
      */
     private Settings settings = null;
+    /**
+     * The list of files that have been scanned.
+     */
+    private List<File> scannedFiles = new ArrayList<>();
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Maven bound parameters and components">
     /**
@@ -425,6 +430,11 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      */
     @Parameter(property = "composerAnalyzerEnabled")
     private Boolean composerAnalyzerEnabled;
+    /**
+     * Whether or not the Perl CPAN File Analyzer is enabled.
+     */
+    @Parameter(property = "cpanfileAnalyzerEnabled")
+    private Boolean cpanfileAnalyzerEnabled;
     /**
      * Sets whether or not the Node.js Analyzer should be used.
      */
@@ -1319,6 +1329,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
                 final List<Dependency> deps = engine.scan(artifactFile.getAbsoluteFile(),
                         createProjectReferenceName(project, dependencyNode));
                 if (deps != null) {
+                    scannedFiles.add(artifactFile);
                     Dependency d = null;
                     if (deps.size() == 1) {
                         d = deps.get(0);
@@ -1364,9 +1375,11 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
                         getLog().debug("Error reading pom " + artifactFile.getAbsoluteFile(), ex);
                     }
                 } else {
-                    final String msg = String.format("No analyzer could be found for '%s:%s' in project %s",
-                            dependencyNode.getArtifact().getId(), dependencyNode.getArtifact().getScope(), project.getName());
-                    getLog().warn(msg);
+                    if (!scannedFiles.contains(artifactFile)) {
+                        final String msg = String.format("No analyzer could be found or the artifact has been scanned twice for '%s:%s' in project %s",
+                                dependencyNode.getArtifact().getId(), dependencyNode.getArtifact().getScope(), project.getName());
+                        getLog().warn(msg);
+                    }
                 }
             } else {
                 final String msg = String.format("Unable to resolve '%s' in project %s",
@@ -1607,17 +1620,17 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     }
 
     Dependency newDependency(MavenProject prj) {
-      final File pom = new File(prj.getBasedir(), "pom.xml");
+        final File pom = new File(prj.getBasedir(), "pom.xml");
 
-      if (pom.isFile()) {
-          getLog().debug("Adding virtual dependency from pom.xml");
-          return new Dependency(pom, true);
-      } else if (prj.getFile().isFile()) {
-          getLog().debug("Adding virtual dependency from file");
-          return new Dependency(prj.getFile(), true);
-      } else {
-          return new Dependency(true);
-      }
+        if (pom.isFile()) {
+            getLog().debug("Adding virtual dependency from pom.xml");
+            return new Dependency(pom, true);
+        } else if (prj.getFile().isFile()) {
+            getLog().debug("Adding virtual dependency from file");
+            return new Dependency(prj.getFile(), true);
+        } else {
+            return new Dependency(true);
+        }
     }
 
     /**
@@ -1875,6 +1888,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
                 }
             }
         }
+        settings.setStringIfNotEmpty(Settings.KEYS.MAVEN_LOCAL_REPO, mavenSettings.getLocalRepository());
         settings.setBooleanIfNotNull(Settings.KEYS.AUTO_UPDATE, autoUpdate);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_EXPERIMENTAL_ENABLED, enableExperimental);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIRED_ENABLED, enableRetired);
@@ -1947,6 +1961,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIP_ENABLED, pipAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIPFILE_ENABLED, pipfileAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
+        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_CPANFILE_ENABLED, cpanfileAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, nodeAuditAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_USE_CACHE, nodeAuditAnalyzerUseCache);
@@ -2033,7 +2048,6 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         }
     }
 
-    //CSOFF: LineLength
     /**
      * Decrypts a password from the Maven settings if it needs to be decrypted.
      * If it's not encrypted the input password will be returned unchanged.
@@ -2044,7 +2058,6 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      * password
      */
     private String decryptPasswordFromSettings(String password) throws SecDispatcherException {
-
         //The following fix was copied from:
         //   https://github.com/bsorrentino/maven-confluence-plugin/blob/master/maven-confluence-reporting-plugin/src/main/java/org/bsc/maven/confluence/plugin/AbstractBaseConfluenceMojo.java
         //
@@ -2058,7 +2071,6 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
 
         return securityDispatcher.decrypt(password);
     }
-    //CSON: LineLength
 
     /**
      * Handles a SecDispatcherException that was thrown at an attempt to decrypt
@@ -2315,3 +2327,4 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
 
     //</editor-fold>
 }
+//CSON: FileLength
