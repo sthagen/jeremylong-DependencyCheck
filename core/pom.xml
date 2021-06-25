@@ -20,7 +20,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>6.2.1-SNAPSHOT</version>
+        <version>6.2.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-core</artifactId>
@@ -32,7 +32,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>
         <url>https://github.com/jeremylong/DependencyCheck/tree/master/core</url>
         <developerConnection>scm:git:git@github.com:jeremylong/DependencyCheck.git</developerConnection>
-        <tag>v6.2.0</tag>
+        <tag>v6.2.2</tag>
     </scm>
     <build>
         <resources>
@@ -463,7 +463,6 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
         <dependency>
             <groupId>org.eclipse.packager</groupId>
             <artifactId>packager-rpm</artifactId>
-            <version>0.17.0</version>
         </dependency>
     </dependencies>
     <profiles>
@@ -521,7 +520,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>42.2.20</version>
+                    <version>42.2.22</version>
                 </dependency>
             </dependencies>
             <build>

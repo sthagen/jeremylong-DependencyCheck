@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>6.2.1-SNAPSHOT</version>
+    <version>6.2.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -94,7 +94,7 @@ Copyright (c) 2012 - Jeremy Long
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>
         <url>https://github.com/jeremylong/DependencyCheck</url>
         <developerConnection>scm:git:https://github.com/jeremylong/DependencyCheck.git</developerConnection>
-        <tag>v6.2.0</tag>
+        <tag>v6.2.2</tag>
     </scm>
     <issueManagement>
         <system>github</system>
@@ -115,16 +115,16 @@ Copyright (c) 2012 - Jeremy Long
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.global.server>github</github.global.server>
         
-        <apache.lucene.version>8.8.2</apache.lucene.version>
+        <apache.lucene.version>8.9.0</apache.lucene.version>
         <apache.ant.version>1.10.10</apache.ant.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <slf4j.version>1.7.31</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <!-- Note that Maven will use classes from the distro, ignoring declared dependencies for Maven core... -->
         <maven.api.version>3.1.0</maven.api.version>
         <reporting.checkstyle-plugin.version>3.1.2</reporting.checkstyle-plugin.version>
         <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
@@ -139,7 +139,7 @@ Copyright (c) 2012 - Jeremy Long
 
         <com.h2database.version>1.4.199</com.h2database.version>
         <commons-cli.version>1.4</commons-cli.version>
-        <commons-io.version>2.9.0</commons-io.version>
+        <commons-io.version>2.10.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-text.version>1.9</commons-text.version>
         <commons-jcs-core.version>2.2.1</commons-jcs-core.version>
@@ -148,7 +148,7 @@ Copyright (c) 2012 - Jeremy Long
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <jackson.version>2.12.3</jackson.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>3.11.0</mockito-core.version>
+        <mockito-core.version>3.11.2</mockito-core.version>
         <jsoup.version>1.13.1</jsoup.version>
         <commons-compress.version>1.20</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.0.0</org.apache.maven.shared.file-management.version>
@@ -1193,6 +1193,21 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>com.hankcs</groupId>
                 <artifactId>aho-corasick-double-array-trie</artifactId>
                 <version>${aho-corasick-double-array-trie.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.packager</groupId>
+                <artifactId>packager-rpm</artifactId>
+                <version>0.17.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-jdk15on</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcpg-jdk15on</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
