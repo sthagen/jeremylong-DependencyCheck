@@ -2532,12 +2532,13 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
-        False positive per issue #700
+        False positive per issue #700 and #3579
         ]]></notes>
         <gav regex="true">^org\.springframework\.cloud:spring-cloud-.*$</gav>
         <cpe>cpe:/a:pivotal:spring_framework</cpe>
         <cpe>cpe:/a:pivotal_software:spring_framework</cpe>
         <cpe>cpe:/a:context_project:context</cpe>
+        <cpe>cpe:/a:pivotal_software:spring_batch</cpe>
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
@@ -4548,6 +4549,14 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
+     spring-cloud-deployer-* false CPE matches discovered in handling #3579
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.cloud/spring\-cloud\-deployer\-.*$</packageUrl>
+        <cpe>cpe:/a:vmware:spring_cloud_config</cpe>
+        <cpe>cpe:/a:vmware:spring_cloud_data_flow</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
             The sonar java analyzer is a separate project from the SonarQube server project #3086
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.sonarsource\.java/.*$</packageUrl>
@@ -4641,6 +4650,13 @@
         <packageUrl regex="true">^pkg:cpan/(Net%3A%3A)?Facebook.*$</packageUrl>
         <cve>CVE-2008-0660</cve>
         <cve>CVE-2014-6392</cve>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        False positive as per #3594
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.nimbusds/lang\-tag@.*$</packageUrl>
+        <cpe>cpe:/a:nim-lang:nim-lang</cpe>
     </suppress>
     <!-- end cpan support -->
 </suppressions>

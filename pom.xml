@@ -143,13 +143,13 @@ Copyright (c) 2012 - Jeremy Long
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-text.version>1.9</commons-text.version>
         <commons-jcs-core.version>2.2.1</commons-jcs-core.version>
-        <aho-corasick-double-array-trie.version>1.2.2</aho-corasick-double-array-trie.version>
+        <aho-corasick-double-array-trie.version>1.2.3</aho-corasick-double-array-trie.version>
         <junit.version>4.13.2</junit.version>
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <jackson.version>2.12.4</jackson.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>3.11.2</mockito-core.version>
-        <jsoup.version>1.14.1</jsoup.version>
+        <mockito-core.version>3.12.4</mockito-core.version>
+        <jsoup.version>1.14.2</jsoup.version>
         <commons-compress.version>1.21</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.0.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
@@ -990,7 +990,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency><!--upgrade transitive dependency due to reported vulns-->
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>3.4.0</version>
+                <version>3.4.1</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
