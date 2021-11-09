@@ -80,7 +80,7 @@ public class SuppressionHandler extends DefaultHandler {
      * The GAV element name.
      */
     public static final String GAV = "gav";
-        /**
+    /**
      * The Package URL element name.
      */
     public static final String PACKAGE_URL = "packageUrl";
@@ -104,6 +104,10 @@ public class SuppressionHandler extends DefaultHandler {
      * The current node text being extracted from the element.
      */
     private StringBuilder currentText;
+    /**
+     * The suppression rule filter.
+     */
+    private SuppressionRuleFilter filter;
 
     /**
      * Get the value of suppressionRules.
@@ -115,9 +119,20 @@ public class SuppressionHandler extends DefaultHandler {
     }
 
     /**
+     * Constructs a Suppression Handler.
+     *
+     * @param filter The suppression rule filter used when loading the
+     * suppression rules. This is used to differentiate vulnerability
+     * suppression rules from CPE suppression rules.
+     */
+    public SuppressionHandler(SuppressionRuleFilter filter) {
+        this.filter = filter;
+    }
+
+    /**
      * Handles the start element event.
      *
-     * @param uri the uri of the element being processed
+     * @param uri the URI of the element being processed
      * @param localName the local name of the element being processed
      * @param qName the qName of the element being processed
      * @param attributes the attributes of the element being processed
@@ -161,6 +176,8 @@ public class SuppressionHandler extends DefaultHandler {
                 case SUPPRESS:
                     if (rule.getUntil() != null && rule.getUntil().before(Calendar.getInstance())) {
                         LOGGER.info("Suppression is expired for rule: {}", rule);
+                    } else if (filter != null && filter.filter(rule)) {
+                        LOGGER.debug("Filtering {} for {}", rule.toString(), filter.getName());
                     } else {
                         suppressionRules.add(rule);
                     }

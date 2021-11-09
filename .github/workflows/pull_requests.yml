@@ -11,7 +11,7 @@ jobs:
     name: Build dependency-check
     runs-on: ubuntu-latest 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
       - name: Check Maven Cache
         id: maven-cache
         uses: actions/cache@v2.1.6
@@ -24,6 +24,9 @@ jobs:
         with:
           java-version: 8
           distribution: 'zulu'
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Build with Maven
         id: build
         run: |
@@ -40,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Check
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
       - name: Semgrep
         id: semgrep
         uses: returntocorp/semgrep-action@v1

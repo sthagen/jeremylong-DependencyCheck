@@ -18,7 +18,7 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
       - name: Check Maven Cache
         id: maven-cache
         uses: actions/cache@v2.1.6
@@ -46,6 +46,9 @@ jobs:
           server-id: ossrh
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_TOKEN }}
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Build Snapshot with Maven
         id: build-snapshot
         env:
@@ -117,7 +120,7 @@ jobs:
           path: ~/OWASP-Dependency-Check
           key: docker-repo
       - name: Checkout code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - name: Download release build
         uses: actions/download-artifact@v2
         with:
