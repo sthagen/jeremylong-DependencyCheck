@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>6.5.1-SNAPSHOT</version>
+    <version>6.5.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -117,13 +117,14 @@ Copyright (c) 2012 - Jeremy Long
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.global.server>github</github.global.server>
         
-        <apache.lucene.version>8.10.1</apache.lucene.version>
+        <apache.lucene.version>8.11.0</apache.lucene.version>
         <apache.ant.version>1.10.12</apache.ant.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <logback.version>1.2.6</logback.version>
+        <logback.version>1.2.8</logback.version>
         <!-- Note that Maven will use classes from the distro, ignoring declared dependencies for Maven core... -->
         <maven.api.version>3.1.0</maven.api.version>
         <reporting.checkstyle-plugin.version>3.1.2</reporting.checkstyle-plugin.version>
+        <reporting.checkstyle.tool.version>9.2</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
         <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
@@ -133,11 +134,12 @@ Copyright (c) 2012 - Jeremy Long
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <spotbugs.maven.plugin.version>4.4.2</spotbugs.maven.plugin.version>
+        <spotbugs.version>4.5.2</spotbugs.version>
+        <spotbugs.maven.plugin.version>4.5.0.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>2.4</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
 
-        <jetbrains.annotations.version>22.0.0</jetbrains.annotations.version>
+        <jetbrains.annotations.version>23.0.0</jetbrains.annotations.version>
 
         <com.h2database.version>1.4.199</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
@@ -150,12 +152,12 @@ Copyright (c) 2012 - Jeremy Long
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <jackson.version>2.13.0</jackson.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>4.0.0</mockito-core.version>
+        <mockito-core.version>4.1.0</mockito-core.version>
         <jsoup.version>1.14.3</jsoup.version>
         <commons-compress.version>1.21</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.0.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <maven-plugin-annotations.version>3.6.1</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.6.2</maven-plugin-annotations.version>
         <maven-reporting-api.version>3.0</maven-reporting-api.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
@@ -164,7 +166,7 @@ Copyright (c) 2012 - Jeremy Long
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <maven-artifact-transfer.version>0.13.1</maven-artifact-transfer.version>
         <groovy-all.version>2.4.21</groovy-all.version>
-        <gmavenplus-plugin.version>1.13.0</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>1.13.1</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.3</com.h3xstream.retirejs.core.version>
         
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
@@ -232,7 +234,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-artifact-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -315,6 +317,18 @@ Copyright (c) 2012 - Jeremy Long
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${reporting.checkstyle-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${reporting.checkstyle.tool.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -451,7 +465,7 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-artifact-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -675,7 +689,7 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.0.2155</version>
+                <version>3.9.1.2184</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -755,8 +769,9 @@ Copyright (c) 2012 - Jeremy Long
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
-                    <nexusurl>https://oss.sonatype.org/</nexusurl>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <stagingProgressTimeoutMinutes>120</stagingProgressTimeoutMinutes>
                 </configuration>
             </plugin>
             <plugin>
@@ -991,7 +1006,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-annotations</artifactId>
-                <version>${spotbugs.maven.plugin.version}</version>
+                <version>${spotbugs.version}</version>
                 <scope>compile</scope>
                 <optional>true</optional>
             </dependency>

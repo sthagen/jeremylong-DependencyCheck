@@ -29,19 +29,19 @@ jobs:
       - uses: actions/checkout@v2.4.0
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Local Maven Cache
         id: maven-it-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: maven/target/local-repo
           key: mvn-it-repo
       - name: Check ODC Data Cache
         id: odc-data-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: core/target/data
           key: odc-data
@@ -67,6 +67,7 @@ jobs:
           echo "VERSION=$VERSION"
       - name: Build Release with Maven
         id: build-release
+        timeout-minutes: 120
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
@@ -126,13 +127,13 @@ jobs:
     steps:
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Docker ODC Cache
         id: docker-odc-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/OWASP-Dependency-Check
           key: docker-repo
@@ -181,14 +182,10 @@ jobs:
           draft: false
           body: |
             Changes in this Release
-            - Updated build configuration to create [reproducible builds](https://reproducible-builds.org/).
-            - Updated automated release process to work with branch protection.
-            - Resolved several false positives in the Java ecosystem.
-            - Enabled the Swift Resolved analyzer per #3735
-            - Improved iOS support per #3168 and #3765
-            - Added the a new pnpm Analyzer
-            - Fixed issue with some npm and yarn analysis failing due to large audit output
-            - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/36?closed=1).          draft: false
+             - Updated the dependency-check-maven plugin to correctly support SNAPSHOT version when a classifier is specified (#3787).
+             - Improved the analysis of Swift package manager (package.resolved - see #3813).
+             - General code maintenance and false positive reductions.
+             - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/37?closed=1).
       - name: Upload CLI
         id: upload-release-cli
         uses: actions/upload-release-asset@v1.0.2
@@ -246,7 +243,7 @@ jobs:
         run: ls -R
         working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
           branch: gh-pages
           folder: target/staging
