@@ -20,7 +20,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>6.5.2-SNAPSHOT</version>
+        <version>6.5.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-core</artifactId>
@@ -213,8 +213,8 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
