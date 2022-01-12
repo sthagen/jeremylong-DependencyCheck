@@ -23,6 +23,7 @@ import com.github.packageurl.PackageURL.StandardTypes;
 import com.github.packageurl.PackageURLBuilder;
 import com.vdurmont.semver4j.Semver;
 import com.vdurmont.semver4j.Semver.SemverType;
+import com.vdurmont.semver4j.SemverException;
 import org.owasp.dependencycheck.Engine;
 import org.owasp.dependencycheck.data.nodeaudit.Advisory;
 import org.owasp.dependencycheck.data.nodeaudit.NodeAuditSearch;
@@ -55,6 +56,7 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.owasp.dependencycheck.analyzer.exception.AnalysisException;
 import org.owasp.dependencycheck.analyzer.exception.UnexpectedAnalysisException;
+import org.owasp.dependencycheck.data.nvd.ecosystem.Ecosystem;
 import org.owasp.dependencycheck.dependency.EvidenceType;
 import org.owasp.dependencycheck.dependency.naming.GenericIdentifier;
 import org.owasp.dependencycheck.dependency.naming.Identifier;
@@ -81,7 +83,7 @@ public abstract class AbstractNpmAnalyzer extends AbstractFileTypeAnalyzer {
      * A descriptor for the type of dependencies processed or added by this
      * analyzer.
      */
-    public static final String NPM_DEPENDENCY_ECOSYSTEM = "npm";
+    public static final String NPM_DEPENDENCY_ECOSYSTEM = Ecosystem.NODEJS;
     /**
      * The file name to scan.
      */
@@ -527,9 +529,13 @@ public abstract class AbstractNpmAnalyzer extends AbstractFileTypeAnalyzer {
             return availableVersions.iterator().next();
         }
         for (String v : availableVersions) {
-            final Semver version = new Semver(v, SemverType.NPM);
-            if (version.satisfies(versionRange)) {
-                return v;
+            try {
+                final Semver version = new Semver(v, SemverType.NPM);
+                if (version.satisfies(versionRange)) {
+                    return v;
+                }
+            } catch (SemverException ex) {
+                LOGGER.debug("invalid semver: " + v);
             }
         }
         return availableVersions.iterator().next();
