@@ -45,6 +45,9 @@ jobs:
         with:
           path: core/target/data
           key: odc-data
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
       - name: Set up JDK 1.8
         id: jdk-8
         uses: actions/setup-java@v2
@@ -54,7 +57,7 @@ jobs:
           server-id: ossrh
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_TOKEN }}
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v2.2.1
         with:
           version: 6.0.2
       - name: Configure Git user
@@ -94,6 +97,7 @@ jobs:
             **/target/*.pom
             ant/target/*.zip
             cli/target/*.zip
+            target/*.buildinfo
       - name: Archive Site
         id: archive-site
         uses: actions/upload-artifact@v2
@@ -181,12 +185,20 @@ jobs:
           prerelease: false
           draft: false
           body: |
-            Changes in this Release
-              - Performance improvements for some Maven projects (see #3923 and #3931).
-              - Fixed bug in npm version handling introduced in 6.5.2 (see #3956).
-              - Improved the node package analyzer to correctly report the origin of a dependency (see #3970).
-              - General code maintenance and false positive reductions.
-              - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/39?closed=1).
+            ### Breaking Changes
+             - The H2 database version has been upgraded.
+               - if you use the `dataDirectory` option you will need to run a purge after upgrading.
+             - Upgraded to dotnet core 6.0. If analyzing dotnet assemblies the system will need to have the dotnet core 6.0.x runtime available.
+
+            ### Changes
+             - The Sarif report format has been fixed and can now be imported into GitHub if desired (See #3993).
+             - Introduced IssueOps for False Positive reports to assist the team in evaluating FP reports.
+               - [Create New FP Report Issue](https://github.com/jeremylong/DependencyCheck/issues/new?assignees=&labels=FP+Report&template=false-positive-report.yml&title=%5BFP%5D%3A+).
+             - When analyzing Java projects ODC now includes data from the developers section. 
+               - This will likely cause false positives on things like Apache James, please report the FP and we will fix these quickly.
+             - General project maintenance, bug fixes, and false positive reductions.
+             - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/28?closed=1).
+
       - name: Upload CLI
         id: upload-release-cli
         uses: actions/upload-release-asset@v1.0.2
@@ -227,6 +239,16 @@ jobs:
           asset_path: ant/target/dependency-check-ant-${{env.VERSION}}-release.zip.asc
           asset_name: dependency-check-ant-${{env.VERSION}}-release.zip.asc
           asset_content_type: text/plain
+      - name: Upload buildinfo
+        id: upload-release-buildinfo
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/dependency-check-parent-${{env.VERSION}}.buildinfo
+          asset_name: dependency-check-parent-${{env.VERSION}}.buildinfo
+          asset_content_type: text/plain
 
   publish:
     name: Publish gh-pages
@@ -244,7 +266,7 @@ jobs:
         run: ls -R
         working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           folder: target/staging

@@ -130,8 +130,7 @@ public class DownloadTask implements Callable<Future<ProcessTask>> {
                 Thread.sleep(waitTime);
                 LOGGER.info("Download Started for NVD CVE - {}", nvdCveInfo.getId());
                 startDownload = System.currentTimeMillis();
-                //going from 2 to 4 to have 3 download attempts with easier info messages
-                final int downloadAttempts = 4;
+                final int downloadAttempts = 5;
                 for (int x = 2; x <= downloadAttempts && !attemptDownload(url1, x == downloadAttempts); x++) {
                     LOGGER.info("Download Attempt {} for NVD CVE - {}", x, nvdCveInfo.getId());
                     Thread.sleep(waitTime * (x / 2));
@@ -152,13 +151,11 @@ public class DownloadTask implements Callable<Future<ProcessTask>> {
             return val;
 
         } catch (Throwable ex) {
-            LOGGER.error("An exception occurred downloading NVD CVE - {}\nSome CVEs may not be reported. Reason: {}",
-                    nvdCveInfo.getId(), ex.getMessage());
-            LOGGER.debug("Download Task Failed", ex);
+            LOGGER.error("Error downloading NVD CVE - {} Reason: {}", nvdCveInfo.getId(), ex.getMessage());
+            throw ex;
         } finally {
             settings.cleanup(false);
         }
-        return null;
     }
 
     private boolean attemptDownload(final URL url1, boolean showLog) throws TooManyRequestsException, ResourceNotFoundException {

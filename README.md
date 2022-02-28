@@ -9,15 +9,15 @@ Dependency-Check is a Software Composition Analysis (SCA) tool that attempts to 
 
 Documentation and links to production binary releases can be found on the [github pages](http://jeremylong.github.io/DependencyCheck/). Additionally, more information about the architecture and ways to extend dependency-check can be found on the [wiki].
 
-6.0.0 Upgrade Notice
+7.0.0 Upgrade Notice
 --------------
-If upgrading to 6.0.0 or higher, there were breaking changes. If you get an error indicating you can't connect
+If upgrading to 7.0.0 or higher, there were breaking changes. If you get an error indicating you can't connect
 to the database you will need to run the purge command to remove the old database:
 - gradle: `./gradlew dependencyCheckPurge`
-- maven: `mvn org.owasp:dependency-check-maven:6.0.0:purge`
+- maven: `mvn org.owasp:dependency-check-maven:7.0.0:purge`
 - cli: `dependency-check.sh --purge`
 
-Homebrew users upgrading to dependency-check 6.0.0 will need to purge their old database.
+Homebrew users upgrading to dependency-check 7.0.0 will need to purge their old database.
 
 Current Releases
 -------------
@@ -93,7 +93,7 @@ For installation to pass, you must have the following components installed:
 * Maven: `mvn -version` 3.5.0 and higher
 
 Tests cases require:
-* dotnet core version 3.1
+* dotnet core version 6.0
 * Go: `go version` 1.12 and higher
 * Ruby [bundler-audit](https://github.com/rubysec/bundler-audit#install)
 * [Yarn](https://classic.yarnpkg.com/en/docs/install/)
@@ -235,7 +235,7 @@ Permission to modify and redistribute is granted under the terms of the Apache 2
 
 Dependency-Check makes use of several other open source libraries. Please see the [NOTICE.txt][notices] file for more information.
 
-Copyright (c) 2012-2021 Jeremy Long. All Rights Reserved.
+Copyright (c) 2012-2022 Jeremy Long. All Rights Reserved.
 
   [wiki]: https://github.com/jeremylong/DependencyCheck/wiki
   [notices]: https://github.com/jeremylong/DependencyCheck/blob/master/NOTICE.txt
