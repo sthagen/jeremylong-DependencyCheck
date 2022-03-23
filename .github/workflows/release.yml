@@ -26,22 +26,22 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Local Maven Cache
         id: maven-it-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: maven/target/local-repo
           key: mvn-it-repo
       - name: Check ODC Data Cache
         id: odc-data-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: core/target/data
           key: odc-data
@@ -131,18 +131,18 @@ jobs:
     steps:
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Docker ODC Cache
         id: docker-odc-cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/OWASP-Dependency-Check
           key: docker-repo
       - name: Checkout code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Download release build
         uses: actions/download-artifact@v2
         with:
@@ -164,7 +164,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Get version
         id: get-version
         run: |
@@ -185,19 +185,9 @@ jobs:
           prerelease: false
           draft: false
           body: |
-            ### Breaking Changes
-             - The H2 database version has been upgraded.
-               - if you use the `dataDirectory` option you will need to run a purge after upgrading.
-             - Upgraded to dotnet core 6.0. If analyzing dotnet assemblies the system will need to have the dotnet core 6.0.x runtime available.
-
             ### Changes
-             - The Sarif report format has been fixed and can now be imported into GitHub if desired (See #3993).
-             - Introduced IssueOps for False Positive reports to assist the team in evaluating FP reports.
-               - [Create New FP Report Issue](https://github.com/jeremylong/DependencyCheck/issues/new?assignees=&labels=FP+Report&template=false-positive-report.yml&title=%5BFP%5D%3A+).
-             - When analyzing Java projects ODC now includes data from the developers section. 
-               - This will likely cause false positives on things like Apache James, please report the FP and we will fix these quickly.
              - General project maintenance, bug fixes, and false positive reductions.
-             - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/28?closed=1).
+             - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/40?closed=1).
 
       - name: Upload CLI
         id: upload-release-cli
@@ -256,7 +246,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Download Site
         uses: actions/download-artifact@v2
         with:
