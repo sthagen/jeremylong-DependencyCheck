@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>7.0.2-SNAPSHOT</version>
+    <version>7.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -135,7 +135,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <spotbugs.version>4.6.0</spotbugs.version>
-        <spotbugs.maven.plugin.version>4.5.3.0</spotbugs.maven.plugin.version>
+        <spotbugs.maven.plugin.version>4.6.0.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
         <jetbrains.annotations.version>23.0.0</jetbrains.annotations.version>
@@ -148,7 +148,8 @@ Copyright (c) 2012 - Jeremy Long
         <aho-corasick-double-array-trie.version>1.2.3</aho-corasick-double-array-trie.version>
         <junit.version>4.13.2</junit.version>
         <hamcrest-core.version>2.2</hamcrest-core.version>
-        <jackson.version>2.13.2</jackson.version>
+        <jackson.version>2.13.2.1</jackson.version>
+        <jackson-afterburmer.version>2.13.2</jackson-afterburmer.version>
         <jmockit.version>1.49</jmockit.version>
         <mockito-core.version>4.4.0</mockito-core.version>
         <jsoup.version>1.14.3</jsoup.version>
@@ -356,7 +357,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>se.bjurr.violations</groupId>
                     <artifactId>violation-comments-to-github-maven-plugin</artifactId>
-                    <version>1.65</version>
+                    <version>1.67</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -806,7 +807,20 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>se.bjurr.violations</groupId>
                 <artifactId>violation-comments-to-github-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>se.bjurr.violations</groupId>
+                        <artifactId>violation-comments-to-github-lib</artifactId>
+                        <version>1.83.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>se.bjurr.violations</groupId>
+                        <artifactId>violations-lib</artifactId>
+                        <version>1.148.3</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
+                    <inherited>false</inherited>
                     <repositoryOwner>jeremylong</repositoryOwner>
                     <repositoryName>DependencyCheck</repositoryName>
                     <gitHubUrl>https://api.github.com/</gitHubUrl>
@@ -827,6 +841,12 @@ Copyright (c) 2012 - Jeremy Long
                             <reporter>Checkstyle</reporter>
                             <folder>.</folder>
                             <pattern>.*/checkstyle-result.xml$</pattern>
+                        </violation>
+                        <violation>
+                            <parser>SARIF</parser>
+                            <reporter>Sarif</reporter>
+                            <folder>.</folder>
+                            <pattern>.*/semgrep.sarif$</pattern>
                         </violation>
                     </violations>
                 </configuration>
@@ -1082,7 +1102,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-afterburner</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-afterburmer.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -1201,7 +1221,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-compat</artifactId>
-                <version>3.0</version>
+                <version>3.8.5</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
