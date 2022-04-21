@@ -50,7 +50,7 @@ jobs:
           dotnet-version: '6.0.x'
       - name: Set up JDK 1.8
         id: jdk-8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: 8
           distribution: 'zulu'
@@ -78,7 +78,7 @@ jobs:
           mvn -s settings.xml -Prelease "-DnexusUrl=https://oss.sonatype.org/" clean package source:jar javadoc:jar gpg:sign deploy site site:stage -DreleaseTesting --no-transfer-progress --batch-mode -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} 
       - name: Archive code coverage results
         id: archive-coverage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
           retention-days: 7
@@ -87,7 +87,7 @@ jobs:
             **/target/jacoco-results/**/*.html
       - name: Archive Release
         id: archive-release
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: archive-release
           retention-days: 7
@@ -100,7 +100,7 @@ jobs:
             target/*.buildinfo
       - name: Archive Site
         id: archive-site
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: archive-site
           retention-days: 7
@@ -112,7 +112,7 @@ jobs:
     needs: build
     steps:
       - name: Download coverage reports
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: code-coverage-report
       - name: Run codacy-coverage-reporter
@@ -144,7 +144,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Download release build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: archive-release
       - name: Build Docker Image
@@ -171,7 +171,7 @@ jobs:
           VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Download release build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: archive-release
       - name: Create Release
@@ -248,7 +248,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Download Site
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: archive-site
           path: target/staging
@@ -256,7 +256,7 @@ jobs:
         run: ls -R
         working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
           branch: gh-pages
           folder: target/staging
