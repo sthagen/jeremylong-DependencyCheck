@@ -244,7 +244,7 @@ public class NodePackageAnalyzer extends AbstractNpmAnalyzer {
         final File nodeModules = new File(baseDir, "node_modules");
         if (!nodeModules.isDirectory()) {
             LOGGER.warn("Analyzing `{}` - however, the node_modules directory does not exist. "
-                    + "Please run `npm install` prior to running dependency-check", dependencyFile.toString());
+                    + "Please run `npm install` prior to running dependency-check", dependencyFile);
             return;
         }
 
@@ -297,10 +297,10 @@ public class NodePackageAnalyzer extends AbstractNpmAnalyzer {
 
         // this seems to produce crash sometimes, I need to tests
         // using a local node_module is not supported by npm audit, it crash
-        if (Objects.nonNull(version) && version.startsWith("file:")) {
+        if (Objects.nonNull(version) && (version.startsWith("file:") || version.matches("^[.~]{0,2}/.*"))) {
             LOGGER.warn("dependency skipped: package.json contain an local node_module for {} seems to be "
                     + "located {} npm audit doesn't support locally referenced modules",
-                    name, version.replace("file:", ""));
+                    name, version);
             return true;
         }
         return false;
@@ -392,7 +392,7 @@ public class NodePackageAnalyzer extends AbstractNpmAnalyzer {
                         throw new AnalysisException("Problem occurred while reading dependency file.", e);
                     }
                 } else {
-                    LOGGER.warn("Unable to find node module: {}", f.toString());
+                    LOGGER.warn("Unable to find node module: {}", f);
                     //TODO - we should use the integrity value instead of calculating the SHA1/MD5
                     child.setSha1sum(Checksum.getSHA1Checksum(String.format("%s:%s", name, version)));
                     child.setSha256sum(Checksum.getSHA256Checksum(String.format("%s:%s", name, version)));

@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.owasp.dependencycheck.BaseDBTestCase;
 
 import static org.junit.Assert.assertTrue;
+import org.owasp.dependencycheck.xml.suppression.SuppressionRules;
 
 /**
  *
@@ -37,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 public class DependencyCheckTaskIT extends BaseDBTestCase {
 
     @Rule
-    public BuildFileRule buildFileRule = new BuildFileRule();
+    public final BuildFileRule buildFileRule = new BuildFileRule();
 
     @Before
     @Override
@@ -129,12 +130,10 @@ public class DependencyCheckTaskIT extends BaseDBTestCase {
      */
     @Test
     public void testGetFailBuildOnCVSS() {
-        Exception exception = Assert.assertThrows(BuildException.class, () -> {
-            buildFileRule.executeTarget("failCVSS");
-        });
+        Exception exception = Assert.assertThrows(BuildException.class, () -> buildFileRule.executeTarget("failCVSS"));
 
-        String expectedMessage = String.format("One or more dependencies were identified with vulnerabilities that " +
-                "have a CVSS score greater than or equal to '%.1f':", 3.0f);
+        String expectedMessage = String.format("One or more dependencies were identified with vulnerabilities that "
+                + "have a CVSS score greater than or equal to '%.1f':", 3.0f);
 
         Assert.assertTrue(exception.getMessage().contains(expectedMessage));
     }
@@ -146,7 +145,8 @@ public class DependencyCheckTaskIT extends BaseDBTestCase {
     public void testSuppressingCVE() {
         // GIVEN an ant task with a vulnerability
         final String antTaskName = "suppression";
-
+        //as the suppression rules are now a singleton - we must reset the list to cause the new suppression rules to load
+        SuppressionRules.getInstance().list().clear();
         // WHEN executing the ant task
         buildFileRule.executeTarget(antTaskName);
         if (buildFileRule.getError() != null && !buildFileRule.getError().isEmpty()) {
@@ -170,7 +170,8 @@ public class DependencyCheckTaskIT extends BaseDBTestCase {
     public void testSuppressingSingle() {
         // GIVEN an ant task with a vulnerability using the legacy property
         final String antTaskName = "suppression-single";
-
+        //as the suppression rules are now a singleton - we must reset the list to cause the new suppression rules to load
+        SuppressionRules.getInstance().list().clear();
         // WHEN executing the ant task
         buildFileRule.executeTarget(antTaskName);
 
@@ -187,7 +188,8 @@ public class DependencyCheckTaskIT extends BaseDBTestCase {
     public void testSuppressingMultiple() {
         // GIVEN an ant task with a vulnerability using multiple was to configure the suppression file
         final String antTaskName = "suppression-multiple";
-
+        //as the suppression rules are now a singleton - we must reset the list to cause the new suppression rules to load
+        SuppressionRules.getInstance().list().clear();
         // WHEN executing the ant task
         buildFileRule.executeTarget(antTaskName);
 
