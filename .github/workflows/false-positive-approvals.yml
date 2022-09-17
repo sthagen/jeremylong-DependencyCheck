@@ -24,25 +24,27 @@ jobs:
           npm install fs
       - name: Commit Suppression Rule
         id: fp-ops-commit
-        uses: actions/github-script@v5.1.1
+        uses: actions/github-script@v6.2.0
         with:
           script: |
             const { execSync } = require("child_process");
             const { XMLParser } = require("fast-xml-parser");
             const fs = require('fs');
-
+            console.log('evaluating issue #' + context.issue.number);
+            
             const { data: comments } = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               owner: context.issue.owner,
               repo: context.issue.repo,
             })
-            
+            console.log('author0: ' + comments[0].user.login);
+            console.log('comments0: ' + comments[0].body);
             let botComments = comments.filter(comment => 
-              comment.user.login === 'github-actions' && 
+              comment.user.login === 'github-actions[bot]' && 
               comment.body.includes('<suppress base="true">') &&
               comment.body.includes('Suppression rule:')
             )
-            
+            console.log('bot comments: ' + botComments);
             if (botComments.length<=0) {
               console.log('Suppression rule from github-actions not found');
               core.setOutput('publish', 'false');
@@ -69,7 +71,7 @@ jobs:
             
             let found = false;
             let previousReportNotes = '';
-            if (!(str && str.trim() === '')) {
+            if (!(generatedSuppressions && generatedSuppressions.trim() === '')) {
               let rules = parser.parse(generatedSuppressions);
               for (r of rules.suppress) {
                 if (proposedRule.suppress.packageUrl === r.packageUrl &&
@@ -150,12 +152,12 @@ jobs:
           target-folder: suppressions
       - name: Message failure
         if: ${{ failure() || steps.fp-ops-commit.outputs.failed }}
-        uses: actions/github-script@v5.1.1
+        uses: actions/github-script@v6.2.0
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to automatically generate and publish the suppression rule! ❌',
+              body: 'Failed to automatically generate and publish the suppression rule!\n\n' + 'Link to action run: ' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId,
             });
