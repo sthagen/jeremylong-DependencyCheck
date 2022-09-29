@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>7.2.1-SNAPSHOT</version>
+    <version>7.2.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -119,8 +119,11 @@ Copyright (c) 2012 - Jeremy Long
         
         <apache.lucene.version>8.11.2</apache.lucene.version>
         <apache.ant.version>1.10.12</apache.ant.version>
-        <slf4j.version>2.0.0</slf4j.version>
+        
+        <!-- upgrading slf4j and logback can cause issues ;) https://github.com/jeremylong/DependencyCheck/issues/4846 -->
+        <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.11</logback.version>
+        
         <!-- Note that Maven will use classes from the distro, ignoring declared dependencies for Maven core... -->
         <maven.api.version>3.1.0</maven.api.version>
         <reporting.checkstyle-plugin.version>3.2.0</reporting.checkstyle-plugin.version>
@@ -266,7 +269,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -815,7 +818,7 @@ Copyright (c) 2012 - Jeremy Long
                     <dependency>
                         <groupId>se.bjurr.violations</groupId>
                         <artifactId>violations-lib</artifactId>
-                        <version>1.155.1</version>
+                        <version>1.155.3</version>
                     </dependency>
                 </dependencies>
                 <configuration>
