@@ -23,13 +23,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: generatedSuppressions
-      - uses: actions/setup-node@v3.5.0
+      - uses: actions/setup-node@v3.5.1
       - run: |
           npm install fast-xml-parser@4.0.9
           npm install fs
       - name: Commit Suppression Rule
         id: fp-ops-commit
-        uses: actions/github-script@v6.3.2
+        uses: actions/github-script@v6.3.3
         with:
           script: |
             const { execSync } = require("child_process");
@@ -150,14 +150,14 @@ jobs:
             } 
       - name: Publish Updated Suppressions
         if: ${{ steps.fp-ops-commit.outputs.publish == 'true' }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: suppressions
           target-folder: suppressions
       - name: Message failure
         if: ${{ failure() || steps.fp-ops-commit.outputs.failed }}
-        uses: actions/github-script@v6.3.2
+        uses: actions/github-script@v6.3.3
         with:
           script: |
             github.rest.issues.createComment({

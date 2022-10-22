@@ -45,7 +45,7 @@ jobs:
         with:
           path: core/target/data
           key: odc-data
-      - uses: actions/setup-dotnet@v3.0.1
+      - uses: actions/setup-dotnet@v3.0.2
         with:
           dotnet-version: '6.0.x'
       - name: Set up JDK 1.8
@@ -57,7 +57,7 @@ jobs:
           server-id: ossrh
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_TOKEN }}
-      - uses: pnpm/action-setup@v2.2.3
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 6.0.2
       - name: Configure Git user
@@ -186,8 +186,10 @@ jobs:
           draft: false
           body: |
             ### Changes
-            - Fixed logging issue (#4846).
-            - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/49?closed=1).
+            - Fixed issue with the Maven plugin that caused concurrent modification exceptions (#4935).
+            - Migrated from Jackson Afterburner to Blackbird (#4905).
+            - Added an experimental Dart analyzer (#4869).
+            - See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/50?closed=1).
 
       - name: Upload CLI
         id: upload-release-cli
@@ -256,7 +258,7 @@ jobs:
         run: ls -R
         working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: target/staging
