@@ -103,7 +103,7 @@ jobs:
           cd ..
       - name: Setup dotnet
         if: ${{ fromJSON(steps.purl-parser.outputs.result).type == 'nuget' }}
-        uses: actions/setup-dotnet@v3.0.2
+        uses: actions/setup-dotnet@v3.0.3
         with:
           dotnet-version: '6.0.x'
       - name: Setup dotnet fp-project
@@ -118,7 +118,7 @@ jobs:
           dotnet publish
           cd ..
       - name: "Check for setup complete"
-        uses: andstor/file-existence-action@v1
+        uses: andstor/file-existence-action@v2
         id: check_files
         with:
           files: "./fp-project"

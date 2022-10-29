@@ -140,7 +140,7 @@ Copyright (c) 2012 - Jeremy Long
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.2.1</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
-        <versions-maven-plugin.version>2.12.0</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.13.0</versions-maven-plugin.version>
         <jetbrains.annotations.version>23.0.0</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
@@ -152,7 +152,7 @@ Copyright (c) 2012 - Jeremy Long
         <junit.version>4.13.2</junit.version>
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>4.8.0</mockito-core.version>
+        <mockito-core.version>4.8.1</mockito-core.version>
         <jsoup.version>1.15.3</jsoup.version>
         <commons-compress.version>1.21</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
@@ -166,7 +166,7 @@ Copyright (c) 2012 - Jeremy Long
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <maven-artifact-transfer.version>0.13.1</maven-artifact-transfer.version>
         <groovy-all.version>2.4.21</groovy-all.version>
-        <gmavenplus-plugin.version>2.0.0</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.3</com.h3xstream.retirejs.core.version>
         <jackson.version>2.13.4</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
@@ -1094,7 +1094,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency><!--upgrade transitive dependency due to reported vulns-->
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>3.4.2</version>
+                <version>3.5.0</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
