@@ -229,12 +229,12 @@ public class Check extends Update {
      */
     private Boolean autoUpdate;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
      * ALL). Default is HTML.
      */
     private String reportFormat = "HTML";
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
      * ALL). Default is HTML.
      */
     private final List<String> reportFormats = new ArrayList<>();
@@ -315,6 +315,10 @@ public class Check extends Update {
      * Whether the pipfile analyzer should be enabled.
      */
     private Boolean pipfileAnalyzerEnabled;
+    /**
+     * Whether the Poetry analyzer should be enabled.
+     */
+    private Boolean poetryAnalyzerEnabled;
     /**
      * Sets the path for the mix_audit binary.
      */
@@ -930,6 +934,24 @@ public class Check extends Update {
      */
     public void setPipfileAnalyzerEnabled(Boolean pipfileAnalyzerEnabled) {
         this.pipfileAnalyzerEnabled = pipfileAnalyzerEnabled;
+    }
+
+    /**
+     * Get the value of poetryAnalyzerEnabled.
+     *
+     * @return the value of poetryAnalyzerEnabled
+     */
+    public Boolean isPoetryAnalyzerEnabled() {
+        return poetryAnalyzerEnabled;
+    }
+
+    /**
+     * Set the value of poetryAnalyzerEnabled.
+     *
+     * @param poetryAnalyzerEnabled new value of poetryAnalyzerEnabled
+     */
+    public void setPoetryAnalyzerEnabled(Boolean poetryAnalyzerEnabled) {
+        this.poetryAnalyzerEnabled = poetryAnalyzerEnabled;
     }
 
     /**
@@ -1892,7 +1914,7 @@ public class Check extends Update {
     //see note on `dealWithReferences()` for information on this suppression
     @SuppressWarnings("squid:RedundantThrowsDeclarationCheck")
     @Override
-    public void execute() throws BuildException {
+    protected void executeWithContextClassloader() throws BuildException {
         dealWithReferences();
         validateConfiguration();
         populateSettings();
@@ -2019,6 +2041,7 @@ public class Check extends Update {
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_MAVEN_INSTALL_ENABLED, mavenInstallAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIP_ENABLED, pipAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIPFILE_ENABLED, pipfileAnalyzerEnabled);
+        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_POETRY_ENABLED, poetryAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_CPANFILE_ENABLED, cpanfileAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);
@@ -2111,7 +2134,7 @@ public class Check extends Update {
 
     /**
      * An enumeration of supported report formats: "ALL", "HTML", "XML", "CSV",
-     * "JSON", "JUNIT", "SARIF", etc..
+     * "JSON", "JUNIT", "SARIF", 'JENkINS', etc..
      */
     public static class ReportFormats extends EnumeratedAttribute {
 

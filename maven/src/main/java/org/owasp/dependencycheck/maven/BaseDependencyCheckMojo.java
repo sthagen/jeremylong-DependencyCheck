@@ -289,7 +289,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @Parameter(property = "dependency-check.virtualSnapshotsFromReactor", defaultValue = "true")
     private Boolean virtualSnapshotsFromReactor;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
      * ALL). Multiple formats can be selected using a comma delineated list.
      */
     @SuppressWarnings("CanBeFinal")
@@ -303,7 +303,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @Parameter(property = "prettyPrint")
     private Boolean prettyPrint;
     /**
-     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF,
+     * The report format to be generated (HTML, XML, JUNIT, CSV, JSON, SARIF, JENKINS,
      * ALL). Multiple formats can be selected using a comma delineated list.
      */
     @Parameter(property = "formats", required = true)
@@ -464,6 +464,12 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
     @SuppressWarnings("CanBeFinal")
     @Parameter(property = "pipfileAnalyzerEnabled")
     private Boolean pipfileAnalyzerEnabled;
+    /**
+     * Sets whether or not the poetry Analyzer should be used.
+     */
+    @SuppressWarnings("CanBeFinal")
+    @Parameter(property = "poetryAnalyzerEnabled")
+    private Boolean poetryAnalyzerEnabled;
     /**
      * Sets whether or not the PHP Composer Lock File Analyzer should be used.
      */
@@ -1978,12 +1984,16 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         final Set<String> selectedFormats = getFormats();
         if (selectedFormats.contains("HTML") || selectedFormats.contains("ALL") || selectedFormats.size() > 1) {
             return "dependency-check-report";
+        } else if (selectedFormats.contains("JENKINS")) {
+            return "dependency-check-jenkins.html";
         } else if (selectedFormats.contains("XML")) {
             return "dependency-check-report.xml";
         } else if (selectedFormats.contains("JUNIT")) {
             return "dependency-check-junit.xml";
         } else if (selectedFormats.contains("JSON")) {
             return "dependency-check-report.json";
+        } else if (selectedFormats.contains("SARIF")) {
+            return "dependency-check-report.sarif";
         } else if (selectedFormats.contains("CSV")) {
             return "dependency-check-report.csv";
         } else {
@@ -2055,7 +2065,9 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         settings.setStringIfNotNull(Settings.KEYS.ANALYZER_PNPM_PATH, pathToPnpm);
 
         final Proxy proxy = getMavenProxy();
+        boolean proxySet = false;
         if (proxy != null) {
+            proxySet = true;
             settings.setString(Settings.KEYS.PROXY_SERVER, proxy.getHost());
             settings.setString(Settings.KEYS.PROXY_PORT, Integer.toString(proxy.getPort()));
             final String userName = proxy.getUsername();
@@ -2073,6 +2085,21 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
             settings.setStringIfNotNull(Settings.KEYS.PROXY_USERNAME, userName);
             settings.setStringIfNotNull(Settings.KEYS.PROXY_PASSWORD, password);
             settings.setStringIfNotNull(Settings.KEYS.PROXY_NON_PROXY_HOSTS, proxy.getNonProxyHosts());
+        }
+        if (!proxySet && System.getProperty("http.proxyHost") != null) {
+            settings.setString(Settings.KEYS.PROXY_SERVER, System.getProperty("http.proxyHost", ""));
+            if (System.getProperty("http.proxyPort") != null) {
+                settings.setString(Settings.KEYS.PROXY_PORT, System.getProperty("http.proxyPort"));
+            }
+            if (System.getProperty("http.proxyUser") != null) {
+                settings.setString(Settings.KEYS.PROXY_USERNAME, System.getProperty("http.proxyUser"));
+            }
+            if (System.getProperty("http.proxyPassword") != null) {
+                settings.setString(Settings.KEYS.PROXY_PASSWORD, System.getProperty("http.proxyPassword"));
+            }
+            if (System.getProperty("http.nonProxyHosts") != null) {
+                settings.setString(Settings.KEYS.PROXY_NON_PROXY_HOSTS, System.getProperty("http.nonProxyHosts"));
+            }
         }
         final String[] suppressions = determineSuppressions();
         settings.setArrayIfNotEmpty(Settings.KEYS.SUPPRESSION_FILE, suppressions);
@@ -2119,6 +2146,7 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_MAVEN_INSTALL_ENABLED, mavenInstallAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIP_ENABLED, pipAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_PIPFILE_ENABLED, pipfileAnalyzerEnabled);
+        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_POETRY_ENABLED, poetryAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_COMPOSER_LOCK_ENABLED, composerAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_CPANFILE_ENABLED, cpanfileAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, nodeAnalyzerEnabled);

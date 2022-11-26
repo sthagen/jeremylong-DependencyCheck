@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>7.3.1-SNAPSHOT</version>
+    <version>7.3.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -152,7 +152,7 @@ Copyright (c) 2012 - Jeremy Long
         <junit.version>4.13.2</junit.version>
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>4.8.1</mockito-core.version>
+        <mockito-core.version>4.9.0</mockito-core.version>
         <jsoup.version>1.15.3</jsoup.version>
         <commons-compress.version>1.22</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
@@ -162,13 +162,13 @@ Copyright (c) 2012 - Jeremy Long
         <commons-collections.version>3.2.2</commons-collections.version>
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
-        <maven-dependency-tree.version>3.2.0</maven-dependency-tree.version>
+        <maven-dependency-tree.version>3.2.1</maven-dependency-tree.version>
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <maven-artifact-transfer.version>0.13.1</maven-artifact-transfer.version>
         <groovy-all.version>2.4.21</groovy-all.version>
         <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
-        <jackson.version>2.14.0</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
         <surefireArgLine />
         
@@ -264,7 +264,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -489,7 +489,8 @@ Copyright (c) 2012 - Jeremy Long
                         <excludeProperty>git.build.user.*</excludeProperty>
                         <excludeProperty>git.build.host</excludeProperty>
                         <excludeProperty>git.commit.user.*</excludeProperty>
-                        <excludeProperty>git.commit.count</excludeProperty>
+                        <excludeProperty>git.tags</excludeProperty>
+                        <excludeProperty>git.total.commit.count</excludeProperty>
                     </excludeProperties>
                 </configuration>
             </plugin>
@@ -789,6 +790,7 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
+                    <scmCommentPrefix>build:</scmCommentPrefix>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <arguments>-Dmaven.javadoc.skip=true -DskipTests -DskipITs</arguments>
                     <updateWorkingCopyVersions>true</updateWorkingCopyVersions>
