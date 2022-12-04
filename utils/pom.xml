@@ -20,7 +20,7 @@ Copyright (c) 2014 - Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>7.3.3-SNAPSHOT</version>
+        <version>7.4.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-utils</artifactId>
@@ -53,10 +53,6 @@ Copyright (c) 2014 - Jeremy Long. All Rights Reserved.
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
