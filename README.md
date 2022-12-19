@@ -241,11 +241,24 @@ docker run --rm ^
 ```
 
 Building From Source
--------------
+--------------------
+
 To build dependency-check (using Java 8) run the command:
 
 ```
 mvn -s settings.xml install
+```
+
+Running dependency-check on dependency-check
+--------------------------------------------
+
+Dependency-check references several vulnerables dependencies that are never used
+except as test resources. All of these optional test dependencies are included in
+the `test-dependencies` profile. To run dependency-check against itself simple
+exclude the `test-dependencies` profile;
+
+```shell
+mvn org.owasp:dependency-check-maven:aggregate -P-test-dependencies
 ```
 
 Building the documentation
@@ -258,7 +271,7 @@ The documentation on the [github pages](http://jeremylong.github.io/DependencyCh
 Once done, point your browser to `./target/staging/index.html`.
 
 Building The Docker Image
--------------
+-------------------------
 To build dependency-check docker image run the command:
 
 ```
@@ -269,11 +282,11 @@ mvn -s settings.xml install
 License
 -------
 
-Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://raw.githubusercontent.com/jeremylong/DependencyCheck/master/LICENSE.txt) file for the full license.
+Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://raw.githubusercontent.com/jeremylong/DependencyCheck/main/LICENSE.txt) file for the full license.
 
 Dependency-Check makes use of several other open source libraries. Please see the [NOTICE.txt][notices] file for more information.
 
 Copyright (c) 2012-2022 Jeremy Long. All Rights Reserved.
 
   [wiki]: https://github.com/jeremylong/DependencyCheck/wiki
-  [notices]: https://github.com/jeremylong/DependencyCheck/blob/master/NOTICE.txt
+  [notices]: https://github.com/jeremylong/DependencyCheck/blob/main/NOTICE.txt

@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>7.4.1-SNAPSHOT</version>
+    <version>7.4.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -124,8 +124,8 @@ Copyright (c) 2012 - Jeremy Long
         <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.11</logback.version>
         
-        <!-- Note that Maven will use classes from the distro, ignoring declared dependencies for Maven core... -->
-        <maven.api.version>3.1.0</maven.api.version>
+        <!-- moved maven.api.version to the profile section -->
+        <!--maven.api.version>3.8.1</maven.api.version-->
         <reporting.checkstyle-plugin.version>3.2.0</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>1.11.1</doxia-module-markdown.version>
@@ -140,8 +140,8 @@ Copyright (c) 2012 - Jeremy Long
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
-        <versions-maven-plugin.version>2.13.0</versions-maven-plugin.version>
-        <jetbrains.annotations.version>23.0.0</jetbrains.annotations.version>
+        <versions-maven-plugin.version>2.14.1</versions-maven-plugin.version>
+        <jetbrains.annotations.version>23.1.0</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
         <commons-io.version>2.11.0</commons-io.version>
@@ -150,16 +150,15 @@ Copyright (c) 2012 - Jeremy Long
         <commons-jcs-core.version>2.2.1</commons-jcs-core.version>
         <aho-corasick-double-array-trie.version>1.2.3</aho-corasick-double-array-trie.version>
         <junit.version>4.13.2</junit.version>
-        <hamcrest-core.version>2.2</hamcrest-core.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>4.9.0</mockito-core.version>
+        <mockito-core.version>4.10.0</mockito-core.version>
         <jsoup.version>1.15.3</jsoup.version>
         <commons-compress.version>1.22</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
         <maven-plugin-annotations.version>3.7.0</maven-plugin-annotations.version>
-        <maven-reporting-api.version>3.1.1</maven-reporting-api.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
+        <maven-reporting-api.version>3.1.1</maven-reporting-api.version>    
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
         <maven-dependency-tree.version>3.2.1</maven-dependency-tree.version>
@@ -1069,9 +1068,9 @@ Copyright (c) 2012 - Jeremy Long
                 <version>0.0.2.1</version>
             </dependency>
             <dependency>
-                <groupId>com.vdurmont</groupId>
+                <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>3.1.0</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>
@@ -1134,6 +1133,13 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <!-- deprecated coordinates, replaced by org.hamcrest:hamcrest -->
+                        <groupId>org.hamcrest</groupId>
+                        <artifactId>hamcrest-core</artifactId>
+                    </exclusion>
+                </exclusions>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -1145,11 +1151,23 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>org.apache.ant</groupId>
                 <artifactId>ant</artifactId>
                 <version>${apache.ant.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.ant</groupId>
                 <artifactId>ant-testutil</artifactId>
                 <version>${apache.ant.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.lucene</groupId>
@@ -1187,6 +1205,11 @@ Copyright (c) 2012 - Jeremy Long
                 <version>${maven.api.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.maven.shared</groupId>
+                <artifactId>maven-shared-utils</artifactId>
+                <version>3.3.4</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
                 <version>${maven.api.version}</version>
@@ -1214,18 +1237,6 @@ Copyright (c) 2012 - Jeremy Long
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-model-builder</artifactId>
-                <version>${maven.api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-compat</artifactId>
-                <version>3.8.6</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.maven.plugin-testing</groupId>
                 <artifactId>maven-plugin-testing-harness</artifactId>
                 <version>${maven-plugin-testing-harness.version}</version>
@@ -1234,6 +1245,7 @@ Copyright (c) 2012 - Jeremy Long
                 <groupId>org.apache.maven.plugin-tools</groupId>
                 <artifactId>maven-plugin-annotations</artifactId>
                 <version>${maven-plugin-annotations.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.reporting</groupId>
@@ -1268,8 +1280,8 @@ Copyright (c) 2012 - Jeremy Long
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-core</artifactId>
-                <version>${hamcrest-core.version}</version>
+                <artifactId>hamcrest</artifactId>
+                <version>${hamcrest.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -1346,7 +1358,7 @@ Copyright (c) 2012 - Jeremy Long
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
+            <artifactId>hamcrest</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1368,6 +1380,22 @@ Copyright (c) 2012 - Jeremy Long
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>standard</id>
+            <!--
+            `releaseTesting` is used in the maven/pom.xml and downgrades the
+            Maven API to 3.1.0 during full refression testing to ensure that
+            no new Maven APIs were used and we maintain compatability with 3.1.
+            -->
+            <activation>
+                <property>
+                    <name>!releaseTesting</name>
+                </property>
+            </activation>
+            <properties>
+                <maven.api.version>3.8.6</maven.api.version>
+            </properties>
+        </profile>
         <profile>
             <id>release</id>
             <activation>
