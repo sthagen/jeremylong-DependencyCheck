@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>7.4.2-SNAPSHOT</version>
+    <version>7.4.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -139,7 +139,7 @@ Copyright (c) 2012 - Jeremy Long
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
-        <versions-maven-plugin.version>2.14.1</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.14.2</versions-maven-plugin.version>
         <jetbrains.annotations.version>23.1.0</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
@@ -151,7 +151,7 @@ Copyright (c) 2012 - Jeremy Long
         <junit.version>4.13.2</junit.version>
         <hamcrest.version>2.2</hamcrest.version>
         <jmockit.version>1.49</jmockit.version>
-        <mockito-core.version>4.10.0</mockito-core.version>
+        <mockito-core.version>4.11.0</mockito-core.version>
         <jsoup.version>1.15.3</jsoup.version>
         <commons-compress.version>1.22</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
@@ -1069,7 +1069,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>4.0.0</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>

@@ -187,11 +187,9 @@ jobs:
           body: |
             ### Fixed
 
-            - Fixed bug when setting the proxy port in gradle (#5123)
-            - Fixed issue with invalid `node_module` paths in some scans (#5127)
-            - Resolved several FP
+            - Resolved issue processing NVD CVE data due to column width (#5229)
 
-            See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/53?closed=1).
+            See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/56?closed=1).
 
       - name: Upload CLI
         id: upload-release-cli
