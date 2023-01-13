@@ -119,11 +119,11 @@ public class App {
         } catch (FileNotFoundException ex) {
             System.err.println(ex.getMessage());
             cli.printHelp();
-            return -1;
+            return 1;
         } catch (ParseException ex) {
             System.err.println(ex.getMessage());
             cli.printHelp();
-            return -2;
+            return 2;
         }
         final String verboseLog = cli.getStringArgument(CliParser.ARGUMENT.VERBOSE_LOG);
         if (verboseLog != null) {
@@ -134,19 +134,19 @@ public class App {
             final String connStr = cli.getStringArgument(CliParser.ARGUMENT.CONNECTION_STRING);
             if (connStr != null) {
                 LOGGER.error("Unable to purge the database when using a non-default connection string");
-                exitCode = -3;
+                exitCode = 3;
             } else {
                 try {
                     populateSettings(cli);
                 } catch (InvalidSettingException ex) {
                     LOGGER.error(ex.getMessage());
                     LOGGER.debug(ERROR_LOADING_PROPERTIES_FILE, ex);
-                    exitCode = -4;
+                    exitCode = 4;
                     return exitCode;
                 }
                 try (Engine engine = new Engine(Engine.Mode.EVIDENCE_PROCESSING, settings)) {
                     if (!engine.purge()) {
-                        exitCode = -7;
+                        exitCode = 7;
                         return exitCode;
                     }
                 } finally {
@@ -162,17 +162,17 @@ public class App {
             } catch (InvalidSettingException ex) {
                 LOGGER.error(ex.getMessage());
                 LOGGER.debug(ERROR_LOADING_PROPERTIES_FILE, ex);
-                exitCode = -4;
+                exitCode = 4;
                 return exitCode;
             }
             try {
                 runUpdateOnly();
             } catch (UpdateException ex) {
                 LOGGER.error(ex.getMessage(), ex);
-                exitCode = -8;
+                exitCode = 8;
             } catch (DatabaseException ex) {
                 LOGGER.error(ex.getMessage(), ex);
-                exitCode = -9;
+                exitCode = 9;
             } finally {
                 settings.cleanup();
             }
@@ -182,7 +182,7 @@ public class App {
             } catch (InvalidSettingException ex) {
                 LOGGER.error(ex.getMessage(), ex);
                 LOGGER.debug(ERROR_LOADING_PROPERTIES_FILE, ex);
-                exitCode = -4;
+                exitCode = 4;
                 return exitCode;
             }
             try {
@@ -196,17 +196,17 @@ public class App {
             } catch (DatabaseException ex) {
                 LOGGER.error(ex.getMessage());
                 LOGGER.debug("database exception", ex);
-                exitCode = -11;
+                exitCode = 11;
             } catch (ReportException ex) {
                 LOGGER.error(ex.getMessage());
                 LOGGER.debug("report exception", ex);
-                exitCode = -12;
+                exitCode = 12;
             } catch (ExceptionCollection ex) {
                 if (ex.isFatal()) {
-                    exitCode = -13;
+                    exitCode = 13;
                     LOGGER.error("One or more fatal errors occurred");
                 } else {
-                    exitCode = -14;
+                    exitCode = 14;
                 }
                 for (Throwable e : ex.getExceptions()) {
                     if (e.getMessage() != null) {
@@ -336,7 +336,7 @@ public class App {
                             + "equal to '%.1f': %n%s%n%nSee the dependency-check report for more details.%n%n", cvssFailScore, ids)
             );
 
-            retCode = 1;
+            retCode = 15;
         }
 
         return retCode;
@@ -496,6 +496,10 @@ public class App {
                 cli.hasOption(CliParser.ARGUMENT.PRETTY_PRINT));
         settings.setStringIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_REPO_JS_URL,
                 cli.getStringArgument(CliParser.ARGUMENT.RETIREJS_URL));
+        settings.setStringIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_REPO_JS_USER,
+                cli.getStringArgument(CliParser.ARGUMENT.RETIREJS_URL_USER));
+        settings.setStringIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_REPO_JS_PASSWORD,
+                cli.getStringArgument(CliParser.ARGUMENT.RETIREJS_URL_PASSWORD));
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_FORCEUPDATE,
                 cli.hasOption(CliParser.ARGUMENT.RETIRE_JS_FORCEUPDATE));
         settings.setBoolean(Settings.KEYS.ANALYZER_JAR_ENABLED,
@@ -504,6 +508,10 @@ public class App {
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_MSBUILD, Settings.KEYS.ANALYZER_MSBUILD_PROJECT_ENABLED));
         settings.setBoolean(Settings.KEYS.ANALYZER_ARCHIVE_ENABLED,
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_ARCHIVE, Settings.KEYS.ANALYZER_ARCHIVE_ENABLED));
+        settings.setBoolean(Settings.KEYS.ANALYZER_KNOWN_EXPLOITED_ENABLED,
+                !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_KEV, Settings.KEYS.ANALYZER_KNOWN_EXPLOITED_ENABLED));
+        settings.setStringIfNotNull(Settings.KEYS.KEV_URL,
+                cli.getStringArgument(CliParser.ARGUMENT.KEV_URL));
         settings.setBoolean(Settings.KEYS.ANALYZER_PYTHON_DISTRIBUTION_ENABLED,
                 !cli.hasDisableOption(CliParser.ARGUMENT.DISABLE_PY_DIST, Settings.KEYS.ANALYZER_PYTHON_DISTRIBUTION_ENABLED));
         settings.setBoolean(Settings.KEYS.ANALYZER_PYTHON_PACKAGE_ENABLED,
@@ -588,7 +596,7 @@ public class App {
                 cli.getStringArgument(CliParser.ARGUMENT.OSSINDEX_PASSWORD, Settings.KEYS.ANALYZER_OSSINDEX_PASSWORD));
         settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS,
                 cli.getStringArgument(CliParser.ARGUMENT.OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS,
-                    Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS));
+                        Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS));
         settings.setFloat(Settings.KEYS.JUNIT_FAIL_ON_CVSS,
                 cli.getFloatArgument(CliParser.ARGUMENT.FAIL_JUNIT_ON_CVSS, 0));
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_ARTIFACTORY_ENABLED,
@@ -649,6 +657,13 @@ public class App {
                 cli.getStringArgument(CliParser.ARGUMENT.CVE_USER));
         settings.setStringIfNotEmpty(Settings.KEYS.CVE_PASSWORD,
                 cli.getStringArgument(CliParser.ARGUMENT.CVE_PASSWORD, Settings.KEYS.CVE_PASSWORD));
+
+        settings.setStringIfNotNull(Settings.KEYS.HOSTED_SUPPRESSIONS_URL,
+                cli.getStringArgument(CliParser.ARGUMENT.HOSTED_SUPPRESSIONS_URL));
+        settings.setBooleanIfNotNull(Settings.KEYS.HOSTED_SUPPRESSIONS_FORCEUPDATE,
+                cli.hasOption(CliParser.ARGUMENT.HOSTED_SUPPRESSIONS_FORCEUPDATE));
+        settings.setIntIfNotNull(Settings.KEYS.HOSTED_SUPPRESSIONS_VALID_FOR_HOURS,
+                cli.getIntegerValue(CliParser.ARGUMENT.HOSTED_SUPPRESSIONS_VALID_FOR_HOURS));
     }
 
     private String getDefaultCveUrlModified(CliParser cli) {

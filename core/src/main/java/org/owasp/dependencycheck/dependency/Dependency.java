@@ -103,6 +103,13 @@ public class Dependency extends EvidenceCollection implements Serializable {
      */
     private final SortedSet<Dependency> relatedDependencies = new TreeSet<>(Dependency.NAME_COMPARATOR);
     /**
+     * The set of dependencies that included this dependency (i.e., this is a
+     * transitive dependency because it was included by X). This is a pair where
+     * the left element is the includedBy and the right element is the type
+     * (e.g. buildEnv, plugins).
+     */
+    private final Set<IncludedByReference> includedBy = new HashSet<>();
+    /**
      * A list of projects that reference this dependency.
      */
     private final Set<String> projectReferences = new HashSet<>();
@@ -433,6 +440,7 @@ public class Dependency extends EvidenceCollection implements Serializable {
     public synchronized Set<Identifier> getVulnerableSoftwareIdentifiers() {
         return Collections.unmodifiableSet(this.vulnerableSoftwareIdentifiers);
     }
+
     /**
      * Returns the count of vulnerability identifiers.
      *
@@ -441,6 +449,22 @@ public class Dependency extends EvidenceCollection implements Serializable {
     public synchronized int getVulnerableSoftwareIdentifiersCount() {
         return this.vulnerableSoftwareIdentifiers.size();
     }
+
+    /**
+     * Returns true if the dependency has a known exploited vulnerability.
+     *
+     * @return true if the dependency has a known exploited vulnerability;
+     * otherwise false.
+     */
+    public synchronized boolean hasKnownExploitedVulnerability() {
+        for (Vulnerability v : vulnerabilities) {
+            if (v.getKnownExploitedVulnerability() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a set of Identifiers to the current list of software identifiers.
      * Only used for testing.
@@ -768,6 +792,46 @@ public class Dependency extends EvidenceCollection implements Serializable {
     }
 
     /**
+     * Get the unmodifiable set of includedBy (the list of parents of this
+     * transitive dependency).
+     *
+     * @return the unmodifiable set of includedBy
+     */
+    public synchronized Set<IncludedByReference> getIncludedBy() {
+        return Collections.unmodifiableSet(new HashSet<>(includedBy));
+    }
+
+    /**
+     * Adds the parent or root of the transitive dependency chain (i.e., this
+     * was included by the parent dependency X).
+     *
+     * @param includedBy a project reference
+     */
+    public synchronized void addIncludedBy(String includedBy) {
+        this.includedBy.add(new IncludedByReference(includedBy, null));
+    }
+
+    /**
+     * Adds the parent or root of the transitive dependency chain (i.e., this
+     * was included by the parent dependency X).
+     *
+     * @param includedBy a project reference
+     * @param type the type of project reference (i.e. 'plugins', 'buildEnv')
+     */
+    public synchronized void addIncludedBy(String includedBy, String type) {
+        this.includedBy.add(new IncludedByReference(includedBy, type));
+    }
+
+    /**
+     * Adds a set of project references.
+     *
+     * @param includedBy a set of project references
+     */
+    public synchronized void addAllIncludedBy(Set<IncludedByReference> includedBy) {
+        this.includedBy.addAll(includedBy);
+    }
+
+    /**
      * Get the unmodifiable set of projectReferences.
      *
      * @return the unmodifiable set of projectReferences
@@ -808,7 +872,7 @@ public class Dependency extends EvidenceCollection implements Serializable {
             LOGGER.debug("dependency: {}", dependency);
         } else if (NAME_COMPARATOR.compare(this, dependency) == 0) {
             LOGGER.debug("Attempted to add the same dependency as this, likely due to merging identical dependencies "
-                         + "obtained from different modules");
+                    + "obtained from different modules");
             LOGGER.debug("this: {}", this);
             LOGGER.debug("dependency: {}", dependency);
         } else if (!relatedDependencies.add(dependency)) {

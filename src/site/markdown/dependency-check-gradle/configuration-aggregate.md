@@ -25,27 +25,29 @@ apply plugin: 'org.owasp.dependencycheck'
 check.dependsOn dependencyCheckAggregate
 ```
 
-Property             | Description                                                                                                        | Default Value
----------------------|--------------------------------------------------------------------------------------------------------------------|------------------
-autoUpdate           | Sets whether auto-updating of the NVD CVE/CPE data is enabled. It is not recommended that this be turned to false. | true
-analyzedTypes        | The default artifact types that will be analyzed.                                                                  | ['jar', 'aar', 'js', 'war', 'ear', 'zip']
-cveValidForHours     | Sets the number of hours to wait before checking for new updates from the NVD.                                     | 4
-format               | The report format to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL).                                              | HTML
-formats              | A list of report formats to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL).                                       | &nbsp;
-junitFailOnCVSS      | If using the JUNIT report format the junitFailOnCVSS sets the CVSS score threshold that is considered a failure.   | 0
+Property             | Description                                                                                                          | Default Value
+---------------------|----------------------------------------------------------------------------------------------------------------------|------------------
+autoUpdate           | Sets whether auto-updating of the NVD CVE/CPE data is enabled. It is not recommended that this be turned to false.   | true
+analyzedTypes        | The default artifact types that will be analyzed.                                                                    | ['jar', 'aar', 'js', 'war', 'ear', 'zip']
+cveValidForHours     | Sets the number of hours to wait before checking for new updates from the NVD.                                       | 4
+format               | The report format to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL).                                         | HTML
+formats              | A list of report formats to be generated (HTML, XML, CSV, JSON, JUNIT, SARIF, ALL).                                  | &nbsp;
+junitFailOnCVSS      | If using the JUNIT report format the junitFailOnCVSS sets the CVSS score threshold that is considered a failure.     | 0
 failBuildOnCVSS      | Specifies if the build should be failed if a CVSS score equal to or above a specified level is identified. The default is 11; since the CVSS scores are 0-10, by default the build will never fail.  More information on CVSS scores can be found at the [NVD](https://nvd.nist.gov/vuln-metrics/cvss)| 11
-failOnError          | Fails the build if an error occurs during the dependency-check analysis.                                           | true
-outputDirectory      | The location to write the report(s). This directory will be located in the build directory.                        | ${buildDir}/reports
-skipTestGroups       | When set to true (the default) all dependency groups that being with 'test' will be skipped.                       | true
+failOnError          | Fails the build if an error occurs during the dependency-check analysis.                                             | true
+outputDirectory      | The location to write the report(s). This directory will be located in the build directory.                          | ${buildDir}/reports
+skipTestGroups       | When set to true (the default) all dependency groups that being with 'test' will be skipped.                         | true
 suppressionFile      | The file path to the XML suppression file \- used to suppress [false positives](../general/suppression.html). The configured value can be a local file path, a URL to a suppression file, or even a reference to a file on the class path (see https://github.com/jeremylong/DependencyCheck/issues/1878#issuecomment-487533799) | &nbsp;
 suppressionFiles     | A list of file paths to the XML suppression files \- used to suppress [false positives](../general/suppression.html). The configured values can be a local file path, a URL to a suppression file, or even a reference to a file on the class path (see https://github.com/jeremylong/DependencyCheck/issues/1878#issuecomment-487533799) | &nbsp;
-hintsFile            | The file path to the XML hints file \- used to resolve [false negatives](../general/hints.html)                    | &nbsp;
-skip                 | If set to true dependency-check analysis will be skipped.                                                          | false
-skipConfigurations   | A list of configurations that will be skipped. This is mutually exclusive with the scanConfigurations property.    | `[]` which means no configuration is skipped.
+hintsFile            | The file path to the XML hints file \- used to resolve [false negatives](../general/hints.html)                      | &nbsp;
+skip                 | If set to true dependency-check analysis will be skipped.                                                            | false
+skipConfigurations   | A list of configurations that will be skipped. This is mutually exclusive with the scanConfigurations property.      | `[]` which means no configuration is skipped.
 scanConfigurations   | A list of configurations that will be scanned, all other configurations are skipped. This is mutually exclusive with the skipConfigurations property. | `[]` which implicitly means all configurations are scanned.
 scanProjects         | A list of projects that will be scanned, all other projects are skipped. The list or projects to skip must include a preceding colon: `scanProjects = [':app']`. This is mutually exclusive with the `skipProjects` property. | `[]` which implicitly means all projects get scanned.
 skipProjects         | A list of projects that will be skipped.  The list or projects to skip must include a preceding colon: `skipProjects = [':sub1']`. This is mutually exclusive with the `scanProjects` property. | `[]` which means no projects are skipped.
-scanSet              | A list of directories that will be scanned for additional dependencies.                                            | ['src/main/resources','src/main/webapp', './package.json', './package-lock.json', './npm-shrinkwrap.json', './Gopkg.lock', './go.mod']
+scanBuildEnv         | A boolean indicating whether to scan the `buildEnv`.                                                                 | false
+scanDependencies     | A boolean indicating whether to scan the `dependencies`.                                                             | true
+scanSet              | A list of directories that will be scanned for additional dependencies.                                              | ['src/main/resources','src/main/webapp', './package.json', './package-lock.json', './npm-shrinkwrap.json', './Gopkg.lock', './go.mod']
 
 #### Example
 ```groovy
@@ -115,6 +117,8 @@ Config Group | Property              | Description                              
 -------------|-----------------------|-------------------------------------------------------------------------------------------------------------------|------------------
 analyzers    | experimentalEnabled   | Sets whether the [experimental analyzers](../analyzers/index.html) will be used. If not set to true the analyzers marked as experimental (see below) will not be used | false
 analyzers    | archiveEnabled        | Sets whether the Archive Analyzer will be used.                                                                   | true
+analyzers    | knownExploitedEnabled | Sets whether the Known Exploited Vulnerability update and analyzer are enabled.                                   | true
+analyzers    | knownExploitedURL     | Sets URL to the CISA Known Exploited Vulnerabilities JSON data feed.                                              | https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
 analyzers    | zipExtensions         | A comma-separated list of additional file extensions to be treated like a ZIP file, the contents will be extracted and analyzed. | &nbsp;
 analyzers    | jarEnabled            | Sets whether Jar Analyzer will be used.                                                                           | true
 analyzers    | dartEnabled           | Sets whether the [experimental](../analyzers/index.html) Dart Analyzer will be used.                              | true
@@ -175,6 +179,9 @@ ossIndex     | username              | The optional user name to connect to Sona
 ossIndex     | password              | The password or API token to connect to Sonatype's OSS Index.                                                     | &nbsp;
 slack        | enabled               | Whether or not slack notifications are enabled.                                                                   | false
 slack        | webhookUrl            | The custom incoming webhook URL to receive notifications.                                                         | &nbsp;
+hostedSuppressions | enabled         | The number of hours to wait before checking for new updates of the hosted suppressions file .                     | 2
+hostedSuppressions | forceupdate     | Sets whether hosted suppressions file will update regardless of the `autoupdate` setting.                         | false
+hostedSuppressions | url             | The URL to the Retire JS repository.                                                                              | https://jeremylong.github.io/DependencyCheck/suppressions/publishedSuppressions.xml
 
 
 #### Example
