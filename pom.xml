@@ -139,7 +139,7 @@ Copyright (c) 2012 - Jeremy Long
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
-        <versions-maven-plugin.version>2.14.2</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>
         <jetbrains.annotations.version>24.0.0</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
@@ -152,7 +152,7 @@ Copyright (c) 2012 - Jeremy Long
         <hamcrest.version>2.2</hamcrest.version>
         <jmockit.version>1.49</jmockit.version>
         <mockito-core.version>4.11.0</mockito-core.version>
-        <jsoup.version>1.15.3</jsoup.version>
+        <jsoup.version>1.15.4</jsoup.version>
         <commons-compress.version>1.22</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
@@ -197,7 +197,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.jsonschema2pojo</groupId>
                     <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                    <version>1.2.0</version>
+                    <version>1.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -212,7 +212,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.4.2</version>
+                    <version>3.5.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
