@@ -159,7 +159,8 @@ public class JarAnalyzer extends AbstractFileTypeAnalyzer {
             "tstamp",
             "dstamp",
             "eclipse-sourcereferences",
-            "kotlin-version");
+            "kotlin-version",
+            "require-capability");
     /**
      * Deprecated Jar manifest attribute, that is, nonetheless, useful for
      * analysis.
@@ -511,12 +512,11 @@ public class JarAnalyzer extends AbstractFileTypeAnalyzer {
      * @return a Properties object or null if no pom.properties was found
      */
     private Properties retrievePomProperties(String path, final JarFile jar) {
-        Properties pomProperties = null;
+        final Properties pomProperties = new Properties();
         final String propPath = path.substring(0, path.length() - 7) + "pom.properties";
         final ZipEntry propEntry = jar.getEntry(propPath);
         if (propEntry != null) {
             try (Reader reader = new InputStreamReader(jar.getInputStream(propEntry), StandardCharsets.UTF_8)) {
-                pomProperties = new Properties();
                 pomProperties.load(reader);
                 LOGGER.debug("Read pom.properties: {}", propPath);
             } catch (UnsupportedEncodingException ex) {

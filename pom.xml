@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>8.1.1-SNAPSHOT</version>
+    <version>8.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -137,10 +137,10 @@ Copyright (c) 2012 - Jeremy Long
         <maven-surefire-report-plugin.version>2.22.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <spotbugs.version>4.7.3</spotbugs.version>
-        <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
+        <spotbugs.maven.plugin.version>4.7.3.2</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>
-        <jetbrains.annotations.version>24.0.0</jetbrains.annotations.version>
+        <jetbrains.annotations.version>24.0.1</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
         <commons-io.version>2.11.0</commons-io.version>
@@ -156,7 +156,7 @@ Copyright (c) 2012 - Jeremy Long
         <commons-compress.version>1.22</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <maven-plugin-annotations.version>3.7.1</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
         <maven-reporting-api.version>3.1.1</maven-reporting-api.version>    
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
@@ -222,7 +222,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.10.1</version>
+                    <version>3.11.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1094,7 +1094,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency><!--upgrade transitive dependency due to reported vulns-->
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.1</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
