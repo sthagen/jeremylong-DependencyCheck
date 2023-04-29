@@ -125,7 +125,7 @@ Copyright (c) 2012 - Jeremy Long
         <logback.version>1.2.11</logback.version>
         
         <maven.api.version>3.1.0</maven.api.version>
-        <reporting.checkstyle-plugin.version>3.2.1</reporting.checkstyle-plugin.version>
+        <reporting.checkstyle-plugin.version>3.2.2</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>1.12.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -133,9 +133,9 @@ Copyright (c) 2012 - Jeremy Long
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
-        <maven-project-info-reports-plugin.version>3.4.2</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.4.3</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0</maven-surefire-report-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.4</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
@@ -156,7 +156,7 @@ Copyright (c) 2012 - Jeremy Long
         <commons-compress.version>1.23.0</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.8.2</maven-plugin-annotations.version>
         <maven-reporting-api.version>3.1.1</maven-reporting-api.version>    
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
@@ -166,7 +166,7 @@ Copyright (c) 2012 - Jeremy Long
         <groovy-all.version>2.4.21</groovy-all.version>
         <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
-        <jackson.version>2.14.2</jackson.version>
+        <jackson.version>2.15.0</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
         <surefireArgLine />
         
@@ -818,7 +818,7 @@ Copyright (c) 2012 - Jeremy Long
                     <dependency>
                         <groupId>se.bjurr.violations</groupId>
                         <artifactId>violations-lib</artifactId>
-                        <version>1.156.3</version>
+                        <version>1.156.4</version>
                     </dependency>
                 </dependencies>
                 <configuration>
