@@ -125,11 +125,11 @@ Copyright (c) 2012 - Jeremy Long
         <logback.version>1.2.11</logback.version>
         
         <maven.api.version>3.1.0</maven.api.version>
-        <reporting.checkstyle-plugin.version>3.2.2</reporting.checkstyle-plugin.version>
+        <reporting.checkstyle-plugin.version>3.3.0</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>1.12.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
-        <maven-dependency-plugin.version>3.5.0</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
@@ -143,7 +143,7 @@ Copyright (c) 2012 - Jeremy Long
         <jetbrains.annotations.version>24.0.1</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
-        <commons-io.version>2.11.0</commons-io.version>
+        <commons-io.version>2.12.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-text.version>1.10.0</commons-text.version>
         <commons-jcs-core.version>2.2.1</commons-jcs-core.version>
@@ -164,7 +164,7 @@ Copyright (c) 2012 - Jeremy Long
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <maven-artifact-transfer.version>0.13.1</maven-artifact-transfer.version>
         <groovy-all.version>2.4.21</groovy-all.version>
-        <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>3.0.0</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
         <jackson.version>2.15.0</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
@@ -309,7 +309,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
