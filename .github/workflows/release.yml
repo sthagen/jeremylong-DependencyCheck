@@ -185,13 +185,7 @@ jobs:
           prerelease: false
           draft: false
           body: |
-            ### Fixed
-
-             - NullPointerException in MSBuildAnalyzer (#5589)
-             - SQL Syntax for Oracle (#5590)
-             - Use `https://` URLs in report templates (#5582)
-
-            See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/64?closed=1).
+            Re-release of 8.3.0 as 8.3.1.
 
       - name: Upload CLI
         id: upload-release-cli
