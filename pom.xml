@@ -153,7 +153,7 @@ Copyright (c) 2012 - Jeremy Long
         <jmockit.version>1.49</jmockit.version>
         <mockito-core.version>4.11.0</mockito-core.version>
         <jsoup.version>1.16.1</jsoup.version>
-        <commons-compress.version>1.23.0</commons-compress.version>
+        <commons-compress.version>1.24.0</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
         <maven-plugin-annotations.version>3.9.0</maven-plugin-annotations.version>
@@ -237,7 +237,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.4.0</version>
+                    <version>3.4.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -1042,7 +1042,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-dbcp2</artifactId>
-                <version>2.9.0</version>
+                <version>2.10.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.package-url</groupId>
@@ -1052,7 +1052,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>us.springett</groupId>
                 <artifactId>cpe-parser</artifactId>
-                <version>2.0.2</version>
+                <version>2.0.3</version>
             </dependency>
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
