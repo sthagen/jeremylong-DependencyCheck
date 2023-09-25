@@ -130,7 +130,7 @@ Copyright (c) 2012 - Jeremy Long
         <doxia-module-markdown.version>1.12.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.4.5</maven-project-info-reports-plugin.version>
@@ -139,7 +139,7 @@ Copyright (c) 2012 - Jeremy Long
         <spotbugs.version>4.7.3</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.5</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
-        <versions-maven-plugin.version>2.16.0</versions-maven-plugin.version>
+        <versions-maven-plugin.version>2.16.1</versions-maven-plugin.version>
         <jetbrains.annotations.version>24.0.1</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
         <commons-cli.version>1.5.0</commons-cli.version>
@@ -720,7 +720,7 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version>
+                <version>3.10.0.2594</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -818,7 +818,7 @@ Copyright (c) 2012 - Jeremy Long
                     <dependency>
                         <groupId>se.bjurr.violations</groupId>
                         <artifactId>violations-lib</artifactId>
-                        <version>1.156.5</version>
+                        <version>1.156.6</version>
                     </dependency>
                 </dependencies>
                 <configuration>
