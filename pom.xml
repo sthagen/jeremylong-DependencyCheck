@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>8.4.3-SNAPSHOT</version>
+    <version>8.4.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -112,7 +112,7 @@ Copyright (c) 2012 - Jeremy Long
     </licenses>
     <properties>
         <!--reproducible build-->
-        <project.build.outputTimestamp>2023-10-22T10:35:45Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2023-11-15T10:23:34Z</project.build.outputTimestamp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.global.server>github</github.global.server>
@@ -134,7 +134,7 @@ Copyright (c) 2012 - Jeremy Long
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.4.5</maven-project-info-reports-plugin.version>
-        <maven-surefire-report-plugin.version>3.2.1</maven-surefire-report-plugin.version>
+        <maven-surefire-report-plugin.version>3.2.2</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <spotbugs.version>4.8.0</spotbugs.version>
         <spotbugs.maven.plugin.version>4.7.3.6</spotbugs.maven.plugin.version>
