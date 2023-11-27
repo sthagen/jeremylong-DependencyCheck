@@ -972,7 +972,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>io.github.jeremylong</groupId>
                 <artifactId>open-vulnerability-clients</artifactId>
-                <version>5.0.2</version>
+                <version>5.0.3</version>
             </dependency>
             <dependency>
                 <groupId>org.anarres.jdiagnostics</groupId>
@@ -1011,7 +1011,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>io.github.jeremylong</groupId>
                 <artifactId>jcs3-slf4j</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.5</version>
             </dependency>
             <dependency>
                 <groupId>commons-validator</groupId>
