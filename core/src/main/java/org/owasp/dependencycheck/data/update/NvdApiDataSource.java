@@ -17,10 +17,13 @@
  */
 package org.owasp.dependencycheck.data.update;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.github.jeremylong.openvulnerability.client.nvd.DefCveItem;
 import io.github.jeremylong.openvulnerability.client.nvd.NvdCveClient;
 import io.github.jeremylong.openvulnerability.client.nvd.NvdCveClientBuilder;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -41,6 +44,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.zip.GZIPOutputStream;
 import org.owasp.dependencycheck.Engine;
 import org.owasp.dependencycheck.data.nvdcve.CveDB;
 import org.owasp.dependencycheck.data.nvdcve.DatabaseException;
@@ -110,23 +114,30 @@ public class NvdApiDataSource implements CachedWebDataSource {
         return processApi();
     }
 
+    protected UrlData extractUrlData(String nvdDataFeedUrl) {
+        String url;
+        String pattern = null;
+        if (nvdDataFeedUrl.endsWith(".json.gz")) {
+            final int lio = nvdDataFeedUrl.lastIndexOf("/");
+            pattern = nvdDataFeedUrl.substring(lio + 1);
+            url = nvdDataFeedUrl.substring(0, lio);
+        } else {
+            url = nvdDataFeedUrl;
+        }
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        return new UrlData(url, pattern);
+    }
+
     private boolean processDatafeed(String nvdDataFeedUrl) throws UpdateException {
         boolean updatesMade = false;
         try {
             dbProperties = cveDb.getDatabaseProperties();
             if (checkUpdate()) {
-                String url;
-                String pattern = null;
-                if (nvdDataFeedUrl.endsWith(".json.gz")) {
-                    final int lio = nvdDataFeedUrl.lastIndexOf("/");
-                    pattern = nvdDataFeedUrl.substring(lio + 1);
-                    url = nvdDataFeedUrl.substring(0, lio);
-                } else {
-                    url = nvdDataFeedUrl;
-                }
-                if (!url.endsWith("/")) {
-                    url += "/";
-                }
+                final UrlData data = extractUrlData(nvdDataFeedUrl);
+                String url = data.getUrl();
+                String pattern = data.getPattern();
                 final Properties cacheProperties = getRemoteCacheProperties(url);
                 if (pattern == null) {
                     final String prefix = cacheProperties.getProperty("prefix", "nvdcve-");
@@ -265,14 +276,14 @@ public class NvdApiDataSource implements CachedWebDataSource {
     private boolean processApi() throws UpdateException {
         final ZonedDateTime lastChecked = dbProperties.getTimestamp(DatabaseProperties.NVD_API_LAST_CHECKED);
         final int validForHours = settings.getInt(Settings.KEYS.NVD_API_VALID_FOR_HOURS, 0);
-        if (cveDb.dataExists() && lastChecked != null && validForHours>0) {
+        if (cveDb.dataExists() && lastChecked != null && validForHours > 0) {
             // ms Valid = valid (hours) x 60 min/hour x 60 sec/min x 1000 ms/sec
             final long validForSeconds = validForHours * 60L * 60L;
             final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
             final Duration duration = Duration.between(lastChecked, now);
             final long difference = duration.getSeconds();
             if (difference < validForSeconds) {
-                LOGGER.info("Skipping the NVD API Update as it was completed within the last {} minutes", validForSeconds/60);
+                LOGGER.info("Skipping the NVD API Update as it was completed within the last {} minutes", validForSeconds / 60);
                 return false;
             }
         }
@@ -321,14 +332,21 @@ public class NvdApiDataSource implements CachedWebDataSource {
             int ctr = 0;
             try (NvdCveClient api = builder.build()) {
                 while (api.hasNext()) {
-                    final Collection<DefCveItem> items = api.next();
+                    Collection<DefCveItem> items = api.next();
                     max = api.getTotalAvailable();
                     if (ctr == 0) {
                         LOGGER.info(String.format("NVD API has %,d records in this update", max));
                     }
                     if (items != null && !items.isEmpty()) {
-                        final Future<NvdApiProcessor> f = processingExecutorService.submit(new NvdApiProcessor(cveDb, items));
+                        final ObjectMapper objectMapper = new ObjectMapper();
+                        objectMapper.registerModule(new JavaTimeModule());
+                        final File outputFile = settings.getTempFile("nvd-data-", ".jsonarray.gz");
+                        try (FileOutputStream fos = new FileOutputStream(outputFile);
+                                GZIPOutputStream out = new GZIPOutputStream(fos);) {
+                        objectMapper.writeValue(out, items);
+                        final Future<NvdApiProcessor> f = processingExecutorService.submit(new NvdApiProcessor(cveDb, outputFile));
                         submitted.add(f);
+                        }
                         ctr += 1;
                         if ((ctr % 5) == 0) {
                             final double percent = (double) (ctr * RESULTS_PER_PAGE) / max * 100;
@@ -559,5 +577,36 @@ public class NvdApiDataSource implements CachedWebDataSource {
         } catch (IOException ex) {
             throw new UpdateException("Invalid NVD Cache Properties file contents", ex);
         }
+    }
+
+    protected static class UrlData {
+
+        private final String url;
+
+        private final String pattern;
+
+        public UrlData(String url, String pattern) {
+            this.url = url;
+            this.pattern = pattern;
+        }
+
+        /**
+         * Get the value of pattern
+         *
+         * @return the value of pattern
+         */
+        public String getPattern() {
+            return pattern;
+        }
+
+        /**
+         * Get the value of url
+         *
+         * @return the value of url
+         */
+        public String getUrl() {
+            return url;
+        }
+
     }
 }
