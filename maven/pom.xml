@@ -20,7 +20,7 @@ Copyright (c) 2013 Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>9.1.1-SNAPSHOT</version>
+        <version>9.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>dependency-check-maven</artifactId>
     <packaging>maven-plugin</packaging>
@@ -29,7 +29,7 @@ Copyright (c) 2013 Jeremy Long. All Rights Reserved.
     <inceptionYear>2013</inceptionYear>
     <properties>
         <!-- upgrading has caused publishing errors -->
-        <version.maven-plugin-plugin>3.11.0</version.maven-plugin-plugin>
+        <version.maven-plugin-plugin>3.12.0</version.maven-plugin-plugin>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>

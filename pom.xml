@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long
 
     <groupId>org.owasp</groupId>
     <artifactId>dependency-check-parent</artifactId>
-    <version>9.1.1-SNAPSHOT</version>
+    <version>9.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -130,7 +130,7 @@ Copyright (c) 2012 - Jeremy Long
         <doxia-module-markdown.version>1.12.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>3.6.2</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
@@ -159,7 +159,7 @@ Copyright (c) 2012 - Jeremy Long
         <commons-compress.version>1.26.1</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <maven-plugin-annotations.version>3.10.2</maven-plugin-annotations.version>
+        <maven-plugin-annotations.version>3.12.0</maven-plugin-annotations.version>
         <maven-reporting-api.version>3.1.1</maven-reporting-api.version>    
         <org.apache.velocity.version>2.3</org.apache.velocity.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
@@ -1073,7 +1073,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency><!--upgrade transitive dependency due to reported vulns-->
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>4.0.0</version>
+                <version>4.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
