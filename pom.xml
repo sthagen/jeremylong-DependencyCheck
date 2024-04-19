@@ -312,7 +312,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.3.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1048,7 +1048,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>5.2.2</version>
+                <version>5.2.3</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>
