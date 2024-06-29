@@ -133,7 +133,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
-        <maven-project-info-reports-plugin.version>3.6.0</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.6.1</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>3.2.5</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <spotbugs.version>4.8.5</spotbugs.version>
@@ -169,7 +169,7 @@ Copyright (c) 2012 - Jeremy Long
         <groovy-all.version>2.4.21</groovy-all.version>
         <gmavenplus-plugin.version>3.0.2</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
-        <jackson.version>2.16.1</jackson.version>
+        <jackson.version>2.17.1</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
         <surefireArgLine />
         
@@ -220,7 +220,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.3.2</version>
+                    <version>3.4.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -255,7 +255,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.2.5</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
