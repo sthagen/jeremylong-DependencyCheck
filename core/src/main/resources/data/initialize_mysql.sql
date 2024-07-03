@@ -159,7 +159,7 @@ CREATE PROCEDURE update_vulnerability (
     IN p_v4automatable VARCHAR(15), IN p_v4recovery VARCHAR(15), IN p_v4valueDensity VARCHAR(15), IN p_v4vulnerabilityResponseEffort VARCHAR(15), 
     IN p_v4providerUrgency VARCHAR(15), IN p_v4baseScore DECIMAL(3,1), IN p_v4baseSeverity VARCHAR(15), IN p_v4threatScore DECIMAL(3,1), 
     IN p_v4threatSeverity VARCHAR(15), IN p_v4environmentalScore DECIMAL(3,1), IN p_v4environmentalSeverity VARCHAR(15),
-    IN p_v4source VARCHAR(15), IN p_v4type VARCHAR(15))
+    IN p_v4source VARCHAR(50), IN p_v4type VARCHAR(15))
 BEGIN
 DECLARE vulnerabilityId INT DEFAULT 0;
 
@@ -186,7 +186,7 @@ IF vulnerabilityId > 0 THEN
         `v3ExploitabilityScore`=p_v3ExploitabilityScore, `v3ImpactScore`=p_v3ImpactScore, `v3AttackVector`=p_v3AttackVector, 
         `v3AttackComplexity`=p_v3AttackComplexity, `v3PrivilegesRequired`=p_v3PrivilegesRequired, `v3UserInteraction`=p_v3UserInteraction, 
         `v3Scope`=p_v3Scope, `v3ConfidentialityImpact`=p_v3ConfidentialityImpact, `v3IntegrityImpact`=p_v3IntegrityImpact, 
-        `v3AvailabilityImpact`=p_v3AvailabilityImpact, `v3BaseScore`=p_v3BaseScore, `v3BaseSeverity`=p_v3BaseSeverity, `v3Version`=p_v3Version
+        `v3AvailabilityImpact`=p_v3AvailabilityImpact, `v3BaseScore`=p_v3BaseScore, `v3BaseSeverity`=p_v3BaseSeverity, `v3Version`=p_v3Version,
         `v4version`=p_v4version, `v4attackVector`=p_v4attackVector, `v4attackComplexity`=p_v4attackComplexity, 
         `v4attackRequirements`=p_v4attackRequirements, `v4privilegesRequired`=p_v4privilegesRequired, 
         `v4userInteraction`=p_v4userInteraction, `v4vulnConfidentialityImpact`=p_v4vulnConfidentialityImpact, 
@@ -379,4 +379,4 @@ GRANT EXECUTE ON PROCEDURE dependencycheck.merge_knownexploited TO 'dcuser';
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON dependencycheck.* TO 'dcuser';
 
-INSERT INTO properties(id, value) VALUES ('version', '5.4');
+INSERT INTO properties(id, value) VALUES ('version', '5.5');
