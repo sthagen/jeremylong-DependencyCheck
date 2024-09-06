@@ -124,7 +124,7 @@ Copyright (c) 2012 - Jeremy Long
         <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.11</logback.version>
         
-        <maven.api.version>3.1.0</maven.api.version>
+        <maven.api.version>3.6.3</maven.api.version>
         <reporting.checkstyle-plugin.version>3.4.0</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>1.12.0</doxia-module-markdown.version>
@@ -138,7 +138,7 @@ Copyright (c) 2012 - Jeremy Long
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <spotbugs.version>4.8.5</spotbugs.version>
         <spotbugs.maven.plugin.version>4.8.6.2</spotbugs.maven.plugin.version>
-        <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
+        <taglist-maven-plugin.version>3.1.0</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
         <com.h2database.version>2.1.214</com.h2database.version>
@@ -688,7 +688,7 @@ Copyright (c) 2012 - Jeremy Long
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.11.0.3922</version>
+                <version>4.0.0.4121</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
