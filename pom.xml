@@ -118,7 +118,7 @@ Copyright (c) 2012 - Jeremy Long
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <github.global.server>github</github.global.server>
         
-        <apache.lucene.version>9.11.1</apache.lucene.version>
+        <apache.lucene.version>9.12.0</apache.lucene.version>
         <apache.ant.version>1.10.15</apache.ant.version>
         
         <!-- upgrading slf4j and logback can cause issues ;) https://github.com/jeremylong/DependencyCheck/issues/4846 -->
@@ -126,7 +126,7 @@ Copyright (c) 2012 - Jeremy Long
         <logback.version>1.2.11</logback.version>
         
         <maven.api.version>3.6.3</maven.api.version>
-        <reporting.checkstyle-plugin.version>3.4.0</reporting.checkstyle-plugin.version>
+        <reporting.checkstyle-plugin.version>3.5.0</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-module-markdown.version>2.0.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -138,7 +138,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-surefire-report-plugin.version>3.5.0</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <spotbugs.version>4.8.5</spotbugs.version>
-        <spotbugs.maven.plugin.version>4.8.6.3</spotbugs.maven.plugin.version>
+        <spotbugs.maven.plugin.version>4.8.6.4</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.1.0</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
         <jetbrains.annotations.version>25.0.0</jetbrains.annotations.version>
