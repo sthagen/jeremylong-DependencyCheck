@@ -143,8 +143,8 @@ Copyright (c) 2012 - Jeremy Long
         <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
         <jetbrains.annotations.version>25.0.0</jetbrains.annotations.version>
         <com.h2database.version>2.3.232</com.h2database.version>
-        <commons-cli.version>1.8.0</commons-cli.version>
-        <commons-io.version>2.16.1</commons-io.version>
+        <commons-cli.version>1.9.0</commons-cli.version>
+        <commons-io.version>2.17.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <commons-text.version>1.12.0</commons-text.version>
         <httpcomponents.version>5.3.1</httpcomponents.version>
@@ -1046,7 +1046,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency><!--upgrade transitive dependency due to reported vulns-->
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>4.0.1</version>
+                <version>4.0.2</version>
             </dependency>
             <dependency>
                 <!--
