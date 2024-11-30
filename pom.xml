@@ -144,7 +144,7 @@ Copyright (c) 2012 - Jeremy Long
         <jetbrains.annotations.version>26.0.1</jetbrains.annotations.version>
         <com.h2database.version>2.3.232</com.h2database.version>
         <commons-cli.version>1.9.0</commons-cli.version>
-        <commons-io.version>2.17.0</commons-io.version>
+        <commons-io.version>2.18.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <commons-text.version>1.12.0</commons-text.version>
         <httpcomponents.version>5.4.1</httpcomponents.version>
@@ -156,7 +156,7 @@ Copyright (c) 2012 - Jeremy Long
         <junit.version>4.13.2</junit.version>
         <hamcrest.version>3.0</hamcrest.version>
         <mockito-core.version>5.12.0</mockito-core.version>
-        <jsoup.version>1.18.1</jsoup.version>
+        <jsoup.version>1.18.2</jsoup.version>
         <commons-compress.version>1.27.1</commons-compress.version>
         <org.apache.maven.shared.file-management.version>3.1.0</org.apache.maven.shared.file-management.version>
         <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
@@ -170,7 +170,7 @@ Copyright (c) 2012 - Jeremy Long
         <groovy-all.version>2.4.21</groovy-all.version>
         <gmavenplus-plugin.version>4.0.1</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
-        <jackson.version>2.18.1</jackson.version>
+        <jackson.version>2.18.2</jackson.version>
         <!--necassary for some IDEs to be able to execute test cases (Netbeans)-->
         <surefireArgLine />
     </properties>
