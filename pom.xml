@@ -131,7 +131,7 @@ Copyright (c) 2012 - Jeremy Long
         <doxia-module-markdown.version>2.0.0</doxia-module-markdown.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>3.11.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.8.0</maven-project-info-reports-plugin.version>
@@ -146,7 +146,7 @@ Copyright (c) 2012 - Jeremy Long
         <commons-cli.version>1.9.0</commons-cli.version>
         <commons-io.version>2.18.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
-        <commons-text.version>1.12.0</commons-text.version>
+        <commons-text.version>1.13.0</commons-text.version>
         <httpcomponents.version>5.4.1</httpcomponents.version>
         <!-- note that logging will be noisy and broken until we upgrade to 3.2
             See https://issues.apache.org/jira/browse/JCS-232 and
@@ -338,7 +338,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-invoker-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <version>3.9.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.codehaus.groovy</groupId>
@@ -1285,7 +1285,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>33.3.1-jre</version>
+                <version>33.4.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>com.hankcs</groupId>
