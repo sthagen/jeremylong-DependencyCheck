@@ -271,7 +271,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.13</version>
+                    <version>1.7.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1011,7 +1011,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>5.4.1</version>
+                <version>5.5.0</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>
