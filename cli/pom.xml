@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>11.1.2-SNAPSHOT</version>
+        <version>12.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-cli</artifactId>
@@ -151,6 +151,15 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.jeremylong</groupId>
+            <artifactId>jcs3-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <!-- not visible in imports due to method chaining, but App code uses classes from this library -->
+            <groupId>io.github.jeremylong</groupId>
+            <artifactId>open-vulnerability-clients</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.ant</groupId>
