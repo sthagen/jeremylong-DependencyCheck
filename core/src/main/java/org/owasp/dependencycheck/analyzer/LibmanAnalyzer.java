@@ -35,11 +35,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonException;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonException;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -148,7 +148,7 @@ public class LibmanAnalyzer extends AbstractFileTypeAnalyzer {
      * Performs the analysis.
      *
      * @param dependency the dependency to analyze
-     * @param engine     the engine
+     * @param engine the engine
      * @throws AnalysisException when there's an exception during analysis
      */
     @Override
@@ -209,7 +209,7 @@ public class LibmanAnalyzer extends AbstractFileTypeAnalyzer {
                 child.setVersion(version);
 
                 if (vendor != null) {
-                    child.addEvidence(EvidenceType.VENDOR, FILE_NAME, "vendor", vendor, Confidence.HIGHEST);    
+                    child.addEvidence(EvidenceType.VENDOR, FILE_NAME, "vendor", vendor, Confidence.HIGHEST);
                 }
                 child.addEvidence(EvidenceType.VENDOR, FILE_NAME, "name", name, Confidence.HIGH);
                 child.addEvidence(EvidenceType.PRODUCT, FILE_NAME, "name", name, Confidence.HIGHEST);

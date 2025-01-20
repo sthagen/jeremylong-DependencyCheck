@@ -33,12 +33,12 @@ Copyright (c) 2014 - Jeremy Long. All Rights Reserved.
         <tag>v6.4.1</tag>
     </scm>
     <properties>
-        <findbugs.onlyAnalyze>org.owasp.dependencycheck.utils.*</findbugs.onlyAnalyze>
+        <spotbugs.onlyAnalyze>org.owasp.dependencycheck.utils.*</spotbugs.onlyAnalyze>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <artifactId>jakarta.json</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

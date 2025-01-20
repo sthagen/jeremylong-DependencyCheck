@@ -20,12 +20,12 @@ package org.owasp.dependencycheck.data.composer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonException;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.stream.JsonParsingException;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonException;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.stream.JsonParsingException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,7 @@ public class ComposerLockParser {
      * Creates a ComposerLockParser from a JsonReader and an InputStream.
      *
      * @param inputStream the InputStream to parse
+     * @param skipDev whether to skip dev dependencies
      */
     public ComposerLockParser(InputStream inputStream, boolean skipDev) {
         LOGGER.debug("Creating a ComposerLockParser");
