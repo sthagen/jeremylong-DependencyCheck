@@ -13,11 +13,6 @@
             <id>itext</id>
             <url>https://repo.itextsupport.com/releases</url>
         </repository>
-        <repository>
-            <id>spring</id>
-            <name>spring</name>
-            <url>https://repo.spring.io/release/</url>
-        </repository>
 
         <repository>
             <name>mavengoogle</name>
@@ -53,6 +48,11 @@
             <id>gradle</id>
             <name>gradle</name>
             <url>https://plugins.gradle.org/m2/</url>
+        </repository>
+        <repository>
+            <id>splunk-artifactory</id>
+            <name>Splunk Releases</name>
+            <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
         </repository>
         <repository>
             <id>vaadin-addon</id>
