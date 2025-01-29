@@ -1,5 +1,13 @@
 # Change Log
 
+## [Version 12.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v12.0.1) (2025-01-29)
+
+- fix: correct JSON report error (#7350)
+- fix: some compatability issues in the gitlab report (#7349)
+- fix: ArtifactoryAnalyzer updated to use the HTTPClient5-based Downloader and skip unusable results (#7293)
+- chore: allow messages via EngineVersionCheck (#7353)
+- chore: switch from javax.json to jakarta.json (#7326)
+
 ## [Version 12.0.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v12.0.1) (2025-01-19)
 
 - docs: Fix OSS Index Maven config documentation (#7322)
