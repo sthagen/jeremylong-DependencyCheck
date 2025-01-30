@@ -27,7 +27,7 @@ Copyright (c) 2017 Jeremy Long. All Rights Reserved.
     <packaging>jar</packaging>
     <properties>
         <!--reproducible build-->
-        <project.build.outputTimestamp>2025-01-19T13:21:07Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2025-01-29T11:57:02Z</project.build.outputTimestamp>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/jeremylong/DependencyCheck.git</connection>

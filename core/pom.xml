@@ -229,6 +229,11 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-utils</artifactId>
             <version>${project.parent.version}</version>
@@ -506,9 +511,6 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
                             <version>${maven-dependency-plugin.version}</version>
                             <configuration>
                                 <usedDependencies combine.children="append">
-                                    <!-- logback is our logging implementation during test and is test-scoped due to a lack of a
-                                    test-runtime scope - it should be considered 'used' in the context of dependency:analyze-report -->
-                                    <usedDependency>ch.qos.logback:logback-classic</usedDependency>
                                     <!-- dependencies to be copied for use in unit/integration testcases are, due to
                                     lack of a test-runtime scope, configured as test-scoped / optional and should be
                                     considered used for dependency:analyze-report -->
