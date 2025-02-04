@@ -13,5 +13,5 @@ Permission to modify and redistribute is granted under the terms of the Apache 2
 Dependency-Check makes use of several other open source libraries. Please see the [NOTICE.txt][notices] file for more information.
 
 
-  [wiki]: https://github.com/jeremylong/DependencyCheck/wiki
-  [notices]: https://github.com/jeremylong/DependencyCheck/blob/main/NOTICE.txt
+  [wiki]: https://github.com/dependency-check/DependencyCheck/wiki
+  [notices]: https://github.com/dependency-check/DependencyCheck/blob/main/NOTICE.txt

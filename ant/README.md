@@ -14,6 +14,6 @@ Copyright & License
 
 Dependency-Check is Copyright (c) 2012-2014 Jeremy Long. All Rights Reserved.
 
-Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://github.com/jeremylong/DependencyCheck/blob/main/LICENSE.txt) file for the full license.
+Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://github.com/dependency-check/DependencyCheck/blob/main/LICENSE.txt) file for the full license.
 
-Dependency-Check-Ant makes use of other open source libraries. Please see the [NOTICE.txt](https://github.com/jeremylong/DependencyCheck/blob/main/ant/NOTICE.txt) file for more information.
+Dependency-Check-Ant makes use of other open source libraries. Please see the [NOTICE.txt](https://github.com/dependency-check/DependencyCheck/blob/main/ant/NOTICE.txt) file for more information.

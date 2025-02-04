@@ -1,6 +1,6 @@
 # Change Log
 
-## [Version 12.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v12.0.2) (2025-01-29)
+## [Version 12.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.2) (2025-01-29)
 
 - fix: correct JSON report error (#7350)
 - fix: some compatability issues in the gitlab report (#7349)
@@ -8,9 +8,9 @@
 - chore: allow messages via EngineVersionCheck (#7353)
 - chore: switch from javax.json to jakarta.json (#7326)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/93?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/93?closed=1).
 
-## [Version 12.0.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v12.0.1) (2025-01-19)
+## [Version 12.0.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.1) (2025-01-19)
 
 - docs: Fix OSS Index Maven config documentation (#7322)
 - Fix OSS Index Maven config documentation
@@ -25,9 +25,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: Correct nonProxyHosts support when no sys properties set
 - chore(docs): Correct analyzers config example to use Gradle dot-syntax
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/92?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/92?closed=1). 
 
-## [Version 12.0.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v12.0.0) (2025-01-11)
+## [Version 12.0.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.0) (2025-01-11)
 
 - feat: report on CVSS v4 (#7204)
 - feat: show from which dependency the CVE comes in failure report (#7224)
@@ -41,9 +41,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: Make the HTTP-Client use pre-emptive authentication for configured server credentials and extend HTTPClient usage to Nexus search
 - fix: Tranform into UTC the last modified date from database (#7222)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/91?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/91?closed=1). 
 
-## [Version 11.1.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v11.1.1) (2024-12-04)
+## [Version 11.1.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v11.1.1) (2024-12-04)
 
 - fix: re-enable issue locking (#7220)
 - fix: add username/password properties to be able to authenticate for central.content.url and analyzer.central.url again (#7169)
@@ -56,9 +56,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - docs: update documentation for Gradle plugin (#7143)
 - docs: improve false positive issue templat (#7130)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/90?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/90?closed=1). 
 
-## [Version 11.1.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v11.1.0) (2024-10-30)
+## [Version 11.1.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v11.1.0) (2024-10-30)
 
 - feat: PHP Composer Analyzer now scans packages-dev by default (#7114)
   - Users can configure if packages-dev should be skipped
@@ -68,9 +68,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - docs: add missing documentation for the MS Build Analyzer (#7113)
 - docs: Document the breaking change for Maven plugin as reporting plugin (#7079)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/89?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/89?closed=1). 
 
-## [Version 11.0.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v11.0.0) (2024-10-21)
+## [Version 11.0.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v11.0.0) (2024-10-21)
 
 - **breaking change**: Switch from JMockit to Mockito & build target to Java 11 (#6922)
   - dependency-check now requires a minimum of Java 11.0 to run
@@ -98,9 +98,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - docs: Fixup javadoc warnings (#6995)
 - chore: Replace use of several deprecated methods/classes by their successors (#6933)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/87?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/87?closed=1). 
 
-## [Version 10.0.4](https://github.com/jeremylong/DependencyCheck/releases/tag/v10.0.4) (2024-09-01)
+## [Version 10.0.4](https://github.com/dependency-check/DependencyCheck/releases/tag/v10.0.4) (2024-09-01)
 
  - build(deps): exclude unused dependency (#6916)
  - fix: improve regex (#6917)
@@ -112,9 +112,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
  - fix: correct percentage calculation (#6868)
  - docs: remove old recommendation (#6860)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/88?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/88?closed=1). 
 
-## [Version 10.0.3](https://github.com/jeremylong/DependencyCheck/releases/tag/v10.0.3) (2024-07-16)
+## [Version 10.0.3](https://github.com/dependency-check/DependencyCheck/releases/tag/v10.0.3) (2024-07-16)
 
 - feat: Enable configuration of a lower resultsPerPage on NVD API (#6843)
 - build(deps): bump open-vulnerability-clients from 6.1.6 to 6.1.7 (#6848)
@@ -123,9 +123,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - build(deps): bump org.apache.maven.plugins:maven-checkstyle-plugin from 3.3.1 to 3.4.0 (#6815)
 - build(deps): bump golang from 1.22.4-alpine to 1.22.5-alpine (#6805)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/84?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/84?closed=1). 
 
-## [Version 10.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v10.0.2) (2024-07-06)
+## [Version 10.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v10.0.2) (2024-07-06)
 
 **Mandatory Upgrade** - due to older versions of dependency-check causing numerous, spurious requests that end in processing failures, this upgrade is mandatory so that the NVD can differentiate valid requests and block the old clients.
 
@@ -137,9 +137,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: add hint to resolve false negative (#6802)
 - chore: update configure (#6794)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/86?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/86?closed=1). 
 
-## [Version 10.0.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v10.0.1) (2024-07-02)
+## [Version 10.0.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v10.0.1) (2024-07-02)
 
 - build(deps): bump open-vulnerability-client (#6772)
 - fix: remove debug logging (#6770)
@@ -147,22 +147,22 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: mssql column name and version (#6761)
 - docs: update supported versions (#6771)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/85?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/85?closed=1). 
 
-## [Version 10.0.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v10.0.0) (2024-07-01)
+## [Version 10.0.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v10.0.0) (2024-07-01)
 
 - **breaking change**: upgrade to dotnet 8.0 (#6580)
   - Users of the AssemblyAnalyzer must upgrade/utilize dotnet 8 to analyze assemblies
 - feat: fix the NVD API related errors by adding cvssV4 support (#6756)
-   - **breaking changes**: anyone utilizing a centralized database will need to upgrade the schema; see changes in [PR #6756](https://github.com/jeremylong/DependencyCheck/pull/6756/files#diff-ca432c4b41d39caa84d140e06694b09c7e6394c8a2db72ba27516dc77ee3bd67)
+   - **breaking changes**: anyone utilizing a centralized database will need to upgrade the schema; see changes in [PR #6756](https://github.com/dependency-check/DependencyCheck/pull/6756/files#diff-ca432c4b41d39caa84d140e06694b09c7e6394c8a2db72ba27516dc77ee3bd67)
 - fix: avoid escaping unnecessary chars in HTML report suppression regexes (#6749)
 - fix: #6688 Trim version number when parsin POM (#6705)
 - fix: change request if lockfile is file v3 (#6690)
 - fix: skip pyproject.toml unless it contains `tool.poetry` before ensuring lockfiles (#6681)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/83?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/83?closed=1). 
 
-## [Version 9.2.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.2.0) (2024-05-15)
+## [Version 9.2.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.2.0) (2024-05-15)
 
  - docs: update logo per intellj (#6660)
  - feat: Carthage analyzer (#6614)
@@ -170,9 +170,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
  - feat: Support Package.swift version 3 Specification (#6578)
  - chore: Update the packaged suppressions to include new hosted suppressions (#6567)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/82?closed=1). 
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/82?closed=1). 
 
-## [Version 9.1.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.1.0) (2024-03-31)
+## [Version 9.1.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.1.0) (2024-03-31)
 
 - feat: Add v2 support for maven_install.json (#6528)
 - build(deps): bump open-vulnerability-client (#6554)
@@ -181,9 +181,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - build(deps): bump org.jsoup:jsoup from 1.16.2 to 1.17.2 (#6362)
 - build(deps): bump golang from 1.21.5-alpine to 1.22.1-alpine (#6506)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/81?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/81?closed=1).
 
-## [Version 9.0.10](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.10) (2024-03-15)
+## [Version 9.0.10](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.10) (2024-03-15)
 
 - fix: #4321 Suppress redis server CVEs for client libraries (#4321) (#6489)
 - fix: bump commons-compress from 1.25.0 to 1.26.0 to fix CVE-2024-25710 and CVE-2024-26308 (#6492)
@@ -193,9 +193,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: prevent NPE in bundler audit (#6462)
 - fix: #6441 Improve suppression rule to not restrict to a single version (#6442)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/80?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/80?closed=1).
 
-## [Version 9.0.9](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.9) (2024-01-17)
+## [Version 9.0.9](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.9) (2024-01-17)
 
 - fix: for #6374 to delete non-empty directories (#6375)
 - fix: NoSuchMethodError closeQuietly(java.io.Closeable[]) (#6377)
@@ -203,9 +203,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - docs: Document default for CLI --data (#6359)
 - docs: document gradle build (#6371)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/79?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/79?closed=1).
 
-## [Version 9.0.8](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.8) (2024-01-06)
+## [Version 9.0.8](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.8) (2024-01-06)
 
 - fix: favor stability over performance (#6349)
 - chore: replace commons-io with core java calls (#6343)
@@ -215,18 +215,18 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: ensure open handles will not leak on errors (#6326)
 - fix: improve error reporting (#6324)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/78?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/78?closed=1).
 
-## [Version 9.0.7](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.7) (2023-12-18)
+## [Version 9.0.7](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.7) (2023-12-18)
 
 - docs: document insecure configuration for GHSA-qqhq-8r2c-c3f5 (#6315)
 - fix: improve memory usage on NVD update (#6321)
 - fix: skip pyproject.toml unless it contains `tool.poetry` (#6316)
 - fix: resolve build error that may cause an issue on some JDK versions (#6312)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/77?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/77?closed=1).
 
-## [Version 9.0.6](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.6) (2023-12-15)
+## [Version 9.0.6](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.6) (2023-12-15)
 
 - build: bump open-vulnerability-clients@5.1.1 (#6308)
 - fix: mask nvd.api.key in logs; see GHSA-qqhq-8r2c-c3f5 (#6307)
@@ -235,9 +235,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: stream NVD data via Jackson to reduce memory footprint (#6275)
 - docs: document github action caching (#6301)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/76?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/76?closed=1).
 
-## [Version 9.0.5](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.5) (2023-12-13)
+## [Version 9.0.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.5) (2023-12-13)
 
 - fix: make NVD API endpoint configurable (#6287)
 - fix: synch last modified timestamp for NVD API (#6281)
@@ -250,18 +250,18 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: use BIT for Oracle DB instead of Boolean when calling prepared statements (#6264)
 - fix: showing all reference tags in reports (#6259)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/75?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/75?closed=1).
 
-## [Version 9.0.4](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.4) (2023-12-08)
+## [Version 9.0.4](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.4) (2023-12-08)
 
 - fix: utilize maven proxy if present (#6255)
 - fix: allow api key in cli to be quoted (#6253)
 - fix: use correct maven plugin reporting plugin (#6244)
 - fix: correct trailing comma in JSON report (#6245)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/74?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/74?closed=1).
 
-## [Version 9.0.3](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.3) (2023-12-06)
+## [Version 9.0.3](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.3) (2023-12-06)
 
 - fix: use Java properties for proxy configuration (#6238)
 - docs: update proxy configuration documentation (#6237)
@@ -277,9 +277,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - fix: correct name on reference links in report (#6205)
 - fix: flaws int the gitlab report (#6193)
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/73?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/73?closed=1).
 
-## [Version 9.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v9.0.2) (2023-12-01)
+## [Version 9.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v9.0.2) (2023-12-01)
 
 - fix: remove virtual match string on NVD API Request (#6177)
 - fix: correct meta data in report after switching the NVD API (#6154)
@@ -1061,7 +1061,7 @@ See the full listing of [resolved issues](https://github.com/jeremylong/Dependen
 - Added two experimental analyzers to support Golang.
 - Updated the suppression schema to support suppressing OSS Index, RetireJS, NSP vulnerabilities, etc.
   - The HTML report now uses the 1.3 suppression schema by default to generate suppression rules.
-  - See the updated examples on https://jeremylong.github.io/DependencyCheck/general/suppression.html.
+  - See the updated examples on https://dependency-check.github.io/DependencyCheck/general/suppression.html.
 - Added optional configuration to add credentials to the OSS Index analysis.
 - Resolved issues when Oracle or MySQL were used as a centralized database in 5.0.0.
 
@@ -1283,12 +1283,12 @@ See the full listing of [resolved issues](https://github.com/jeremylong/Dependen
 - Excess white space has been removed from the XML and HTML reports; the JSON report is still pretty printed (a future release will convert this to a configurable option)
 - Better error reporting
 - Changed to use commons-text instead of commons-lang3 as a portion of commons-lang3 was moved to commonts-text
-- Added more flexible suppression rules with the introduction of the `until` attribute (see [#1145](https://github.com/jeremylong/DependencyCheck/issues/1145) and [dependency-suppression.1.2.xsd](https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd)
+- Added more flexible suppression rules with the introduction of the `until` attribute (see [#1145](https://github.com/jeremylong/DependencyCheck/issues/1145) and [dependency-suppression.1.2.xsd](https://dependency-check.github.io/DependencyCheck/dependency-suppression.1.2.xsd)
 
 ### Fixed
 
 - Unsafe unzip operations ([zip slip](https://github.com/snyk/zip-slip-vulnerability)), as reported by the Snyk Security Research Team, have been corrected. CVE-2018-12036 allows attackers to write to arbitrary files via a crafted archive that holds directory traversal filenames.
-- The dependency-check-maven plugin no longer uses the [Central Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/central-analyzer.html) by default
+- The dependency-check-maven plugin no longer uses the [Central Analyzer](https://dependency-check.github.io/DependencyCheck/analyzers/central-analyzer.html) by default
 - Updated dependency-check-maven so that it will not fail when your multi-module build has dependencies that have not yet been built in the reactor (See [#740](https://github.com/jeremylong/DependencyCheck/issues/740))
   - Note if the required dependency has not yet been built in the reactor and the dependency is available in a configured repository dependency-check-maven, as expected, would pull the dependency from the repository for analysis.
 - Minor documentation updates
