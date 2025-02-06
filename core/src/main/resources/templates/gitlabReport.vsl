@@ -25,7 +25,7 @@
             },
 
             ## optional properties
-            "url": "https://github.com/jeremylong/DependencyCheck/"
+            "url": "https://github.com/dependency-check/DependencyCheck/"
         },
 
         "end_time": "$enc.json($scanDateGitLab)",
