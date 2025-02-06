@@ -1478,7 +1478,7 @@
     </suppress>
     <suppress base="true">
         <notes><![CDATA[
-        False positives found while investigating https://github.com/jeremylong/dependency-check-gradle/issues/103
+        False positives found while investigating https://github.com/dependency-check/dependency-check-gradle/issues/103
         ]]></notes>
         <gav regex="true">^com\.amazonaws:aws-android-sdk-cognitoidentityprovider-asf:.*$</gav>
         <cpe>cpe:/a:android:android_sdk</cpe>

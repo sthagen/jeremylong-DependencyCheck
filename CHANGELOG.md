@@ -879,30 +879,30 @@ See the full listing of [changes](https://github.com/dependency-check/Dependency
 
 ### Changed
 
-- Added SARIF file format per [#3081](https://github.com/jeremylong/DependencyCheck/issues/3081).
-- Added support for Yarn per [#3063](https://github.com/jeremylong/DependencyCheck/pull/3063).
+- Added SARIF file format per [#3081](https://github.com/dependency-check/DependencyCheck/issues/3081).
+- Added support for Yarn per [#3063](https://github.com/dependency-check/DependencyCheck/pull/3063).
 - False positive reduction and minor bug fixes.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/20?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/20?closed=1).
 
-## [Version 6.0.5](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.5) (2021-01-07)
+## [Version 6.0.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.5) (2021-01-07)
 
 ### Changed
 
 - Added missing command line arguments per #3028 and #3035.
 - False positive reduction and minor bug fixes.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/19?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/19?closed=1).
 
-## [Version 6.0.4](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.4) (2020-12-31)
+## [Version 6.0.4](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.4) (2020-12-31)
 
 ### Changed
 
 - Minor bug fixes and reduction of false positives.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/18?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/18?closed=1).
 
-## [Version 6.0.3](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.3) (2020-11-03)
+## [Version 6.0.3](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.3) (2020-11-03)
 
 ### Changed
 
@@ -922,21 +922,21 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - Support for external Oracle databases has been add for the 6.x releases (see #2899)
 - Resolved several reported false positives.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/17?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/17?closed=1).
 
-## [Version 6.0.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.2) (2020-09-27)
+## [Version 6.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.2) (2020-09-27)
 
 ### Changed
 
-- The project is migrating from hosting the release archives on Bintray and moving them to Github under the assets for each [release](https://github.com/jeremylong/DependencyCheck/releases)
+- The project is migrating from hosting the release archives on Bintray and moving them to Github under the assets for each [release](https://github.com/dependency-check/DependencyCheck/releases)
   - **Please update any automation you have to point to the new location.**
 - Npm Audit Analyzer now correctly skips dev dependencies (`--nodeAuditSkipDevDependencies`); see #2482.
 - GoLang Analyzer now scans transitive dependencies; see #2680.
 - Several bug fixes found in 6.0.1.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/16?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/16?closed=1).
 
-## [Version 6.0.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.1) (2020-09-13)
+## [Version 6.0.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.1) (2020-09-13)
 
 ### Changed
 
@@ -945,9 +945,9 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
 - Fixed the database path for the Ant and Gradle plugins.
 - Added locking around the RetireJS updates to resolve read/write conflicts in CI environments.
 
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/15?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/15?closed=1).
 
-## [Version 6.0.0](https://github.com/jeremylong/DependencyCheck/releases/tag/v6.0.0) (2020-09-07)
+## [Version 6.0.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v6.0.0) (2020-09-07)
 
 ### Changed
 
@@ -957,21 +957,21 @@ See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/
   - Improve the CVSS data, when available, per #2547
   - Improve the way that ecosystems are determined
   - Improve the update performance of external databases
-- Users with an **external Oracle** database will not be able to upgrade as https://github.com/jeremylong/DependencyCheck/issues/2755
+- Users with an **external Oracle** database will not be able to upgrade as https://github.com/dependency-check/DependencyCheck/issues/2755
   has not been resolved - as such, version 6.0.0 does not support Oracle.
 - Users mirroring the NVD - ODC 6.0.0 requires the use of the version 1.1 data feeds
   - please ensure you are using 1.1 not the 1.0 data feed.
   
-See the full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/14?closed=1).
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/14?closed=1).
 
-## [Version 5.3.2](https://github.com/jeremylong/DependencyCheck/releases/tag/v5.3.2) (2020-03-26)
+## [Version 5.3.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v5.3.2) (2020-03-26)
 
 ### Changed
 
 - Several bug fixes
-- Full listing of [changes](https://github.com/jeremylong/DependencyCheck/milestone/13?closed=1).
+- Full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/13?closed=1).
 
-## [Version 5.3.1](https://github.com/jeremylong/DependencyCheck/releases/tag/v5.3.1) (2020-03-10)
+## [Version 5.3.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v5.3.1) (2020-03-10)
 
 ### Changed
 

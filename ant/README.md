@@ -6,7 +6,7 @@ performed are a "best effort" and as such, there could be false positives as wel
 vulnerabilities in 3rd party components is a well-known problem and is currently documented in the 2021 OWASP
 Top 10 as [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/).
 
-Documentation and links to production binary releases can be found on the [github pages](http://jeremylong.github.io/DependencyCheck/dependency-check-ant/index.html).
+Documentation and links to production binary releases can be found on the [github pages](https://dependency-check.github.io/DependencyCheck/dependency-check-ant/index.html).
 
 
 Copyright & License

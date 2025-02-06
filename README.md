@@ -6,7 +6,7 @@
 
 Dependency-Check is a Software Composition Analysis (SCA) tool that attempts to detect publicly disclosed vulnerabilities contained within a project's dependencies. It does this by determining if there is a Common Platform Enumeration (CPE) identifier for a given dependency. If found, it will generate a report linking to the associated CVE entries.
 
-Documentation and links to production binary releases can be found on the [github pages](http://jeremylong.github.io/DependencyCheck/). Additionally, more information about the architecture and ways to extend dependency-check can be found on the [wiki].
+Documentation and links to production binary releases can be found on the [github pages](https://dependency-check.github.io/DependencyCheck). Additionally, more information about the architecture and ways to extend dependency-check can be found on the [wiki].
 
 ## Notice
 
@@ -104,7 +104,7 @@ For instructions on the use of the Jenkins plugin please see the [OWASP Dependen
 ### Command Line
 
 More detailed instructions can be found on the
-[dependency-check github pages](http://jeremylong.github.io/DependencyCheck/dependency-check-cli/).
+[dependency-check github pages](https://dependency-check.github.io/DependencyCheck/dependency-check-cli/).
 The latest CLI can be downloaded from github in the [releases section](https://github.com/dependency-check/DependencyCheck/releases).
 
 Downloading the latest release:
@@ -133,7 +133,7 @@ $ dependency-check --out . --scan [path to jar files to be scanned]
 
 ### Maven Plugin
 
-More detailed instructions can be found on the [dependency-check-maven github pages](http://jeremylong.github.io/DependencyCheck/dependency-check-maven).
+More detailed instructions can be found on the [dependency-check-maven github pages](https://dependency-check.github.io/DependencyCheck/dependency-check-maven).
 By default, the plugin is tied to the `verify` phase (i.e. `mvn verify`). Alternatively,
 one can directly invoke the plugin via `mvn org.owasp:dependency-check-maven:check`.
 
@@ -165,11 +165,11 @@ The dependency-check plugin can be configured using the following:
 
 ### Gradle Plugin
 
-For instructions on the use of the Gradle Plugin, please see the [dependency-check-gradle github page](http://jeremylong.github.io/DependencyCheck/dependency-check-gradle).
+For instructions on the use of the Gradle Plugin, please see the [dependency-check-gradle github page](https://dependency-check.github.io/DependencyCheck/dependency-check-gradle).
 
 ### Ant Task
 
-For instructions on the use of the Ant Task, please see the [dependency-check-ant github page](http://jeremylong.github.io/DependencyCheck/dependency-check-ant).
+For instructions on the use of the Ant Task, please see the [dependency-check-ant github page](https://dependency-check.github.io/DependencyCheck/dependency-check-ant).
 
 ## Development Prerequisites
 
@@ -339,7 +339,7 @@ mvn org.owasp:dependency-check-maven:aggregate -P-test-dependencies -DskipProvid
 Building the documentation
 --------------------------
 
-The documentation on the [github pages](http://jeremylong.github.io/DependencyCheck/) is generated from this repository:
+The documentation on the [github pages](https://dependency-check.github.io/DependencyCheck/) is generated from this repository:
 
     mvn -s settings.xml site  site:staging
 
@@ -357,7 +357,7 @@ mvn -s settings.xml install
 License
 -------
 
-Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://raw.githubusercontent.com/jeremylong/DependencyCheck/main/LICENSE.txt) file for the full license.
+Permission to modify and redistribute is granted under the terms of the Apache 2.0 license. See the [LICENSE.txt](https://raw.githubusercontent.com/dependency-check/DependencyCheck/main/LICENSE.txt) file for the full license.
 
 Dependency-Check makes use of several other open source libraries. Please see the [NOTICE.txt][notices] file for more information.
 
