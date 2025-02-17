@@ -1,5 +1,14 @@
 # Change Log
 
+## [Version 12.1.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.0) (2025-02-16)
+
+- build(deps): bump open-vulnerability-client to 7.2.2 (#7407)
+  - resolves issue with downloading data from the NVD (#7406)
+- fix: Improve thread safety issue #7338 alternative (#7367)
+- feat: Implement Yarn Berry Analyser (#7319)
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/94?closed=1
+
 ## [Version 12.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.2) (2025-01-29)
 
 - fix: correct JSON report error (#7350)
@@ -29,7 +38,8 @@ See the full listing of [changes](https://github.com/dependency-check/Dependency
 
 ## [Version 12.0.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.0) (2025-01-11)
 
-- feat: report on CVSS v4 (#7204)
+- BREAKING CHANGE: report on CVSS v4 (#7204)
+  - the schema has been updated to include CVSS v4 for JSON and XML reports
 - feat: show from which dependency the CVE comes in failure report (#7224)
 - feat: Use Maven settings decryption API for decrypting secrets from settings.xml (#7284)
 - feat: Extend authentication to support Bearer token for many resources (#7277)
