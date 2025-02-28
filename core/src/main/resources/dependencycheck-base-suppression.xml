@@ -361,8 +361,26 @@
     <suppress base="true">
         <notes><![CDATA[
         FP per #2972
+        hyphenated PHP library vendor names
         ]]></notes>
         <packageUrl regex="true">^pkg:composer/php\-.*$</packageUrl>
+        <cpe>cpe:/a:php:php</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2972 + #7444
+        hyphenated PHP library product names (prefix)
+        ]]></notes>
+        <packageUrl regex="true">^pkg:composer/[^/]+/php[\-_].*$</packageUrl>
+        <cpe>cpe:/a:php:php</cpe>
+    </suppress>
+    <suppress base="true">
+        <notes><![CDATA[
+        FP per #2972 + #7444
+        hyphenated PHP library product names (suffix)
+        including number suffix, e.g., `symfony/polyfill-php80`
+        ]]></notes>
+        <packageUrl regex="true">^pkg:composer/[^/]+/.*[\-_]php[0-9]*@.*$</packageUrl>
         <cpe>cpe:/a:php:php</cpe>
     </suppress>
     <suppress base="true">
