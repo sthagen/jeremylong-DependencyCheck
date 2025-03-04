@@ -186,20 +186,19 @@ public final class Downloader {
         // set a conservatively long default timeout to compensate for MITM-proxies that return the (final) bytes only
         // after all security checks passed
         final int readTimeout = settings.getInt(Settings.KEYS.CONNECTION_READ_TIMEOUT, 60_000);
-
         connectionManager.setDefaultConnectionConfig(
                 ConnectionConfig.custom()
                         .setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS)
                         .setSocketTimeout(readTimeout, TimeUnit.MILLISECONDS)
                         .build()
         );
-        if (settings.getString(Settings.KEYS.PROXY_SERVER) != null) {
+        if (!settings.getString(Settings.KEYS.PROXY_SERVER, "").isBlank()) {
             // Legacy proxy configuration present
             // So don't rely on the system properties for proxy; use the legacy settings configuration
             final String proxyHost = settings.getString(Settings.KEYS.PROXY_SERVER);
             final int proxyPort = settings.getInt(Settings.KEYS.PROXY_PORT, -1);
-            final String nonProxyHosts = settings.getString(Settings.KEYS.PROXY_NON_PROXY_HOSTS);
-            if (nonProxyHosts != null && !nonProxyHosts.isEmpty()) {
+            final String nonProxyHosts = settings.getString(Settings.KEYS.PROXY_NON_PROXY_HOSTS, "");
+            if (!nonProxyHosts.isBlank()) {
                 final ProxySelector selector = new SelectiveProxySelector(
                         new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort)),
                         nonProxyHosts.split("\\|")
@@ -208,7 +207,7 @@ public final class Downloader {
             } else {
                 httpClientBuilder.setProxy(new HttpHost(proxyHost, proxyPort));
             }
-            if (settings.getString(Settings.KEYS.PROXY_USERNAME) != null) {
+            if (!settings.getString(Settings.KEYS.PROXY_USERNAME, "").isBlank() && !settings.getString(Settings.KEYS.PROXY_PASSWORD, "").isBlank()) {
                 final String proxyuser = settings.getString(Settings.KEYS.PROXY_USERNAME);
                 final char[] proxypass = settings.getString(Settings.KEYS.PROXY_PASSWORD).toCharArray();
                 this.proxyHttpHost = new HttpHost(null, proxyHost, proxyPort);
