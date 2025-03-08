@@ -33,12 +33,29 @@ public class YarnAuditAnalyzerIT extends BaseTest {
 
     @Test
     public void testAnalyzePackageYarnClassic() throws AnalysisException, InitializationException, InvalidSettingException {
-        testAnalyzePackageYarn("yarn-classic-audit/yarn.lock");
+        testAnalyzePackageYarn("yarn/yarn-classic-audit/yarn.lock");
     }
 
     @Test
     public void testAnalyzePackageYarnBerry() throws AnalysisException, InitializationException, InvalidSettingException {
-        testAnalyzePackageYarn("yarn-berry-audit/yarn.lock");
+        testAnalyzePackageYarn("yarn/yarn-berry-audit/yarn.lock");
+    }
+
+    @Test
+    public void testAnalyzePackageYarnBerryNoVulnerability() throws AnalysisException, InitializationException, InvalidSettingException {
+        //Assume.assumeThat(getSettings().getBoolean(Settings.KEYS.ANALYZER_YARN_AUDIT_ENABLED), is(true));
+        try (Engine engine = new Engine(getSettings())) {
+            var analyzer = new YarnAuditAnalyzer();
+            analyzer.setFilesMatched(true);
+            analyzer.initialize(getSettings());
+            analyzer.prepare(engine);
+            final Dependency toScan = new Dependency(BaseTest.getResourceAsFile(this, "yarn/yarn-berry-audit-no-vulnerability/yarn.lock"));
+            analyzer.analyze(toScan, engine);
+            assertTrue("No dependency should be identified", engine.getDependencies().length == 0);
+        } catch (InitializationException ex) {
+            //yarn is not installed - skip the test case.
+            Assume.assumeNoException(ex);
+        }
     }
 
     private void testAnalyzePackageYarn(String yarnLockFile) throws AnalysisException {
