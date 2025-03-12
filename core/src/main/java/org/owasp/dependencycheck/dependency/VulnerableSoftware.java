@@ -124,7 +124,7 @@ public class VulnerableSoftware extends Cpe implements Serializable {
     //CSON: ParameterNumber
 
     @Override
-    public int compareTo(@NotNull Object o) {
+    public int compareTo(@NotNull ICpe o) {
         if (o instanceof VulnerableSoftware) {
             final VulnerableSoftware other = (VulnerableSoftware) o;
             return new CompareToBuilder()
