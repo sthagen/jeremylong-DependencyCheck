@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -188,23 +189,43 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
     }
 
     /**
-     * Loads all the base suppression rules packaged with the application.
+     * Loads the base suppression rules packaged with the application.
      *
      * @param parser The suppression parser to use
      * @param engine a reference the dependency-check engine
      * @throws SuppressionParseException thrown if the XML cannot be parsed.
      */
     private void loadPackagedSuppressionBaseData(final SuppressionParser parser, final Engine engine) throws SuppressionParseException {
-        final List<SuppressionRule> ruleList;
-        try (InputStream in = FileUtils.getResourceAsStream(BASE_SUPPRESSION_FILE)) {
-            if (in == null) {
-                throw new SuppressionParseException("Suppression rules `" + BASE_SUPPRESSION_FILE + "` could not be found");
-            }
-            ruleList = parser.parseSuppressionRules(in);
-        } catch (SAXException | IOException ex) {
-            throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
+        List<SuppressionRule> ruleList = null;
+        Iterator<URL> urls = null;
+        try {
+            urls = FileUtils.getResources(BASE_SUPPRESSION_FILE);
+        } catch (IOException e) {
+            LOGGER.warn("Base suppression rules `{}}` could not be loaded; {}", BASE_SUPPRESSION_FILE, e.getMessage());
+            return;
         }
-        if (!ruleList.isEmpty()) {
+        URL loc = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
+        String jarPath = loc.getFile();
+        URL validUrl = null;
+        while (urls.hasNext()) {
+            URL url = urls.next();
+            String path = url.toString();
+            if (path.equals("jar:" + jarPath + "!/dependencycheck-base-suppression.xml")) {
+                validUrl = url;
+                break;
+            }
+        }
+        if (validUrl != null) {
+            try (InputStream in = validUrl.openStream()) {
+                if (in == null) {
+                    throw new SuppressionParseException("Suppression rules `" + BASE_SUPPRESSION_FILE + "` could not be found");
+                }
+                ruleList = parser.parseSuppressionRules(in);
+            } catch (SAXException | IOException ex) {
+                throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
+            }
+        }
+        if (ruleList != null && !ruleList.isEmpty()) {
             if (engine.hasObject(SUPPRESSION_OBJECT_KEY)) {
                 @SuppressWarnings("unchecked")
                 final List<SuppressionRule> rules = (List<SuppressionRule>) engine.getObject(SUPPRESSION_OBJECT_KEY);
