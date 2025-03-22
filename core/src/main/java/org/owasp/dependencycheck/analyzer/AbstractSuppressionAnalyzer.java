@@ -204,13 +204,19 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
             LOGGER.warn("Base suppression rules `{}}` could not be loaded; {}", BASE_SUPPRESSION_FILE, e.getMessage());
             return;
         }
-        URL loc = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
-        String jarPath = loc.getFile();
+        URL jarLocation = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
+
         URL validUrl = null;
         while (urls.hasNext()) {
+            String validationBase = jarLocation.getFile();
             URL url = urls.next();
             String path = url.toString();
-            if (path.equals("jar:" + jarPath + "!/dependencycheck-base-suppression.xml")) {
+            if (path.startsWith("file:")) {
+                validationBase = "file:" + validationBase + "dependencycheck-base-suppression.xml";
+            } else {
+                validationBase = "jar:file:" + validationBase + "!/dependencycheck-base-suppression.xml";
+            }
+            if (validationBase.equals(path)) {
                 validUrl = url;
                 break;
             }
@@ -224,6 +230,8 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
             } catch (SAXException | IOException ex) {
                 throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
             }
+        } else {
+            throw new SuppressionParseException("Unable to load the base suppression data file");
         }
         if (ruleList != null && !ruleList.isEmpty()) {
             if (engine.hasObject(SUPPRESSION_OBJECT_KEY)) {
