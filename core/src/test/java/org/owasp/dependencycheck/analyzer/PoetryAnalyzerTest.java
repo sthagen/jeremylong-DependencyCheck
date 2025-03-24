@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Copyright (c) 2019 Nima Yahyazadeh. All Rights Reserved.
  */
 package org.owasp.dependencycheck.analyzer;
 
