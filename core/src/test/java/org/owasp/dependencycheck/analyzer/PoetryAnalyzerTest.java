@@ -80,6 +80,13 @@ public class PoetryAnalyzerTest extends BaseTest {
         analyzer.analyze(result, engine);
     }
 
+    @Test
+    public void testNodeGypToml() throws AnalysisException {
+        final Dependency result = new Dependency(BaseTest.getResourceAsFile(this, "node-gyp-toml/pyproject.toml"));
+        //returns with no error.
+        analyzer.analyze(result, engine);
+    }
+
     @Test(expected = AnalysisException.class)
     public void testPoetryToml() throws AnalysisException {
         final Dependency result = new Dependency(BaseTest.getResourceAsFile(this, "python-poetry-toml/pyproject.toml"));

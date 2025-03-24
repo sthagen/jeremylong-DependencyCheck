@@ -36,6 +36,8 @@ import org.owasp.dependencycheck.utils.Settings;
 
 import com.moandjiezana.toml.Toml;
 import java.io.File;
+import java.util.Optional;
+
 import org.owasp.dependencycheck.data.nvd.ecosystem.Ecosystem;
 import org.owasp.dependencycheck.dependency.naming.GenericIdentifier;
 import org.owasp.dependencycheck.dependency.naming.PurlIdentifier;
@@ -147,7 +149,12 @@ public class PoetryAnalyzer extends AbstractFileTypeAnalyzer {
         //do not report on the build file itself
         engine.removeDependency(dependency);
 
-        final Toml result = new Toml().read(dependency.getActualFile());
+        Optional<Toml> potentiallyParsedToml = parseDependencyFile(dependency);
+        if (potentiallyParsedToml.isEmpty()) {
+            LOGGER.warn("toml file skipped: {} could not be parsed", dependency.getActualFilePath());
+            return;
+        }
+        final Toml result = potentiallyParsedToml.get();
         if (PYPROJECT_TOML.equals(dependency.getActualFile().getName())) {
             if (result.getTable("tool.poetry") == null) {
                 LOGGER.debug("skipping {} as it does not contain `tool.poetry`", dependency.getDisplayFileName());
@@ -198,6 +205,30 @@ public class PoetryAnalyzer extends AbstractFileTypeAnalyzer {
             d.addEvidence(EvidenceType.VENDOR, POETRY_LOCK, "vendor", name, Confidence.HIGHEST);
             engine.addDependency(d);
         });
+    }
+
+    private Optional<Toml> parseDependencyFile(Dependency dependency) {
+        try {
+            Toml toml = new Toml().read(dependency.getActualFile());
+            return Optional.of(toml);
+        } catch (RuntimeException e) {
+            Optional<String> unparsableFileErrorMessage = Optional.ofNullable(e.getCause())
+                    .filter(c -> c instanceof IllegalStateException)
+                    .map(Throwable::getMessage)
+                    .filter(PoetryAnalyzer::isInvalidKeyErrorMessage);
+
+            if (unparsableFileErrorMessage.isPresent()) {
+                String message = String.format("Invalid toml file, cannot parse '%s'", dependency.getActualFile());
+                LOGGER.debug(message, e);
+                return Optional.empty();
+            }
+
+            throw e;
+        }
+    }
+
+    private static boolean isInvalidKeyErrorMessage(String m) {
+        return m.startsWith("Invalid key");
     }
 
     private void ensureLock(File parent) throws AnalysisException {
