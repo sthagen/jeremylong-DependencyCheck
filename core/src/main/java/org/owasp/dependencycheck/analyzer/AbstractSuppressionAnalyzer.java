@@ -205,18 +205,16 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
             return;
         }
         URL jarLocation = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
-
+        String expectedUrl = jarLocation.getFile();
+        if (expectedUrl.endsWith(".jar")) {
+            expectedUrl = "jar:file:" + expectedUrl + "!/dependencycheck-base-suppression.xml";
+        } else {
+            expectedUrl = "file:" + expectedUrl + "dependencycheck-base-suppression.xml";
+        }
         URL validUrl = null;
         while (urls.hasNext()) {
-            String validationBase = jarLocation.getFile();
             URL url = urls.next();
-            String path = url.toString();
-            if (path.startsWith("file:")) {
-                validationBase = "file:" + validationBase + "dependencycheck-base-suppression.xml";
-            } else {
-                validationBase = "jar:file:" + validationBase + "!/dependencycheck-base-suppression.xml";
-            }
-            if (validationBase.equals(path)) {
+            if (expectedUrl.equals(url.toString())) {
                 validUrl = url;
                 break;
             }
