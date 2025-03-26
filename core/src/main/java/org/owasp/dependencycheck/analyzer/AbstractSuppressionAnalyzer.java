@@ -207,9 +207,9 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
         URL jarLocation = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
         String expectedUrl = jarLocation.getFile();
         if (expectedUrl.endsWith(".jar")) {
-            expectedUrl = "jar:file:" + expectedUrl + "!/dependencycheck-base-suppression.xml";
+            expectedUrl = "jar:file:" + expectedUrl + "!/" + BASE_SUPPRESSION_FILE;
         } else {
-            expectedUrl = "file:" + expectedUrl + "dependencycheck-base-suppression.xml";
+            expectedUrl = "file:" + expectedUrl + BASE_SUPPRESSION_FILE;
         }
         URL validUrl = null;
         while (urls.hasNext()) {
