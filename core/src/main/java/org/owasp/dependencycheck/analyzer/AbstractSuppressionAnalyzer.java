@@ -197,39 +197,23 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
      */
     private void loadPackagedSuppressionBaseData(final SuppressionParser parser, final Engine engine) throws SuppressionParseException {
         List<SuppressionRule> ruleList = null;
-        Iterator<URL> urls = null;
-        try {
-            urls = FileUtils.getResources(BASE_SUPPRESSION_FILE);
-        } catch (IOException e) {
-            LOGGER.warn("Base suppression rules `{}}` could not be loaded; {}", BASE_SUPPRESSION_FILE, e.getMessage());
-            return;
-        }
         URL jarLocation = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
-        String expectedUrl = jarLocation.getFile();
-        if (expectedUrl.endsWith(".jar")) {
-            expectedUrl = "jar:file:" + expectedUrl + "!/" + BASE_SUPPRESSION_FILE;
+        String suppressionFileLocation = jarLocation.getFile();
+        if (suppressionFileLocation.endsWith(".jar")) {
+            suppressionFileLocation = "jar:file:" + suppressionFileLocation + "!/" + BASE_SUPPRESSION_FILE;
         } else {
-            expectedUrl = "file:" + expectedUrl + BASE_SUPPRESSION_FILE;
+            suppressionFileLocation = "file:" + suppressionFileLocation + BASE_SUPPRESSION_FILE;
         }
-        URL validUrl = null;
-        while (urls.hasNext()) {
-            URL url = urls.next();
-            if (expectedUrl.equals(url.toString())) {
-                validUrl = url;
-                break;
-            }
+        URL baseSuppresssionURL = null;
+        try {
+            baseSuppresssionURL = new URL(suppressionFileLocation);
+        } catch (MalformedURLException e) {
+            throw new SuppressionParseException("Unable to load the base suppression data file", e);
         }
-        if (validUrl != null) {
-            try (InputStream in = validUrl.openStream()) {
-                if (in == null) {
-                    throw new SuppressionParseException("Suppression rules `" + BASE_SUPPRESSION_FILE + "` could not be found");
-                }
-                ruleList = parser.parseSuppressionRules(in);
-            } catch (SAXException | IOException ex) {
-                throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
-            }
-        } else {
-            throw new SuppressionParseException("Unable to load the base suppression data file");
+        try (InputStream in = baseSuppresssionURL.openStream()) {
+            ruleList = parser.parseSuppressionRules(in);
+        } catch (SAXException | IOException ex) {
+            throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
         }
         if (ruleList != null && !ruleList.isEmpty()) {
             if (engine.hasObject(SUPPRESSION_OBJECT_KEY)) {
