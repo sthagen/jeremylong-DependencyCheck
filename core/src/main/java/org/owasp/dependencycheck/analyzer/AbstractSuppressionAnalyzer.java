@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -188,23 +189,33 @@ public abstract class AbstractSuppressionAnalyzer extends AbstractAnalyzer {
     }
 
     /**
-     * Loads all the base suppression rules packaged with the application.
+     * Loads the base suppression rules packaged with the application.
      *
      * @param parser The suppression parser to use
      * @param engine a reference the dependency-check engine
      * @throws SuppressionParseException thrown if the XML cannot be parsed.
      */
     private void loadPackagedSuppressionBaseData(final SuppressionParser parser, final Engine engine) throws SuppressionParseException {
-        final List<SuppressionRule> ruleList;
-        try (InputStream in = FileUtils.getResourceAsStream(BASE_SUPPRESSION_FILE)) {
-            if (in == null) {
-                throw new SuppressionParseException("Suppression rules `" + BASE_SUPPRESSION_FILE + "` could not be found");
-            }
+        List<SuppressionRule> ruleList = null;
+        URL jarLocation = AbstractSuppressionAnalyzer.class.getProtectionDomain().getCodeSource().getLocation();
+        String suppressionFileLocation = jarLocation.getFile();
+        if (suppressionFileLocation.endsWith(".jar")) {
+            suppressionFileLocation = "jar:file:" + suppressionFileLocation + "!/" + BASE_SUPPRESSION_FILE;
+        } else {
+            suppressionFileLocation = "file:" + suppressionFileLocation + BASE_SUPPRESSION_FILE;
+        }
+        URL baseSuppresssionURL = null;
+        try {
+            baseSuppresssionURL = new URL(suppressionFileLocation);
+        } catch (MalformedURLException e) {
+            throw new SuppressionParseException("Unable to load the base suppression data file", e);
+        }
+        try (InputStream in = baseSuppresssionURL.openStream()) {
             ruleList = parser.parseSuppressionRules(in);
         } catch (SAXException | IOException ex) {
             throw new SuppressionParseException("Unable to parse the base suppression data file", ex);
         }
-        if (!ruleList.isEmpty()) {
+        if (ruleList != null && !ruleList.isEmpty()) {
             if (engine.hasObject(SUPPRESSION_OBJECT_KEY)) {
                 @SuppressWarnings("unchecked")
                 final List<SuppressionRule> rules = (List<SuppressionRule>) engine.getObject(SUPPRESSION_OBJECT_KEY);
