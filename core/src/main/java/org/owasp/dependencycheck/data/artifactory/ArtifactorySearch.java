@@ -33,6 +33,7 @@ import org.owasp.dependencycheck.data.nexus.MavenArtifact;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.utils.Checksum;
 import org.owasp.dependencycheck.utils.Downloader;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.Settings;
 import org.owasp.dependencycheck.utils.TooManyRequestsException;
@@ -116,6 +117,8 @@ public class ArtifactorySearch {
             throw new IOException(msg.append(" (400): Invalid URL").toString(), e);
         } catch (ResourceNotFoundException e) {
             throw new IOException(msg.append(" (404): Not found").toString(), e);
+        } catch (ForbiddenException e) {
+            throw new IOException(msg.append(" (403): Forbidden").toString(), e);
         }
     }
 

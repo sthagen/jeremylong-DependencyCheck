@@ -21,6 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.owasp.dependencycheck.analyzer.exception.AnalysisException;
 import org.owasp.dependencycheck.data.central.CentralSearch;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.TooManyRequestsException;
 import org.owasp.dependencycheck.data.nexus.MavenArtifact;
 import org.owasp.dependencycheck.dependency.Dependency;
@@ -50,7 +51,7 @@ public class CentralAnalyzerTest extends BaseTest {
 
     @Test
     @SuppressWarnings("PMD.NonStaticInitializer")
-    public void testFetchMavenArtifactsWithoutException() throws IOException, TooManyRequestsException {
+    public void testFetchMavenArtifactsWithoutException() throws IOException, TooManyRequestsException, ForbiddenException {
             CentralAnalyzer instance = new CentralAnalyzer();
             instance.setCentralSearch(centralSearch);
             when(dependency.getSha1sum()).thenReturn(SHA1_SUM);
@@ -64,7 +65,7 @@ public class CentralAnalyzerTest extends BaseTest {
     @Test(expected = FileNotFoundException.class)
     @SuppressWarnings("PMD.NonStaticInitializer")
     public void testFetchMavenArtifactsRethrowsFileNotFoundException()
-            throws IOException, TooManyRequestsException {
+            throws IOException, TooManyRequestsException, ForbiddenException {
         CentralAnalyzer instance = new CentralAnalyzer();
         instance.setCentralSearch(centralSearch);
         when(dependency.getSha1sum()).thenReturn(SHA1_SUM);
@@ -75,7 +76,7 @@ public class CentralAnalyzerTest extends BaseTest {
     @Test(expected = IOException.class)
     @SuppressWarnings("PMD.NonStaticInitializer")
     public void testFetchMavenArtifactsAlwaysThrowsIOException()
-            throws IOException, TooManyRequestsException {
+            throws IOException, TooManyRequestsException, ForbiddenException {
         getSettings().setInt(Settings.KEYS.ANALYZER_CENTRAL_RETRY_COUNT, 1);
         getSettings().setBoolean(Settings.KEYS.ANALYZER_CENTRAL_USE_CACHE, false);
         CentralAnalyzer instance = new CentralAnalyzer();

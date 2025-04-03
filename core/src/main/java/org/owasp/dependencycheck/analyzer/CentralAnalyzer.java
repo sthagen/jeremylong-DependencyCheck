@@ -34,6 +34,7 @@ import org.owasp.dependencycheck.utils.DownloadFailedException;
 import org.owasp.dependencycheck.utils.Downloader;
 import org.owasp.dependencycheck.utils.FileFilterBuilder;
 import org.owasp.dependencycheck.utils.FileUtils;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.InvalidSettingException;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.Settings;
@@ -313,6 +314,12 @@ public class CentralAnalyzer extends AbstractFileTypeAnalyzer {
             final String message = "Could not connect to Central search. Analysis failed.";
             LOGGER.error(message, ioe);
             throw new AnalysisException(message, ioe);
+        } catch (ForbiddenException e) {
+            final String message = "Connection to Central search refused. This is most likely not a problem with " +
+                    "Dependency-Check itself and is related to network connectivity. Please check " +
+                    "https://central.sonatype.org/faq/403-error-central/.";
+            LOGGER.error(message);
+            throw new AnalysisException(message, e);
         }
     }
 
@@ -330,7 +337,8 @@ public class CentralAnalyzer extends AbstractFileTypeAnalyzer {
      * @throws TooManyRequestsException if Central has received too many
      * requests.
      */
-    protected List<MavenArtifact> fetchMavenArtifacts(Dependency dependency) throws IOException, TooManyRequestsException {
+    protected List<MavenArtifact> fetchMavenArtifacts(Dependency dependency) throws IOException,
+            TooManyRequestsException, ForbiddenException {
         IOException lastException = null;
         long sleepingTimeBetweenRetriesInMillis = BASE_RETRY_WAIT;
         int triesLeft = numberOfRetries;
