@@ -143,7 +143,7 @@ public class CentralSearch {
         if (cache != null) {
             final List<MavenArtifact> cached = cache.get(sha1);
             if (cached != null) {
-                LOGGER.debug("cache hit for Central: " + sha1);
+                LOGGER.debug("cache hit for Central: {}", sha1);
                 if (cached.isEmpty()) {
                     throw new FileNotFoundException("Artifact not found in Central");
                 }
