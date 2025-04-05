@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * Class of methods to search Artifactory for hashes and determine Maven GAV
  * from there.
  *
- * Data classes copied from JFrog's artifactory-client-java project.
+ * <p>Data classes copied from JFrog's artifactory-client-java project.</p>
  *
  * @author nhenneaux
  */
