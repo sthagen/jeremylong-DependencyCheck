@@ -1,5 +1,31 @@
 # Change Log
 
+## [Version 12.1.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.1) (2025-04-05)
+
+- fix: resolve NVD data Parse error `com.fasterxml.jackson.core.JsonParseException: Unexpected character (']' (code 93))`
+  - bump open-vulnerability-client from 7.3.1 to 7.3.2  (#7577)
+- fix: update links for repository move from `jeremylong` to the `dependency-check` organization (#7373)
+- fix: resolve NPE when processing CVE-2025-2682 (#7558)
+- fix: prevent rogue base suppression files (#7544)
+- fix: #6819 handle invalid toml file (#7548)
+- fix: Use unscored severity only in absence of any CVSS baseScore (#7530)
+- fix: protect against exotic version number of yarn (#7525)
+- fix: Ignore require-bundle MANIFEST.MF entry for evidence (#7523)
+- fix: avoid error on yarn berry audit when no vulnerability found (#7501)
+- fix: improve null checks in Downloader (#7493)
+- fix: improve null checks resolves https://github.com/dependency-check/dependency-check-gradle/issues/441
+- fix: Avoid FPs when Composer product name has php (#7486)
+- fix: cli not honoring window paths correctly (#7470)
+- fix: Also apply muteNoisyLoggers to UpdateMojo (#7469)
+- fix: Make HC5 Downloader honor the connection- and readTimeout settings that the old URLConnectionFactory based downloads observed (#7437) 
+- docs: sync the supported Maven version with the one stated in the system requirement section (#7570)
+- docs: update proxy config documentation (#7550)
+- docs: Remove copyright as requested by the Apache foundation
+- docs: drop redundant text in the Internet Access Required section (#7521)
+- docs: correct gradle documentation (#7511)
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/95?closed=1)
+
 ## [Version 12.1.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.0) (2025-02-16)
 
 - build(deps): bump open-vulnerability-client to 7.2.2 (#7407)
@@ -7,7 +33,7 @@
 - fix: Improve thread safety issue #7338 alternative (#7367)
 - feat: Implement Yarn Berry Analyser (#7319)
 
-See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/94?closed=1
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/94?closed=1)
 
 ## [Version 12.0.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.0.2) (2025-01-29)
 
