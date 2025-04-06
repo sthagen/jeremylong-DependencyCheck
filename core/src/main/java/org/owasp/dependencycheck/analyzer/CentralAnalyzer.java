@@ -310,16 +310,16 @@ public class CentralAnalyzer extends AbstractFileTypeAnalyzer {
             LOGGER.info("invalid sha1-hash on {}", dependency.getFileName());
         } catch (FileNotFoundException fnfe) {
             LOGGER.debug("Artifact not found in repository: '{}", dependency.getFileName());
-        } catch (IOException ioe) {
-            final String message = "Could not connect to Central search. Analysis failed.";
-            LOGGER.error(message, ioe);
-            throw new AnalysisException(message, ioe);
         } catch (ForbiddenException e) {
             final String message = "Connection to Central search refused. This is most likely not a problem with " +
                     "Dependency-Check itself and is related to network connectivity. Please check " +
                     "https://central.sonatype.org/faq/403-error-central/.";
             LOGGER.error(message);
             throw new AnalysisException(message, e);
+        } catch (IOException ioe) {
+            final String message = "Could not connect to Central search. Analysis failed.";
+            LOGGER.error(message, ioe);
+            throw new AnalysisException(message, ioe);
         }
     }
 
@@ -338,7 +338,7 @@ public class CentralAnalyzer extends AbstractFileTypeAnalyzer {
      * requests.
      */
     protected List<MavenArtifact> fetchMavenArtifacts(Dependency dependency) throws IOException,
-            TooManyRequestsException, ForbiddenException {
+            TooManyRequestsException {
         IOException lastException = null;
         long sleepingTimeBetweenRetriesInMillis = BASE_RETRY_WAIT;
         int triesLeft = numberOfRetries;

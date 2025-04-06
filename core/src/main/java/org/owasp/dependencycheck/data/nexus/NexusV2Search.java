@@ -164,7 +164,7 @@ public class NexusV2Search implements NexusSearch {
                 LOGGER.warn("Pre-flight request to Nexus failed; expected root node name of status, got {}", doc.getDocumentElement().getNodeName());
                 return false;
             }
-        } catch (IOException | TooManyRequestsException | ResourceNotFoundException | URISyntaxException | ForbiddenException e) {
+        } catch (IOException | TooManyRequestsException | ResourceNotFoundException | URISyntaxException e) {
             LOGGER.warn("Pre-flight request to Nexus failed: ", e);
             return false;
         }

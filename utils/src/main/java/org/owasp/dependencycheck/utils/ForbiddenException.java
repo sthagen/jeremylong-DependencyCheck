@@ -18,7 +18,9 @@
  */
 package org.owasp.dependencycheck.utils;
 
-public class ForbiddenException extends Exception {
+import java.io.IOException;
+
+public class ForbiddenException extends IOException {
 
     public ForbiddenException(String message) {
         super(message);
