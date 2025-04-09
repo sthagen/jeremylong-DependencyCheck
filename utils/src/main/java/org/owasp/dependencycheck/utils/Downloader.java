@@ -649,7 +649,7 @@ public final class Downloader {
      * @throws ResourceNotFoundException When HTTP status 404 is encountered
      */
     public <T> T fetchAndHandle(@NotNull URL url, @NotNull HttpClientResponseHandler<T> handler)
-            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException {
+            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException, ForbiddenException {
         return fetchAndHandle(url, handler, Collections.emptyList(), true);
     }
 
@@ -666,7 +666,7 @@ public final class Downloader {
      * @throws ResourceNotFoundException When HTTP status 404 is encountered
      */
     public <T> T fetchAndHandle(@NotNull URL url, @NotNull HttpClientResponseHandler<T> handler, @NotNull List<Header> hdr)
-            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException {
+            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException, ForbiddenException {
         return fetchAndHandle(url, handler, hdr, true);
     }
 
@@ -684,7 +684,7 @@ public final class Downloader {
      * @throws ResourceNotFoundException When HTTP status 404 is encountered
      */
     public <T> T fetchAndHandle(@NotNull URL url, @NotNull HttpClientResponseHandler<T> handler, @NotNull List<Header> hdr, boolean useProxy)
-            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException {
+            throws IOException, TooManyRequestsException, ResourceNotFoundException, URISyntaxException, ForbiddenException {
         final T data;
         if ("file".equals(url.getProtocol())) {
             final Path p = Paths.get(url.toURI());
@@ -717,7 +717,8 @@ public final class Downloader {
      * @throws ResourceNotFoundException When HTTP status 404 is encountered
      */
     public <T> T fetchAndHandle(@NotNull CloseableHttpClient client, @NotNull URL url, @NotNull HttpClientResponseHandler<T> handler,
-                                @NotNull List<Header> hdr) throws IOException, TooManyRequestsException, ResourceNotFoundException {
+                                @NotNull List<Header> hdr) throws IOException, TooManyRequestsException,
+            ResourceNotFoundException, ForbiddenException {
         try {
             final String theProtocol = url.getProtocol();
             if (!("http".equals(theProtocol) || "https".equals(theProtocol))) {
@@ -732,6 +733,9 @@ public final class Downloader {
         } catch (HttpResponseException hre) {
             final String messageFormat = "%s - Server status: %d - Server reason: %s";
             switch (hre.getStatusCode()) {
+                case 403:
+                    throw new ForbiddenException(String.format(messageFormat, url, hre.getStatusCode(),
+                            hre.getReasonPhrase()));
                 case 404:
                     throw new ResourceNotFoundException(String.format(messageFormat, url, hre.getStatusCode(), hre.getReasonPhrase()));
                 case 429:

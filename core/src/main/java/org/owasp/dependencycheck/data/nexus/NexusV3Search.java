@@ -27,6 +27,7 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import org.jetbrains.annotations.Nullable;
 import org.owasp.dependencycheck.utils.DownloadFailedException;
 import org.owasp.dependencycheck.utils.Downloader;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.Settings;
 import org.owasp.dependencycheck.utils.TooManyRequestsException;
@@ -146,7 +147,7 @@ public class NexusV3Search implements NexusSearch {
         try {
             return Downloader.getInstance().fetchAndHandle(client, url, handler, List.of(new BasicHeader(HttpHeaders.ACCEPT,
                             ContentType.APPLICATION_JSON)));
-        } catch (TooManyRequestsException | ResourceNotFoundException | DownloadFailedException e) {
+        } catch (TooManyRequestsException | ResourceNotFoundException | DownloadFailedException | ForbiddenException e) {
             if (LOGGER.isDebugEnabled()) {
                 int responseCode = -1;
                 String responseMessage = "";
