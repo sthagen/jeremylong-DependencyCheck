@@ -21,6 +21,7 @@ import org.apache.hc.client5.http.impl.classic.AbstractHttpClientResponseHandler
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.owasp.dependencycheck.utils.DownloadFailedException;
 import org.owasp.dependencycheck.utils.Downloader;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.TooManyRequestsException;
 import java.io.FileNotFoundException;
@@ -135,14 +136,14 @@ public class CentralSearch {
      * @throws TooManyRequestsException if Central has received too many
      * requests.
      */
-    public List<MavenArtifact> searchSha1(String sha1) throws IOException, TooManyRequestsException {
+    public List<MavenArtifact> searchSha1(String sha1) throws IOException, TooManyRequestsException, ForbiddenException {
         if (null == sha1 || !sha1.matches("^[0-9A-Fa-f]{40}$")) {
             throw new IllegalArgumentException("Invalid SHA1 format");
         }
         if (cache != null) {
             final List<MavenArtifact> cached = cache.get(sha1);
             if (cached != null) {
-                LOGGER.debug("cache hit for Central: " + sha1);
+                LOGGER.debug("cache hit for Central: {}", sha1);
                 if (cached.isEmpty()) {
                     throw new FileNotFoundException("Artifact not found in Central");
                 }
@@ -180,6 +181,9 @@ public class CentralSearch {
         } catch (URISyntaxException e) {
             final String errorMessage = "Could not convert central search URL to a URI " + e.getMessage();
             throw new IOException(errorMessage, e);
+        } catch (ForbiddenException e) {
+            final String errorMessage = "Forbidden access to MavenCentral " + e.getMessage();
+            throw new ForbiddenException(errorMessage, e);
         }
         if (cache != null) {
             cache.put(sha1, result);

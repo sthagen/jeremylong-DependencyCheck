@@ -34,6 +34,7 @@ import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.owasp.dependencycheck.utils.DownloadFailedException;
 import org.owasp.dependencycheck.utils.Downloader;
+import org.owasp.dependencycheck.utils.ForbiddenException;
 import org.owasp.dependencycheck.utils.ResourceNotFoundException;
 import org.owasp.dependencycheck.utils.Settings;
 
@@ -147,7 +148,7 @@ public class NexusV2Search implements NexusSearch {
                 throw new IOException("Could not connect to Nexus");
         } catch (ResourceNotFoundException e) {
             throw new FileNotFoundException("Artifact not found in Nexus");
-        } catch (XPathExpressionException | URISyntaxException e) {
+        } catch (XPathExpressionException | URISyntaxException | ForbiddenException e) {
             throw new IOException(e.getMessage(), e);
         }
     }
