@@ -341,7 +341,7 @@ Building the documentation
 
 The documentation on the [github pages](https://dependency-check.github.io/DependencyCheck/) is generated from this repository:
 
-    mvn -s settings.xml site  site:staging
+    mvn -s settings.xml site site:stage
 
 Once done, point your browser to `./target/staging/index.html`.
 
