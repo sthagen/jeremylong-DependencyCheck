@@ -17,27 +17,29 @@
  */
 package org.owasp.dependencycheck.data.lucene;
 
+import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
+import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.checkOneTerm;
+import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.checkRandomData;
+import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
-import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
-import org.apache.lucene.tests.analysis.MockTokenizer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.apache.lucene.tests.util.LuceneTestCase.RANDOM_MULTIPLIER;
+import static org.apache.lucene.tests.util.LuceneTestCase.random;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
  * @author Jeremy Long
  */
-class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
+public class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
 
     private Analyzer analyzer;
 
-    @BeforeEach
+    @Before
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -56,7 +58,7 @@ class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
      * @throws Exception thrown if there is a problem
      */
     @Test
-    void testIncrementToken() throws Exception {
+    public void testIncrementToken() throws Exception {
         String[] expected = new String[6];
         expected[0] = "http";
         expected[1] = "www";
@@ -73,7 +75,7 @@ class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
      * @throws Exception thrown if there is a problem
      */
     @Test
-    void testGarbage() throws Exception {
+    public void testGarbage() throws Exception {
         String[] expected = new String[2];
         expected[0] = "test";
         expected[1] = "two";
@@ -86,8 +88,12 @@ class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
      * blast some random strings through the analyzer
      */
     @Test
-    void testRandomStrings() {
-        assertDoesNotThrow(() -> checkRandomData(random(), analyzer, 1000 * RANDOM_MULTIPLIER), "Failed test random strings: ");
+    public void testRandomStrings() {
+        try {
+            checkRandomData(random(), analyzer, 1000 * RANDOM_MULTIPLIER);
+        } catch (IOException ex) {
+            fail("Failed test random strings: " + ex.getMessage());
+        }
     }
 
     /**
@@ -97,7 +103,7 @@ class AlphaNumericFilterTest extends BaseTokenStreamTestCase {
      * @throws IOException
      */
     @Test
-    void testEmptyTerm() throws IOException {
+    public void testEmptyTerm() throws IOException {
         Analyzer a = new Analyzer() {
             @Override
             protected Analyzer.TokenStreamComponents createComponents(String fieldName) {

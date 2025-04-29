@@ -88,23 +88,21 @@ class PomParserTest {
 
 
     @Test
-    void testParseWithoutDocTypeCleanup_InputStreamWithDocType() throws Exception {
+    void testParseWithoutDocTypeCleanup_InputStreamWithDocType() {
         InputStream inputStream = BaseTest.getResourceAsStream(this, "pom/mailapi-1.4.3_doctype.pom");
         PomParser instance = new PomParser();
-        String expVersion = "1.4.3";
-        Model result = instance.parseWithoutDocTypeCleanup(inputStream);
+
         assertThrows(PomParseException.class, () ->
-            assertEquals(expVersion, result.getParentVersion(), "Invalid version extracted"));
+            instance.parseWithoutDocTypeCleanup(inputStream));
     }
 
     @Test
-    void testParseWithoutDocTypeCleanup_WithDocType() throws Exception {
+    void testParseWithoutDocTypeCleanup_WithDocType() {
         File file = BaseTest.getResourceAsFile(this, "pom/mailapi-1.4.3_doctype.pom");
         PomParser instance = new PomParser();
-        String expVersion = "1.4.3";
-        Model result = instance.parseWithoutDocTypeCleanup(file);
+
         assertThrows(PomParseException.class, () ->
-            assertEquals(expVersion, result.getParentVersion(), "Invalid version extracted"));
+            instance.parseWithoutDocTypeCleanup(file));
     }
 
 }

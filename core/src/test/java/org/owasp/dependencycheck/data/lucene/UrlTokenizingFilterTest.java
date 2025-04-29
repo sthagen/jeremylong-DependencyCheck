@@ -17,36 +17,37 @@
  */
 package org.owasp.dependencycheck.data.lucene;
 
+import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
 import org.apache.lucene.tests.analysis.MockTokenizer;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.core.KeywordTokenizer;
+import org.junit.Test;
 
 /**
  *
  * @author Jeremy Long
  */
-class UrlTokenizingFilterTest extends BaseTokenStreamTestCase {
+public class UrlTokenizingFilterTest extends BaseTokenStreamTestCase {
 
-    private final Analyzer analyzer = new Analyzer() {
+    private final Analyzer analyzer;
+
+    public UrlTokenizingFilterTest() {
+        analyzer = new Analyzer() {
             @Override
             protected TokenStreamComponents createComponents(String fieldName) {
                 Tokenizer source = new MockTokenizer(MockTokenizer.WHITESPACE, false);
                 return new TokenStreamComponents(source, new UrlTokenizingFilter(source));
             }
         };
+    }
 
     /**
      * test some example domains
      */
     @Test
-    void testExamples() throws IOException {
+    public void testExamples() throws IOException {
         String[] expected = new String[2];
         expected[0] = "domain";
         expected[1] = "test";
@@ -60,8 +61,12 @@ class UrlTokenizingFilterTest extends BaseTokenStreamTestCase {
      * blast some random strings through the analyzer
      */
     @Test
-    void testRandomStrings() {
-        assertDoesNotThrow(() -> checkRandomData(random(), analyzer, 1000 * RANDOM_MULTIPLIER), "Failed test random strings: ");
+    public void testRandomStrings() {
+        try {
+            checkRandomData(random(), analyzer, 1000 * RANDOM_MULTIPLIER);
+        } catch (IOException ex) {
+            fail("Failed test random strings: " + ex.getMessage());
+        }
     }
 
     /**
@@ -71,7 +76,7 @@ class UrlTokenizingFilterTest extends BaseTokenStreamTestCase {
      * @throws IOException
      */
     @Test
-    void testEmptyTerm() throws IOException {
+    public void testEmptyTerm() throws IOException {
         Analyzer a = new Analyzer() {
             @Override
             protected TokenStreamComponents createComponents(String fieldName) {

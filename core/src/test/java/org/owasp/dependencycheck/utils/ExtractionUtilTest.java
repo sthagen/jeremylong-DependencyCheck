@@ -63,7 +63,8 @@ class ExtractionUtilTest extends BaseTest {
     void testExtractFilesUsingFilter() throws Exception {
         File destination = getSettings().getTempDirectory();
         File archive = BaseTest.getResourceAsFile(this, "evil.zip");
-        ExtractionUtil.extractFiles(archive, destination);
+        assertThrows(org.owasp.dependencycheck.utils.ExtractionException.class, () ->
+            ExtractionUtil.extractFiles(archive, destination));
         FilenameFilter filter = new NameFileFilter("evil.txt");
         assertThrows(org.owasp.dependencycheck.utils.ExtractionException.class, () ->
             ExtractionUtil.extractFilesUsingFilter(archive, destination, filter));
