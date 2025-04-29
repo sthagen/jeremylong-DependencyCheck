@@ -17,10 +17,10 @@
  */
 package org.owasp.dependencycheck.data.artifactory;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.utils.Settings;
@@ -28,17 +28,16 @@ import org.owasp.dependencycheck.utils.Settings;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class ArtifactorySearchTest extends BaseTest {
+class ArtifactorySearchTest extends BaseTest {
     private static String httpsProxyHostOrig;
     private static String httpsPortOrig;
 
-    @BeforeClass
-    public static void tinkerProxies() {
+    @BeforeAll
+    static void tinkerProxies() {
         httpsProxyHostOrig = System.getProperty("https.proxyHost");
         if (httpsProxyHostOrig == null) {
             httpsProxyHostOrig = System.getenv("https.proxyHost");
@@ -51,8 +50,8 @@ public class ArtifactorySearchTest extends BaseTest {
         System.setProperty("https.proxyPort", "");
     }
 
-    @AfterClass
-    public static void restoreProxies() {
+    @AfterAll
+    static void restoreProxies() {
         if (httpsProxyHostOrig != null) {
             System.setProperty("https.proxyHost", httpsProxyHostOrig);
         }
@@ -61,7 +60,7 @@ public class ArtifactorySearchTest extends BaseTest {
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -69,7 +68,7 @@ public class ArtifactorySearchTest extends BaseTest {
 
 
     @Test
-    public void shouldFailWhenHostUnknown() throws IOException {
+    void shouldFailWhenHostUnknown() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");

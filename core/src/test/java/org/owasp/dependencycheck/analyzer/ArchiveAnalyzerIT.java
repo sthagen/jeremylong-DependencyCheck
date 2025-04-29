@@ -17,29 +17,36 @@
  */
 package org.owasp.dependencycheck.analyzer;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.owasp.dependencycheck.BaseDBTestCase;
 import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.Engine;
-import org.owasp.dependencycheck.BaseDBTestCase;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.exception.InitializationException;
 import org.owasp.dependencycheck.utils.Settings;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
  * @author Jeremy Long
  */
-public class ArchiveAnalyzerIT extends BaseDBTestCase {
+class ArchiveAnalyzerIT extends BaseDBTestCase {
 
     /**
      * Test of getSupportedExtensions method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testSupportsExtensions() {
+    void testSupportsExtensions() {
         ArchiveAnalyzer instance = new ArchiveAnalyzer();
         instance.initialize(getSettings());
         Set<String> expResult = new HashSet<>();
@@ -57,7 +64,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
         expResult.add("tbz2");
         expResult.add("rpm");
         for (String ext : expResult) {
-            assertTrue(ext, instance.accept(new File("test." + ext)));
+            assertTrue(instance.accept(new File("test." + ext)), ext);
         }
     }
 
@@ -65,7 +72,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of getName method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testGetName() {
+    void testGetName() {
         ArchiveAnalyzer instance = new ArchiveAnalyzer();
         instance.initialize(getSettings());
         String expResult = "Archive Analyzer";
@@ -77,18 +84,18 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of supportsExtension method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testSupportsExtension() {
+    void testSupportsExtension() {
         String extension = "test.7z"; //not supported
         ArchiveAnalyzer instance = new ArchiveAnalyzer();
         instance.initialize(getSettings());
-        assertFalse(extension, instance.accept(new File(extension)));
+        assertFalse(instance.accept(new File(extension)), extension);
     }
 
     /**
      * Test of getAnalysisPhase method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testGetAnalysisPhase() {
+    void testGetAnalysisPhase() {
         ArchiveAnalyzer instance = new ArchiveAnalyzer();
         instance.initialize(getSettings());
         AnalysisPhase expResult = AnalysisPhase.INITIAL;
@@ -100,7 +107,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of prepare and close methods, of class ArchiveAnalyzer.
      */
     @Test
-    public void testInitialize() {
+    void testInitialize() {
         ArchiveAnalyzer instance = new ArchiveAnalyzer();
         instance.initialize(getSettings());
         try {
@@ -110,11 +117,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
         } catch (InitializationException ex) {
             fail(ex.getMessage());
         } finally {
-            try {
-                instance.close();
-            } catch (Exception ex) {
-                fail(ex.getMessage());
-            }
+            assertDoesNotThrow(instance::close);
         }
     }
 
@@ -124,7 +127,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * @throws java.lang.Exception when an error occurs
      */
     @Test
-    public void testAnalyze() throws Exception {
+    void testAnalyze() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -154,7 +157,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer, with an executable jar.
      */
     @Test
-    public void testAnalyzeExecutableJar() throws Exception {
+    void testAnalyzeExecutableJar() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -181,7 +184,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
     }
 
     @Test
-    public void testAnalyzeJarStaticResources() throws Exception {
+    void testAnalyzeJarStaticResources() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -217,7 +220,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeTar() throws Exception {
+    void testAnalyzeTar() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -249,7 +252,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeTarGz() throws Exception {
+    void testAnalyzeTarGz() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -282,7 +285,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeTarBz2() throws Exception {
+    void testAnalyzeTarBz2() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -310,7 +313,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeTgz() throws Exception {
+    void testAnalyzeTgz() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -340,7 +343,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeTbz2() throws Exception {
+    void testAnalyzeTbz2() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -367,7 +370,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyzeRpm() throws Exception {
+    void testAnalyzeRpm() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);
@@ -380,7 +383,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
         instance.accept(new File("struts-1.2.9-162.35.1.uyuni.noarch.rpm"));
         try (Engine engine = new Engine(settings)) {
             instance.prepare(null);
-            
+
             File file = BaseTest.getResourceAsFile(this, "xmlsec-2.0.7-3.7.uyuni.noarch.rpm");
             Dependency dependency = new Dependency(file);
 
@@ -397,7 +400,7 @@ public class ArchiveAnalyzerIT extends BaseDBTestCase {
      * Test of analyze method, of class ArchiveAnalyzer.
      */
     @Test
-    public void testAnalyze_badZip() throws Exception {
+    void testAnalyze_badZip() throws Exception {
         Settings settings = getSettings();
         settings.setBoolean(Settings.KEYS.AUTO_UPDATE, false);
         settings.setBoolean(Settings.KEYS.ANALYZER_NEXUS_ENABLED, false);

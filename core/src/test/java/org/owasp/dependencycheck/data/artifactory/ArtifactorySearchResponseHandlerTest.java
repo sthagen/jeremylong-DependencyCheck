@@ -23,8 +23,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.HttpEntity;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.data.nexus.MavenArtifact;
 import org.owasp.dependencycheck.dependency.Dependency;
@@ -36,21 +36,21 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ArtifactorySearchResponseHandlerTest extends BaseTest {
+class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswerWithoutSha256() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswerWithoutSha256() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("2e66da15851f9f5b5079228f856c2f090ba98c38");
@@ -105,7 +105,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswerWithMultipleMatches() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswerWithMultipleMatches() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("94a9ce681a42d0352b3ad22659f67835e560d107");
@@ -146,7 +146,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
      * @throws IOException
      */
     @Test
-    public void shouldProcessCorrectlyForMissingXResultDetailHeader() throws IOException {
+    void shouldProcessCorrectlyForMissingXResultDetailHeader() throws IOException {
         // Inject logback ListAppender to capture test-logs from ArtifactorySearchResponseHandler
         final Logger sutLogger = (Logger) LoggerFactory.getLogger(ArtifactorySearchResponseHandler.class);
         final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
@@ -178,7 +178,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
             // There should be a WARN-log for for each of the results regarding the absence of X-Result-Detail header driven attributes
             final List<ILoggingEvent> logsList = listAppender.list;
-            assertEquals("Number of log entries for the ArtifactorySearchResponseHandler", 2, logsList.size());
+            assertEquals(2, logsList.size(), "Number of log entries for the ArtifactorySearchResponseHandler");
 
             ILoggingEvent logEvent = logsList.get(0);
             assertEquals(Level.WARN, logEvent.getLevel());
@@ -201,7 +201,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldHandleNoMatches() throws IOException {
+    void shouldHandleNoMatches() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("94a9ce681a42d0352b3ad22659f67835e560d108");
@@ -289,7 +289,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswer() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswer() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -410,7 +410,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswerMisMatchMd5() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswerMisMatchMd5() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -429,14 +429,14 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
             fail("MD5 mismatching should throw an exception!");
         } catch (FileNotFoundException e) {
             // Then
-            assertEquals("Artifact " + dependency.toString()
+            assertEquals("Artifact " + dependency
                     + " not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
 
         }
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswerMisMatchSha1() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswerMisMatchSha1() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0e");
@@ -460,7 +460,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldProcessCorrectlyArtifactoryAnswerMisMatchSha256() throws IOException {
+    void shouldProcessCorrectlyArtifactoryAnswerMisMatchSha256() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -484,7 +484,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldThrowNotFoundWhenPatternCannotBeParsed() throws IOException {
+    void shouldThrowNotFoundWhenPatternCannotBeParsed() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -509,7 +509,7 @@ public class ArtifactorySearchResponseHandlerTest extends BaseTest {
     }
 
     @Test
-    public void shouldSkipResultsWherePatternCannotBeParsed() throws IOException {
+    void shouldSkipResultsWherePatternCannotBeParsed() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");

@@ -17,22 +17,21 @@
  */
 package org.owasp.dependencycheck.data.lucene;
 
-import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
-import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.checkOneTerm;
-import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
+import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  *
  * @author Jeremy Long
  */
-public class TokenPairConcatenatingFilterTest extends BaseTokenStreamTestCase {
+class TokenPairConcatenatingFilterTest extends BaseTokenStreamTestCase {
 
 //    private Analyzer analyzer;
 //
@@ -81,7 +80,7 @@ public class TokenPairConcatenatingFilterTest extends BaseTokenStreamTestCase {
      * @throws IOException
      */
     @Test
-    public void testEmptyTerm() {
+    void testEmptyTerm() {
         Analyzer a = new Analyzer() {
             @Override
             protected Analyzer.TokenStreamComponents createComponents(String fieldName) {
@@ -89,10 +88,6 @@ public class TokenPairConcatenatingFilterTest extends BaseTokenStreamTestCase {
                 return new Analyzer.TokenStreamComponents(tokenizer, new TokenPairConcatenatingFilter(tokenizer));
             }
         };
-        try {
-            checkOneTerm(a, "", "");
-        } catch (IOException ex) {
-            fail("Failed test random strings: " + ex.getMessage());
-        }
+        assertDoesNotThrow(() -> checkOneTerm(a, "", ""), "Failed test random strings: ");
     }
 }

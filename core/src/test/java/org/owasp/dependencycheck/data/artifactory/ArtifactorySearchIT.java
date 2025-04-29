@@ -17,8 +17,8 @@
  */
 package org.owasp.dependencycheck.data.artifactory;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.owasp.dependencycheck.data.nexus.MavenArtifact;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.utils.Settings;
@@ -27,15 +27,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-@Ignore
-public class ArtifactorySearchIT {
+@Disabled
+class ArtifactorySearchIT {
 
 
     @Test
-    public void testWithRealInstanceUsingBearerToken() throws IOException {
+    void testWithRealInstanceUsingBearerToken() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -63,7 +63,7 @@ public class ArtifactorySearchIT {
     }
 
     @Test
-    public void testWithRealInstanceAnonymous() throws IOException {
+    void testWithRealInstanceAnonymous() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -82,7 +82,7 @@ public class ArtifactorySearchIT {
     }
 
     @Test
-    public void testWithRealInstanceWithUserToken() throws IOException {
+    void testWithRealInstanceWithUserToken() throws IOException {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("0695b63d702f505b9b916e02272e3b6381bade7f");
