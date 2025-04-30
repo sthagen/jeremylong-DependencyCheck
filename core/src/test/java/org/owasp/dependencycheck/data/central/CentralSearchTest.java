@@ -69,7 +69,7 @@ class CentralSearchTest extends BaseTest {
     void testMissingSha1() {
         IOException ex = assertThrows(IOException.class, () -> searcher.searchSha1("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
 
-        //abort if we hit a failure state on the CI
+        // abort if we hit a failure state on the CI
         assumeFalse(StringUtils.contains(ex.getMessage(), "Could not connect to MavenCentral"));
         assumeFalse(ex.getMessage().matches("^https://.+ - Server status: \\d{3} - Server reason: .+$"));
 

@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -129,9 +129,8 @@ class AssemblyAnalyzerTest extends BaseTest {
         Dependency d = new Dependency(test);
 
         try {
-            analyzer.analyze(d, null);
-            fail("Expected an AnalysisException");
-        } catch (AnalysisException ae) {
+            AnalysisException ae = assertThrows(AnalysisException.class, () -> analyzer.analyze(d, null),
+                "Expected an AnalysisException");
             assertTrue(ae.getMessage().contains("nonexistent.dll does not exist and cannot be analyzed by dependency-check"));
         } finally {
             System.setProperty(LOG_KEY, oldProp);
@@ -159,9 +158,9 @@ class AssemblyAnalyzerTest extends BaseTest {
             AssemblyAnalyzer aanalyzer = new AssemblyAnalyzer();
             aanalyzer.initialize(getSettings());
             aanalyzer.accept(new File("test.dll")); // trick into "thinking it is active"
-            aanalyzer.prepare(null);
-            fail("Expected an InitializationException");
-        } catch (InitializationException ae) {
+
+            InitializationException ae = assertThrows(InitializationException.class, () -> aanalyzer.prepare(null),
+                    "Expected an InitializationException");
             assertEquals("An error occurred with the .NET AssemblyAnalyzer, is the dotnet 8.0 runtime or sdk installed?", ae.getMessage());
         } finally {
             System.setProperty(LOG_KEY, oldProp);

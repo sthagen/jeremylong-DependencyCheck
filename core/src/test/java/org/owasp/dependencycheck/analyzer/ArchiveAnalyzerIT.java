@@ -22,7 +22,6 @@ import org.owasp.dependencycheck.BaseDBTestCase;
 import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.Engine;
 import org.owasp.dependencycheck.dependency.Dependency;
-import org.owasp.dependencycheck.exception.InitializationException;
 import org.owasp.dependencycheck.utils.Settings;
 
 import java.io.File;
@@ -34,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -113,9 +111,7 @@ class ArchiveAnalyzerIT extends BaseDBTestCase {
         try {
             instance.setEnabled(true);
             instance.setFilesMatched(true);
-            instance.prepare(null);
-        } catch (InitializationException ex) {
-            fail(ex.getMessage());
+            assertDoesNotThrow(() -> instance.prepare(null));
         } finally {
             assertDoesNotThrow(instance::close);
         }

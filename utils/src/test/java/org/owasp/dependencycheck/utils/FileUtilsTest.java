@@ -24,7 +24,6 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -51,11 +50,10 @@ class FileUtilsTest extends BaseTest {
      */
     @Test
     void testDelete() throws Exception {
-
         File file = File.createTempFile("tmp", "deleteme", getSettings().getTempDirectory());
-        if (!file.exists()) {
-            fail("Unable to create a temporary file.");
-        }
+
+        assertTrue(file.exists(), "Unable to create a temporary file.");
+
         boolean status = FileUtils.delete(file);
         assertTrue(status, "delete returned a failed status");
         assertFalse(file.exists(), "Temporary file exists after attempting deletion");
@@ -66,7 +64,6 @@ class FileUtilsTest extends BaseTest {
      */
     @Test
     void testDeleteWithSubDirectories() throws Exception {
-
         File dir = new File(getSettings().getTempDirectory(), "delete-me");
         dir.mkdirs();
         File file = File.createTempFile("tmp", "deleteme", dir);

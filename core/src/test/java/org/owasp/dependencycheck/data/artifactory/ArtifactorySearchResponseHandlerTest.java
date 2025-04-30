@@ -37,7 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -168,36 +168,35 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("Result with no details due to missing X-Result-Detail header, should throw an exception!");
-        } catch (FileNotFoundException e) {
-            // Then
-            assertEquals("Artifact Dependency{ fileName='freemarker-2.3.33.jar', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts",
-                    e.getMessage());
 
-            // There should be a WARN-log for for each of the results regarding the absence of X-Result-Detail header driven attributes
-            final List<ILoggingEvent> logsList = listAppender.list;
-            assertEquals(2, logsList.size(), "Number of log entries for the ArtifactorySearchResponseHandler");
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "Result with no details due to missing X-Result-Detail header, should throw an exception!");
 
-            ILoggingEvent logEvent = logsList.get(0);
-            assertEquals(Level.WARN, logEvent.getLevel());
-            assertEquals("No checksums found in artifactory search result of uri {}. Please make sure that header X-Result-Detail is retained on any (reverse)-proxy, loadbalancer or WebApplicationFirewall in the network path to your Artifactory Server", logEvent.getMessage());
-            Object[] args = logEvent.getArgumentArray();
-            assertEquals(1, args.length);
-            assertEquals("https://artifactory.example.com:443/artifactory/api/storage/maven-central-cache/org/freemarker/freemarker/2.3.33/freemarker-2.3.33.jar", args[0]);
+        // Then
+        assertEquals("Artifact Dependency{ fileName='freemarker-2.3.33.jar', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts",
+                e.getMessage());
 
-            logEvent = logsList.get(1);
-            assertEquals(Level.WARN, logEvent.getLevel());
-            assertEquals("No checksums found in artifactory search result of uri {}. Please make sure that header X-Result-Detail is retained on any (reverse)-proxy, loadbalancer or WebApplicationFirewall in the network path to your Artifactory Server", logEvent.getMessage());
-            args = logEvent.getArgumentArray();
-            assertEquals(1, args.length);
-            assertEquals("https://artifactory.example.com:443/artifactory/api/storage/gradle-plugins-extended-cache/org/freemarker/freemarker/2.3.33/freemarker-2.3.33.jar", args[0]);
+        // There should be a WARN-log for for each of the results regarding the absence of X-Result-Detail header driven attributes
+        final List<ILoggingEvent> logsList = listAppender.list;
+        assertEquals(2, logsList.size(), "Number of log entries for the ArtifactorySearchResponseHandler");
 
-            // Remove our manually injected additional appender
-            sutLogger.detachAppender(listAppender);
-            listAppender.stop();
-        }
+        ILoggingEvent logEvent = logsList.get(0);
+        assertEquals(Level.WARN, logEvent.getLevel());
+        assertEquals("No checksums found in artifactory search result of uri {}. Please make sure that header X-Result-Detail is retained on any (reverse)-proxy, loadbalancer or WebApplicationFirewall in the network path to your Artifactory Server", logEvent.getMessage());
+        Object[] args = logEvent.getArgumentArray();
+        assertEquals(1, args.length);
+        assertEquals("https://artifactory.example.com:443/artifactory/api/storage/maven-central-cache/org/freemarker/freemarker/2.3.33/freemarker-2.3.33.jar", args[0]);
+
+        logEvent = logsList.get(1);
+        assertEquals(Level.WARN, logEvent.getLevel());
+        assertEquals("No checksums found in artifactory search result of uri {}. Please make sure that header X-Result-Detail is retained on any (reverse)-proxy, loadbalancer or WebApplicationFirewall in the network path to your Artifactory Server", logEvent.getMessage());
+        args = logEvent.getArgumentArray();
+        assertEquals(1, args.length);
+        assertEquals("https://artifactory.example.com:443/artifactory/api/storage/gradle-plugins-extended-cache/org/freemarker/freemarker/2.3.33/freemarker-2.3.33.jar", args[0]);
+
+        // Remove our manually injected additional appender
+        sutLogger.detachAppender(listAppender);
+        listAppender.stop();
     }
 
     @Test
@@ -214,14 +213,11 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("No Match found, should throw an exception!");
-        } catch (FileNotFoundException e) {
-            // Then
-            assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory",
-                    e.getMessage());
-        }
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "No Match found, should throw an exception!");
+        // Then
+        assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory",
+                e.getMessage());
     }
 
     private byte[] multipleMatchesPayload() {
@@ -424,15 +420,12 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("MD5 mismatching should throw an exception!");
-        } catch (FileNotFoundException e) {
-            // Then
-            assertEquals("Artifact " + dependency
-                    + " not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "MD5 mismatching should throw an exception!");
 
-        }
+        // Then
+        assertEquals("Artifact " + dependency
+                + " not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
     }
 
     @Test
@@ -450,13 +443,11 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("SHA1 mismatching should throw an exception!");
-        } catch (FileNotFoundException e) {
-            // Then
-            assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
-        }
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "SHA1 mismatching should throw an exception!");
+
+        // Then
+        assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
     }
 
     @Test
@@ -474,13 +465,11 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("SHA256 mismatching should throw an exception!");
-        } catch (FileNotFoundException e) {
-            // Then
-            assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
-        }
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "SHA256 mismatching should throw an exception!");
+
+        // Then
+        assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
     }
 
     @Test
@@ -499,13 +488,11 @@ class ArtifactorySearchResponseHandlerTest extends BaseTest {
 
         // When
         final ArtifactorySearchResponseHandler handler = new ArtifactorySearchResponseHandler(dependency);
-        try {
-            handler.handleResponse(response);
-            fail("Maven GAV pattern mismatch for filepath should throw a not found exception!");
-        } catch (FileNotFoundException e) {
+        FileNotFoundException e = assertThrows(FileNotFoundException.class, () -> handler.handleResponse(response),
+                "Maven GAV pattern mismatch for filepath should throw a not found exception!");
+
             // Then
             assertEquals("Artifact Dependency{ fileName='null', actualFilePath='null', filePath='null', packagePath='null'} not found in Artifactory; discovered sha1 hits not recognized as matching maven artifacts", e.getMessage());
-        }
     }
 
     @Test

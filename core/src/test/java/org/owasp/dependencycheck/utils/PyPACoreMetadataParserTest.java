@@ -9,19 +9,17 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class PyPACoreMetadataParserTest {
 
     @Test
-    void getProperties_should_throw_exception_for_too_large_major() throws IOException {
-        try {
-            PyPACoreMetadataParser.getProperties(new BufferedReader(new StringReader("Metadata-Version: 3.0")));
-            fail("Expected IllegalArgumentException for too large major in Metadata-Version");
-        } catch (IllegalArgumentException e) {
-            assertTrue(e.getMessage().contains("Unsupported PyPA Wheel metadata"));
-        }
+    void getProperties_should_throw_exception_for_too_large_major() {
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> PyPACoreMetadataParser.getProperties(new BufferedReader(new StringReader("Metadata-Version: 3.0"))),
+                "Expected IllegalArgumentException for too large major in Metadata-Version");
+        assertTrue(e.getMessage().contains("Unsupported PyPA Wheel metadata"));
     }
 
     @Test

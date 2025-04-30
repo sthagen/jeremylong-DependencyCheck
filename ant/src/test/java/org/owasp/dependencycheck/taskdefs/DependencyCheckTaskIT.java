@@ -29,7 +29,6 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -127,12 +126,11 @@ class DependencyCheckTaskIT extends BaseDBTestCase {
 
     @Test
     void testNestedBADReportFormat() {
-        try {
-            buildFileRule.executeTarget("test.formatBADNested");
-            fail("Should have had a buildExceotion for a bad format attribute");
-        } catch (BuildException e) {
-            assertTrue(e.getMessage().contains("BAD is not a legal value for this attribute"), "Message did not have BAD, unexpected exception: " + e.getMessage());
-        }
+        BuildException e = assertThrows(BuildException.class,
+                () -> buildFileRule.executeTarget("test.formatBADNested"),
+                "Should have had a buildException for a bad format attribute");
+        assertTrue(e.getMessage().contains("BAD is not a legal value for this attribute"),
+                "Message did not have BAD, unexpected exception: " + e.getMessage());
     }
 
     /**

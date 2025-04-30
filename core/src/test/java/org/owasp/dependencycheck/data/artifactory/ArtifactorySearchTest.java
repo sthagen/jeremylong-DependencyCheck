@@ -25,12 +25,11 @@ import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.dependency.Dependency;
 import org.owasp.dependencycheck.utils.Settings;
 
-import java.io.IOException;
 import java.net.UnknownHostException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class ArtifactorySearchTest extends BaseTest {
     private static String httpsProxyHostOrig;
@@ -68,7 +67,7 @@ class ArtifactorySearchTest extends BaseTest {
 
 
     @Test
-    void shouldFailWhenHostUnknown() throws IOException {
+    void shouldFailWhenHostUnknown() {
         // Given
         Dependency dependency = new Dependency();
         dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
@@ -79,14 +78,12 @@ class ArtifactorySearchTest extends BaseTest {
         settings.setString(Settings.KEYS.ANALYZER_ARTIFACTORY_URL, "https://artifactory.techno.ingenico.com.invalid/artifactory");
         final ArtifactorySearch artifactorySearch = new ArtifactorySearch(settings);
         // When
-        try {
-            artifactorySearch.search(dependency);
-            fail("Should have thrown an UnknownHostException");
-        } catch (UnknownHostException exception) {
-            // Then
-            assertNotNull(exception.getMessage());
-            assertTrue(exception.getMessage().contains("artifactory.techno.ingenico.com.invalid"));
-        }
+        UnknownHostException exception = assertThrows(UnknownHostException.class, () -> artifactorySearch.search(dependency),
+                "Should have thrown an UnknownHostException");
+
+        // Then
+        assertNotNull(exception.getMessage());
+        assertTrue(exception.getMessage().contains("artifactory.techno.ingenico.com.invalid"));
     }
 
 }

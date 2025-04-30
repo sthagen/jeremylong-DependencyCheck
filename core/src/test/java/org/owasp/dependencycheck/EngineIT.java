@@ -36,8 +36,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
@@ -72,9 +72,9 @@ class EngineIT extends BaseDBTestCase {
              when(instance.getExecutorService(analyzer)).thenReturn(executorService);
              doReturn(failingAnalysisTask).when(instance).getAnalysisTasks(analyzer, exceptions);
 
-             instance.executeAnalysisTasks(analyzer, exceptions);
-             fail("ExceptionCollection exception was expected");
-         } catch (ExceptionCollection expected) {
+             ExceptionCollection expected = assertThrows(ExceptionCollection.class,
+                     () -> instance.executeAnalysisTasks(analyzer, exceptions),
+                     "ExceptionCollection exception was expected");
              List<Throwable> collected = expected.getExceptions();
              assertEquals(1, collected.size());
              assertEquals(java.util.concurrent.ExecutionException.class, collected.get(0).getClass());

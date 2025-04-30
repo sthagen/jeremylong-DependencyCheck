@@ -159,7 +159,7 @@ class CPEAnalyzerIT extends BaseDBTestCase {
             }
             assertTrue(found, "Match not found: { dep:'" + dep.getFileName() + "', exp:'" + expResult + "' }");
         } else {
-            dep.getVulnerableSoftwareIdentifiers().forEach((id) -> fail("Unexpected match found: { dep:'" + dep.getFileName() + "', found:'" + id + "' }"));
+            dep.getVulnerableSoftwareIdentifiers().forEach(id -> fail("Unexpected match found: { dep:'" + dep.getFileName() + "', found:'" + id + "' }"));
         }
     }
 
@@ -222,7 +222,7 @@ class CPEAnalyzerIT extends BaseDBTestCase {
             instance.close();
 
             suppressionAnalyzer.analyze(commonValidator, engine);
-            commonValidator.getVulnerableSoftwareIdentifiers().forEach((i) -> fail("Apache Common Validator found an unexpected CPE identifier - " + i.getValue()));
+            commonValidator.getVulnerableSoftwareIdentifiers().forEach(i -> fail("Apache Common Validator found an unexpected CPE identifier - " + i.getValue()));
 
             String expResult = "cpe:2.3:a:apache:struts:2.1.2:*:*:*:*:*:*:*";
             assertFalse(struts.getVulnerableSoftwareIdentifiers().isEmpty(), "Incorrect match size - struts");

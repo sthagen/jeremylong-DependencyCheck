@@ -25,6 +25,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,9 +48,7 @@ class DriverLoaderTest extends BaseTest {
         String className = "org.h2.Driver";
         Driver d = null;
         try {
-            d = DriverLoader.load(className);
-        } catch (DriverLoadException ex) {
-            fail(ex.getMessage());
+            d = assertDoesNotThrow(() ->  DriverLoader.load(className));
         } finally {
             if (d != null) {
                 DriverManager.deregisterDriver(d);
@@ -107,9 +106,7 @@ class DriverLoaderTest extends BaseTest {
 
         Driver d = null;
         try {
-            d = DriverLoader.load(className, paths);
-        } catch (DriverLoadException ex) {
-            fail(ex.getMessage());
+            d = assertDoesNotThrow(() -> DriverLoader.load(className, paths));
         } finally {
             if (d != null) {
                 try {

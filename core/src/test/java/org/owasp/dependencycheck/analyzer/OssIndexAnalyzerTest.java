@@ -23,9 +23,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class OssIndexAnalyzerTest extends BaseTest {
 
@@ -141,9 +141,8 @@ class OssIndexAnalyzerTest extends BaseTest {
         // When
         try (engine) {
             engine.setDependencies(Collections.singletonList(dependency));
-            analyzer.analyzeDependency(dependency, engine);
-        } catch (AnalysisException e) {
-            fail("Analysis exception thrown upon remote error although only a warning should have been logged");
+            assertDoesNotThrow(() -> analyzer.analyzeDependency(dependency, engine),
+                    "Analysis exception thrown upon remote error although only a warning should have been logged");
         } finally {
             analyzer.close();
         }
@@ -169,9 +168,8 @@ class OssIndexAnalyzerTest extends BaseTest {
         // When
         try (engine) {
             engine.setDependencies(Collections.singletonList(dependency));
-            analyzer.analyzeDependency(dependency, engine);
-        } catch (AnalysisException e) {
-            fail("Analysis exception thrown upon remote error although only a warning should have been logged");
+            assertDoesNotThrow(() -> analyzer.analyzeDependency(dependency, engine),
+                    "Analysis exception thrown upon remote error although only a warning should have been logged");
         } finally {
             analyzer.close();
         }
