@@ -66,10 +66,10 @@ class ExpectedObjectInputStreamTest {
         ByteArrayOutputStream mem = new ByteArrayOutputStream();
         byte[] buf;
         try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(mem))) {
-                out.writeObject(data);
-                out.flush();
-                buf = mem.toByteArray();
-            }
+            out.writeObject(data);
+            out.flush();
+            buf = mem.toByteArray();
+        }
         ByteArrayInputStream in = new ByteArrayInputStream(buf);
         ExpectedObjectInputStream instance = new ExpectedObjectInputStream(in, "java.util.ArrayList", "org.owasp.dependencycheck.utils.SimplePojo");
         assertThrows(java.io.InvalidClassException.class, instance::readObject);

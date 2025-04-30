@@ -49,12 +49,12 @@ class DependencyCheckTaskIT extends BaseDBTestCase {
     @AfterEach
     @Override
     public void tearDown() throws Exception {
-        super.tearDown();
         if (buildFileRule.getProject() != null) {
             if (this.buildFileRule.getProject().getTargets().containsKey("tearDown")) {
                 this.buildFileRule.getProject().executeTarget("tearDown");
             }
         }
+        super.tearDown();
     }
 
     /**

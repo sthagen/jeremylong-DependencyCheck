@@ -118,7 +118,7 @@ class AppTest extends BaseTest {
     @Test
     void testPopulateSettingsException() {
         String[] args = {"-invalidPROPERTY"};
-        Exception exception = assertThrows(UnrecognizedOptionException.class, () -> testBooleanProperties(args, null));
+        UnrecognizedOptionException exception = assertThrows(UnrecognizedOptionException.class, () -> testBooleanProperties(args, null));
         assertTrue(exception.getMessage().contains("Unrecognized option: -invalidPROPERTY"));
     }
 
