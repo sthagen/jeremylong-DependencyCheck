@@ -1,5 +1,19 @@
 # Change Log
 
+## [Version 12.1.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.2) (2025-06-07)
+
+- fix: Allow configuring OSS Index user/pw directly (#7640)
+- fix: remove vulnerable transitive dependency - beanutils (#7705)
+- fix: Simplify PHP framework suppression for Composer (#7693)
+- fix: update CPE pattern to remove FP (#7684)
+- fix(cli): Patch generated Windows shell script for JAVACMD installs with spaces (#7653)
+- fix: Resolve various WCAG accessibility / css issues in the HTML report (#7629)
+- fix: #7510 Display a dedicated message when receiving an HTTP 403 (#7575)
+- docs: Make `Vulnerability Sources` in `Related Work` clearer (#7691)
+- docs: #7610 add a reference to NVD mirroring in getting started documentation (#7611)
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/96?closed=1)
+
 ## [Version 12.1.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.1) (2025-04-05)
 
 - fix: resolve NVD data Parse error `com.fasterxml.jackson.core.JsonParseException: Unexpected character (']' (code 93))`
