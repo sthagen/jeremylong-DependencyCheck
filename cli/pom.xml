@@ -20,7 +20,7 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
     <parent>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-parent</artifactId>
-        <version>12.1.2-SNAPSHOT</version>
+        <version>12.1.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>dependency-check-cli</artifactId>
@@ -116,11 +116,7 @@ Copyright (c) 2012 - Jeremy Long. All Rights Reserved.
                         <configuration>
                             <!-- Hack/workaround for https://github.com/mojohaus/appassembler/issues/114 -->
                             <target>
-                                <replace file="${project.build.directory}/release/bin/dependency-check.bat"
-                                         token="%JAVACMD% %JAVA_OPTS%"
-                                         value="&quot;%JAVACMD%&quot; %JAVA_OPTS%"
-                                         failOnNoReplacements="true"
-                                />
+                                <replace file="${project.build.directory}/release/bin/dependency-check.bat" token="%JAVACMD% %JAVA_OPTS%" value="&quot;%JAVACMD%&quot; %JAVA_OPTS%" failOnNoReplacements="true" />
                             </target>
                         </configuration>
                     </execution>
