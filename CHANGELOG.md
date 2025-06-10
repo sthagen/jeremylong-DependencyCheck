@@ -1,5 +1,13 @@
 # Change Log
 
+## [Version 12.1.3](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.3) (2025-06-10)
+
+- fix: correct regex matches introduced in 12.1.2 (#7726)
+- build(deps): bump org.semver4j:semver4j from 5.7.0 to 5.7.1 (#7718)
+- build(deps): bump junit.version from 5.13.0 to 5.13.1 (#7719)
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/97?closed=1)
+
 ## [Version 12.1.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.2) (2025-06-07)
 
 - fix: Allow configuring OSS Index user/pw directly (#7640)
