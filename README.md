@@ -175,7 +175,7 @@ For instructions on the use of the Ant Task, please see the [dependency-check-an
 
 For installation to pass, you must have the following components installed:
 * Java: `java -version` 11.0
-* Maven: `mvn -version` 3.5.0 and higher
+* Maven: `mvn -version` 3.6.3 and higher
 
 Tests cases require:
 * dotnet core version 8.0
