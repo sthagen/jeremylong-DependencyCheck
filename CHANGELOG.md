@@ -1,6 +1,6 @@
 # Change Log
 
-## [Version 12.1.4](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.4) (2025-09-20)
+## [Version 12.1.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.5) (2025-09-20)
 
 - **fix**: Update to support OSS Index Authentication Requirements (#7920)
   - Note: OSS Index will require authentication starting 9/22/2025. Users must configure a free account to continue using the OSS Index Analyzer. See https://ossindex.sonatype.org/doc/auth-required.
