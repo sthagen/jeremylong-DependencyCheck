@@ -37,7 +37,9 @@ import org.owasp.dependencycheck.dependency.VulnerableSoftware;
 import org.owasp.dependencycheck.dependency.VulnerableSoftwareBuilder;
 import org.owasp.dependencycheck.dependency.naming.Identifier;
 import org.owasp.dependencycheck.dependency.naming.PurlIdentifier;
+import org.owasp.dependencycheck.exception.InitializationException;
 import org.owasp.dependencycheck.utils.Settings;
+import org.owasp.dependencycheck.utils.Settings.KEYS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.springett.parsers.cpe.exceptions.CpeValidationException;
@@ -125,6 +127,16 @@ public class OssIndexAnalyzer extends AbstractAnalyzer {
         synchronized (FETCH_MUTIX) {
             reports = null;
         }
+    }
+
+    @Override
+    protected void prepareAnalyzer(Engine engine) throws InitializationException {
+      synchronized (FETCH_MUTIX) {
+        if (StringUtils.isEmpty(getSettings().getString(KEYS.ANALYZER_OSSINDEX_USER, StringUtils.EMPTY)) ||
+            StringUtils.isEmpty(getSettings().getString(KEYS.ANALYZER_OSSINDEX_PASSWORD, StringUtils.EMPTY))) {
+          throw new InitializationException("Error initializing OSS Index analyzer due to missing user/password credentials. Authentication is now required: https://ossindex.sonatype.org/doc/auth-required");
+        }
+      }
     }
 
     @Override
