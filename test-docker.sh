@@ -61,6 +61,8 @@ docker run --rm \
     --scan /src \
     --format "JSON" \
     --project "test scan" \
+    --disableCentral \
+    --disableOssIndex \
     --out /report \
     --log /report/odc.log \
     --nvdDatafeed https://dependency-check.github.io/DependencyCheck/hb_nvd/
