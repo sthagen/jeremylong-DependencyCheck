@@ -1,5 +1,27 @@
 # Change Log
 
+## [Version 12.1.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.5) (2025-09-20)
+
+- **fix**: Update to support OSS Index Authentication Requirements (#7920)
+  - Note: OSS Index will require authentication starting 9/22/2025. Users must configure a free account to continue using the OSS Index Analyzer. See https://ossindex.sonatype.org/doc/auth-required.
+- fix: add CVSSv4 to suppressed entries in JSON report (#7900)
+- fix: correctly utilize CVSSv4 from ossindex (#7899)
+- fix: npe when processing cve with empty configuration (#7888)
+- fix: Return unsorted vulnerabilities in new HashSet, avoiding CoMod (#7848)
+- fix: Return unsorted vulnerabilities in new HashSet, avoiding CoMod
+- fix: class loading problem with fat jars (#7786) (#7787)
+- fix: Improve Artifactory handler log message (#7838)
+- fix: classloading problem with fat jars (#7786)
+- fix: Add null checking when parsing the license json in AbstractNpmAnalyzer. (#7784)
+- fix(fp): resolves several false positives related to CVE-2021-41033 (#7736)
+- docs: Clarify format of exclude patterns (#7879)
+- docs: Document poetry-based analysis behaviour in Python analyzer (#7855)
+- docs: request FP reporters use the latest version of ODC. (#7820)
+- docs: update development pre-reqs (#7792)
+- docs: fix minor typos in false positive issue template (#7763)
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/98?closed=1)
+
 ## [Version 12.1.3](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.3) (2025-06-10)
 
 - fix: correct regex matches introduced in 12.1.2 (#7726)
