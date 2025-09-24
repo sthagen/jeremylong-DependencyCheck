@@ -1,5 +1,15 @@
 # Change Log
 
+## [Version 12.1.6](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.6) (2025-09-24)
+
+- fix: Disable OSS Index if its credentials are missing ([#7963](https://github.com/dependency-check/DependencyCheck/pull/7963))
+- fix: Correct CVSSv4 parsing for low precision OSSIndex values ([#7935](https://github.com/dependency-check/DependencyCheck/pull/7935))
+- fix(fp): Fix false positives for Redis Server against NPM/JS client libs ([#7942](https://github.com/dependency-check/DependencyCheck/pull/7942))
+- docs: Fix legacy GitHub links within docs and CHANGELOG ([#7944](https://github.com/dependency-check/DependencyCheck/pull/7944))
+- chore: fix version typo in security policy ([#7936](https://github.com/dependency-check/DependencyCheck/pull/7936))
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/99?closed=1)
+
 ## [Version 12.1.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.5) (2025-09-20)
 
 - **fix**: Update to support OSS Index Authentication Requirements ([#7920](https://github.com/dependency-check/DependencyCheck/pull/7920))
