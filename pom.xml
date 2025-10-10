@@ -130,12 +130,12 @@ Copyright (c) 2012 - Jeremy Long
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-base.version>2.0.0</doxia-base.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
-        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.9.0</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-        <maven-surefire-report-plugin.version>3.5.3</maven-surefire-report-plugin.version>
+        <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <spotbugs.maven.plugin.version>4.9.4.0</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.2.1</taglist-maven-plugin.version>
@@ -154,7 +154,7 @@ Copyright (c) 2012 - Jeremy Long
             https://github.com/apache/commons-jcs/pull/120 -->
         <commons-jcs-core.version>3.2.1</commons-jcs-core.version>
         <aho-corasick-double-array-trie.version>1.2.3</aho-corasick-double-array-trie.version>
-        <junit.version>5.13.4</junit.version>
+        <junit.version>5.14.0</junit.version>
         <hamcrest.version>3.0</hamcrest.version>
         <mockito.version>5.19.0</mockito.version>
         <jsoup.version>1.21.2</jsoup.version>
@@ -1305,7 +1305,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>33.4.8-jre</version>
+                <version>33.5.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>com.hankcs</groupId>
