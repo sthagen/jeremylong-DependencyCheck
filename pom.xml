@@ -129,7 +129,7 @@ Copyright (c) 2012 - Jeremy Long
         <reporting.checkstyle-plugin.version>3.6.0</reporting.checkstyle-plugin.version>
         <reporting.checkstyle.tool.version>9.3</reporting.checkstyle.tool.version>
         <doxia-base.version>2.0.0</doxia-base.version>
-        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
         <maven-dependency-plugin.version>3.9.0</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <!-- upgrading beyond 2.5 breaks maven site-->
@@ -137,11 +137,11 @@ Copyright (c) 2012 - Jeremy Long
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
         <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-        <spotbugs.maven.plugin.version>4.9.8.0</spotbugs.maven.plugin.version>
+        <spotbugs.maven.plugin.version>4.9.8.1</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.2.1</taglist-maven-plugin.version>
         <versions-maven-plugin.version>2.19.1</versions-maven-plugin.version>
         <jetbrains.annotations.version>26.0.2-1</jetbrains.annotations.version>
-        <findbugs.spotbugs.version>4.9.6</findbugs.spotbugs.version>
+        <findbugs.spotbugs.version>4.9.8</findbugs.spotbugs.version>
         <com.h2database.version>2.4.240</com.h2database.version>
         <commons-cli.version>1.10.0</commons-cli.version>
         <commons-io.version>2.20.0</commons-io.version>
@@ -292,7 +292,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
