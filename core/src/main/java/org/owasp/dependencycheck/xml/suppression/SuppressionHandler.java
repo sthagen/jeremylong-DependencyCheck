@@ -95,6 +95,18 @@ public class SuppressionHandler extends DefaultHandler {
      */
     public static final String CVSS_BELOW = "cvssBelow";
     /**
+     * The cvssV2Below element name.
+     */
+    public static final String CVSS_V2_BELOW = "cvssV2Below";
+    /**
+     * The cvssV3Below element name.
+     */
+    public static final String CVSS_V3_BELOW = "cvssV3Below";
+    /**
+     * The cvssV4Below element name.
+     */
+    public static final String CVSS_V4_BELOW = "cvssV4Below";
+    /**
      * A list of suppression rules.
      */
     private final List<SuppressionRule> suppressionRules = new ArrayList<>();
@@ -231,6 +243,18 @@ public class SuppressionHandler extends DefaultHandler {
                 case CVSS_BELOW:
                     final Double cvss = Double.valueOf(currentText.toString().trim());
                     rule.addCvssBelow(cvss);
+                    break;
+                case CVSS_V2_BELOW:
+                    final Double cvssV2 = Double.valueOf(currentText.toString().trim());
+                    rule.addCvssV2Below(cvssV2);
+                    break;
+                case CVSS_V3_BELOW:
+                    final Double cvssV3 = Double.valueOf(currentText.toString().trim());
+                    rule.addCvssV3Below(cvssV3);
+                    break;
+                case CVSS_V4_BELOW:
+                    final Double cvssV4 = Double.valueOf(currentText.toString().trim());
+                    rule.addCvssV4Below(cvssV4);
                     break;
                 default:
                     break;
