@@ -64,6 +64,18 @@ public class SuppressionRule {
      */
     private List<Double> cvssBelow = new ArrayList<>();
     /**
+     * The list of cvssV2Below scores.
+     */
+    private List<Double> cvssV2Below = new ArrayList<>();
+    /**
+     * The list of cvssV3Below scores.
+     */
+    private List<Double> cvssV3Below = new ArrayList<>();
+    /**
+     * The list of cvssV4Below scores.
+     */
+    private List<Double> cvssV4Below = new ArrayList<>();
+    /**
      * The list of CWE entries to suppress.
      */
     private List<String> cwe = new ArrayList<>();
@@ -259,6 +271,114 @@ public class SuppressionRule {
      */
     public boolean hasCvssBelow() {
         return !cvssBelow.isEmpty();
+    }
+
+    /**
+     * Get the value of cvssV2Below.
+     *
+     * @return the value of cvssV2Below
+     */
+    public List<Double> getCvssV2Below() {
+        return cvssV2Below;
+    }
+
+    /**
+     * Set the value of cvssV2Below.
+     *
+     * @param cvssV2Below new value of cvssV2Below
+     */
+    public void setCvssV2Below(List<Double> cvssV2Below) {
+        this.cvssV2Below = cvssV2Below;
+    }
+
+    /**
+     * Adds the CVSS to the cvssV2Below list.
+     *
+     * @param cvss the CVSS to add
+     */
+    public void addCvssV2Below(Double cvss) {
+        this.cvssV2Below.add(cvss);
+    }
+
+    /**
+     * Returns whether or not this suppression rule has CVSS v2 suppression criteria.
+     *
+     * @return whether or not this suppression rule has CVSS v2 suppression criteria.
+     */
+    public boolean hasCvssV2Below() {
+        return !cvssV2Below.isEmpty();
+    }
+
+    /**
+     * Get the value of cvssV3Below.
+     *
+     * @return the value of cvssV3Below
+     */
+    public List<Double> getCvssV3Below() {
+        return cvssV3Below;
+    }
+
+    /**
+     * Set the value of cvssV3Below.
+     *
+     * @param cvssV3Below new value of cvssV3Below
+     */
+    public void setCvssV3Below(List<Double> cvssV3Below) {
+        this.cvssV3Below = cvssV3Below;
+    }
+
+    /**
+     * Adds the CVSS to the cvssV3Below list.
+     *
+     * @param cvss the CVSS to add
+     */
+    public void addCvssV3Below(Double cvss) {
+        this.cvssV3Below.add(cvss);
+    }
+
+    /**
+     * Returns whether or not this suppression rule has CVSS v3 suppression criteria.
+     *
+     * @return whether or not this suppression rule has CVSS v3 suppression criteria.
+     */
+    public boolean hasCvssV3Below() {
+        return !cvssV3Below.isEmpty();
+    }
+
+    /**
+     * Get the value of cvssV4Below.
+     *
+     * @return the value of cvssV4Below
+     */
+    public List<Double> getCvssV4Below() {
+        return cvssV4Below;
+    }
+
+    /**
+     * Set the value of cvssV4Below.
+     *
+     * @param cvssV4Below new value of cvssV4Below
+     */
+    public void setCvssV4Below(List<Double> cvssV4Below) {
+        this.cvssV4Below = cvssV4Below;
+    }
+
+    /**
+     * Adds the CVSS to the cvssV4Below list.
+     *
+     * @param cvss the CVSS to add
+     */
+    public void addCvssV4Below(Double cvss) {
+        this.cvssV4Below.add(cvss);
+    }
+
+    /**
+     * Returns whether or not this suppression rule has CVSS v4 suppression criteria.
+     *
+     * @return whether or not this suppression rule has CVSS v4 suppression criteria.
+     */
+    public boolean hasCvssV4Below() {
+        return !cvssV4Below.isEmpty();
     }
 
     /**
@@ -494,7 +614,7 @@ public class SuppressionRule {
             }
             removalList.forEach(dependency::removeVulnerableSoftwareIdentifier);
         }
-        if (hasCve() || hasVulnerabilityName() || hasCwe() || hasCvssBelow()) {
+        if (hasCve() || hasVulnerabilityName() || hasCwe() || hasCvssBelow() || hasCvssV2Below() || hasCvssV3Below() || hasCvssV4Below()) {
             final Set<Vulnerability> removeVulns = new HashSet<>();
             for (Vulnerability v : dependency.getVulnerabilities()) {
                 boolean remove = false;
@@ -525,23 +645,9 @@ public class SuppressionRule {
                     }
                 }
                 if (!remove) {
-                    for (Double cvss : this.cvssBelow) {
-                        //TODO validate this comparison
-                        if (v.getCvssV2() != null && v.getCvssV2().getCvssData().getBaseScore().compareTo(cvss) < 0) {
-                            remove = true;
-                            removeVulns.add(v);
-                            break;
-                        }
-                        if (v.getCvssV3() != null && v.getCvssV3().getCvssData().getBaseScore().compareTo(cvss) < 0) {
-                            remove = true;
-                            removeVulns.add(v);
-                            break;
-                        }
-                        if (v.getCvssV4() != null && v.getCvssV4().getCvssData().getBaseScore().compareTo(cvss) < 0) {
-                            remove = true;
-                            removeVulns.add(v);
-                            break;
-                        }
+                    if (suppressedBasedOnScore(v)) {
+                        remove = true;
+                        removeVulns.add(v);
                     }
                 }
                 if (remove && !isBase()) {
@@ -554,6 +660,44 @@ public class SuppressionRule {
             }
             removeVulns.forEach(dependency::removeVulnerability);
         }
+    }
+
+    boolean suppressedBasedOnScore(Vulnerability v) {
+        if (!cvssBelow.isEmpty()) {
+            for (Double cvss : this.cvssBelow) {
+                //TODO validate this comparison
+                if (v.getCvssV2() != null && v.getCvssV2().getCvssData().getBaseScore().compareTo(cvss) < 0) {
+                    return true;
+                }
+                if (v.getCvssV3() != null && v.getCvssV3().getCvssData().getBaseScore().compareTo(cvss) < 0) {
+                    return true;
+                }
+                if (v.getCvssV4() != null && v.getCvssV4().getCvssData().getBaseScore().compareTo(cvss) < 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (hasCvssV2Below() || hasCvssV3Below() || hasCvssV4Below()) {
+            Double v2SuppressionThreshold = this.cvssV2Below.stream().max(Double::compare).orElse(11.0);
+            Double v3SuppressionThreshold = this.cvssV3Below.stream().max(Double::compare).orElse(11.0);
+            Double v4SuppressionThreshold = this.cvssV4Below.stream().max(Double::compare).orElse(11.0);
+
+            Double v2Score = v.getCvssV2() != null ? v.getCvssV2().getCvssData().getBaseScore() : null;
+            Double v3Score = v.getCvssV3() != null ? v.getCvssV3().getCvssData().getBaseScore() : null;
+            Double v4Score = v.getCvssV4() != null ? v.getCvssV4().getCvssData().getBaseScore() : null;
+
+            // only if all version indicate suppression will the vulnerability be suppressed
+            // so if we are missing data (score or threshold) for a specific version we assume suppression
+            boolean cvssV2CheckSuppressing = v2Score == null || v2Score < v2SuppressionThreshold;
+            boolean cvssV3CheckSuppressing = v3Score == null || v3Score < v3SuppressionThreshold;
+            boolean cvssV4CheckSuppressing = v4Score == null || v4Score < v4SuppressionThreshold;
+
+            return cvssV2CheckSuppressing && cvssV3CheckSuppressing && cvssV4CheckSuppressing;
+        }
+
+        return false;
     }
 
     /**
@@ -692,6 +836,21 @@ public class SuppressionRule {
         if (cvssBelow != null && !cvssBelow.isEmpty()) {
             sb.append("cvssBelow={");
             cvssBelow.forEach((s) -> sb.append(s).append(','));
+            sb.append('}');
+        }
+        if (cvssV2Below != null && !cvssV2Below.isEmpty()) {
+            sb.append("cvssV2Below={");
+            cvssV2Below.forEach((s) -> sb.append(s).append(','));
+            sb.append('}');
+        }
+        if (cvssV3Below != null && !cvssV3Below.isEmpty()) {
+            sb.append("cvssV3Below={");
+            cvssV3Below.forEach((s) -> sb.append(s).append(','));
+            sb.append('}');
+        }
+        if (cvssV4Below != null && !cvssV4Below.isEmpty()) {
+            sb.append("cvssV4Below={");
+            cvssV4Below.forEach((s) -> sb.append(s).append(','));
             sb.append('}');
         }
         sb.append('}');

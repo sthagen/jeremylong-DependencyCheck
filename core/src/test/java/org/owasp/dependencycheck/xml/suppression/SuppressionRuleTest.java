@@ -19,7 +19,10 @@ package org.owasp.dependencycheck.xml.suppression;
 
 import com.github.packageurl.MalformedPackageURLException;
 import io.github.jeremylong.openvulnerability.client.nvd.CvssV2;
+import io.github.jeremylong.openvulnerability.client.nvd.CvssV3;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.owasp.dependencycheck.BaseTest;
 import org.owasp.dependencycheck.dependency.Confidence;
 import org.owasp.dependencycheck.dependency.Dependency;
@@ -563,6 +566,114 @@ class SuppressionRuleTest extends BaseTest {
         instance.process(dependency);
         assertEquals(0, dependency.getVulnerabilities().size());
         assertEquals(1, dependency.getSuppressedVulnerabilities().size());
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    // vuln has cvss cvssV2=6.0, cvssV3=8.0, cvssV4 is not set
+                    // cvssV2Below, cvssV3Below, isSuppressed
+                    "   5.0,  7.0,  false",
+                    "   7.0,  7.0,  false",
+                    "  null,  7.0,  false",
+                    "   5.0,  9.0,  false",
+                    "   7.0,  9.0,  true",
+                    "  null,  9.0,  true",
+                    "   5.0, null,  false",
+                    "   7.0, null,  true",
+                    "  null, null,  false",
+
+                    "   6.0,  8.0,  false", // cvssVnBelows are exclusive
+            },
+            nullValues = "null")
+    void testVersionSpecificThresholding(Double cvssV2Below, Double cvssV3Below, boolean isSuppressed) {
+        Dependency dependency = createDependencyWithDifferentScores();
+        SuppressionRule rule = new SuppressionRule();
+
+        if (cvssV2Below != null) {
+            rule.addCvssV2Below(cvssV2Below);
+        }
+        if (cvssV3Below != null) {
+            rule.addCvssV3Below(cvssV3Below);
+        }
+        rule.process(dependency);
+
+        assertEquals(isSuppressed ? 0 : 1, dependency.getVulnerabilities().size(),
+                String.format("cvssV2Below=%s, cvssV3Below=%s: expecting vulnerability to be %s",
+                        cvssV2Below == null ? "not set" : String.format("%.1f", cvssV2Below),
+                        cvssV3Below == null ? "not set" : String.format("%.1f", cvssV3Below),
+                        isSuppressed ? "suppressed" : "not suppressed")
+        );
+        assertEquals(isSuppressed ? 1 : 0, dependency.getSuppressedVulnerabilities().size());
+    }
+
+
+    @Test
+    void testMismatchOfThresholdAndAvailableCVEVersion() {
+        // vuln with only a cvss v2 score
+        File spring = BaseTest.getResourceAsFile(this, "spring-security-web-3.0.0.RELEASE.jar");
+        Dependency dependency = new Dependency(spring);
+        Vulnerability v = new Vulnerability();
+        CvssV2 cvss = CvssUtil.vectorToCvssV2("/AV:N/AC:L/Au:N/C:P/I:P/A:P", 6.0);
+        v.setCvssV2(cvss);
+        dependency.addVulnerability(v);
+
+        // rule with only a V3 threshold
+        SuppressionRule rule = new SuppressionRule();
+        rule.addCvssV3Below(7.0);
+
+        assertEquals(1, dependency.getVulnerabilities().size(),
+                "Since threshold and score versions are different versions the vuln should not be suppressed");
+    }
+
+    @Test
+    void testThresholdAreExclusive() {
+        Dependency dependency = createDependencyWithDifferentScores();
+        SuppressionRule rule = new SuppressionRule();
+        rule.addCvssBelow(6.0);
+        rule.process(dependency);
+
+        assertEquals(1, dependency.getVulnerabilities().size(),
+                "A cvssBelow of 6.0 will not suppress a vulnerability with a score of 6.0");
+        assertEquals(0, dependency.getSuppressedVulnerabilities().size());
+    }
+
+    @Test
+    void testThresholdHighestIsUseIfMultipleBelows() {
+        Dependency dependency = createDependencyWithDifferentScores();
+        SuppressionRule rule = new SuppressionRule();
+        rule.addCvssBelow(5.0);
+        rule.addCvssBelow(7.0);
+        rule.process(dependency);
+
+        assertEquals(0, dependency.getVulnerabilities().size(),
+                "A cvssBelow of 5.0 and 7.0 will suppress a vulnerability with a score of 6.0");
+        assertEquals(1, dependency.getSuppressedVulnerabilities().size());
+    }
+
+    @Test
+    void testThresholdHighestIsUseIfMultipleVersionedBelows() {
+        Dependency dependency = createDependencyWithDifferentScores();
+        SuppressionRule rule = new SuppressionRule();
+        rule.addCvssV2Below(5.0);
+        rule.addCvssV2Below(7.0);
+        rule.process(dependency);
+
+        assertEquals(0, dependency.getVulnerabilities().size(),
+                "A cvssBelow of 5.0 and 7.0 will suppress a vulnerability with a score of 6.0");
+        assertEquals(1, dependency.getSuppressedVulnerabilities().size());
+    }
+
+    private Dependency createDependencyWithDifferentScores() {
+        File spring = BaseTest.getResourceAsFile(this, "spring-security-web-3.0.0.RELEASE.jar");
+        Dependency dependency = new Dependency(spring);
+        Vulnerability v = new Vulnerability();
+        CvssV2 cvss = CvssUtil.vectorToCvssV2("/AV:N/AC:L/Au:N/C:P/I:P/A:P", 6.0);
+        v.setCvssV2(cvss);
+        CvssV3 cvss3 = CvssUtil.vectorToCvssV3("CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H", 8.0);
+        v.setCvssV3(cvss3);
+        dependency.addVulnerability(v);
+        return dependency;
     }
 
     private Vulnerability createVulnerability() {

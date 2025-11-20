@@ -49,6 +49,9 @@
                 <xs:element name="vulnerabilityName" type="dc:regexStringType"/>
                 <xs:element name="cwe" type="xs:positiveInteger"/>
                 <xs:element name="cvssBelow" type="dc:cvssScoreType"/>
+                <xs:element name="cvssV2Below" type="dc:cvssScoreType" />
+                <xs:element name="cvssV3Below" type="dc:cvssScoreType" />
+                <xs:element name="cvssV4Below" type="dc:cvssScoreType" />
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="until" type="xs:date"/>

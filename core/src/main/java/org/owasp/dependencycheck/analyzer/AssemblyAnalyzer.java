@@ -373,7 +373,7 @@ public class AssemblyAnalyzer extends AbstractFileTypeAnalyzer {
                 if (p.exitValue() != 1 || !StringUtils.isBlank(error)) {
                     LOGGER.warn("An error occurred with the .NET AssemblyAnalyzer, please see the log for more details.\n"
                     + "dependency-check requires dotnet 8.0 core runtime or sdk to be installed to analyze assemblies.");
-                    LOGGER.debug("GrokAssembly.dll is not working properly");
+                    LOGGER.debug("GrokAssembly.dll is not working properly: {}", error);
                     grokAssembly = null;
                     setEnabled(false);
                     throw new InitializationException("Could not execute .NET AssemblyAnalyzer, is the dotnet 8.0 runtime or sdk installed?");

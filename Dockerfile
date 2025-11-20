@@ -7,8 +7,8 @@ RUN "$JAVA_HOME/bin/jlink" --compress=zip-6 --module-path /opt/java/openjdk/jmod
 FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine3.22
 
 ARG VERSION
-ARG POSTGRES_DRIVER_VERSION=42.7.5
-ARG MYSQL_DRIVER_VERSION=9.2.0
+ARG POSTGRES_DRIVER_VERSION=42.7.8
+ARG MYSQL_DRIVER_VERSION=9.5.0
 ARG UID=1000
 ARG GID=1000
 
