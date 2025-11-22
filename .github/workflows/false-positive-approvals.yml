@@ -22,7 +22,7 @@ jobs:
       github.event.comment.user.login == 'chadlwilson') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: generatedSuppressions
       - uses: actions/setup-node@v6.0.0
