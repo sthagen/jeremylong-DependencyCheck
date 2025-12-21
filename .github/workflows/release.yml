@@ -29,19 +29,19 @@ jobs:
       - uses: actions/checkout@v6
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Local Maven Cache
         id: maven-it-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: maven/target/local-repo
           key: mvn-it-repo
       - name: Check ODC Data Cache
         id: odc-data-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: core/target/data
           key: odc-data
@@ -80,7 +80,7 @@ jobs:
           mvn -V -s settings.xml -Prelease clean package source:jar javadoc:jar gpg:sign deploy site site:stage -DreleaseTesting --no-transfer-progress --batch-mode
       - name: Archive code coverage results
         id: archive-coverage
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: code-coverage-report
           retention-days: 7
@@ -89,7 +89,7 @@ jobs:
             **/target/jacoco-results/**/*.html
       - name: Archive Release
         id: archive-release
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: archive-release
           retention-days: 7
@@ -102,7 +102,7 @@ jobs:
             target/*.buildinfo
       - name: Archive Site
         id: archive-site
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: archive-site
           retention-days: 7
@@ -114,7 +114,7 @@ jobs:
 #    needs: build
 #    steps:
 #      - name: Download coverage reports
-#        uses: actions/download-artifact@v6
+#        uses: actions/download-artifact@v7
 #        with:
 #          name: code-coverage-report
 #      - name: Run codacy-coverage-reporter
@@ -133,20 +133,20 @@ jobs:
     steps:
       - name: Check Maven Cache
         id: maven-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository/
           key: mvn-repo
       - name: Check Docker ODC Cache
         id: docker-odc-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/OWASP-Dependency-Check
           key: docker-repo
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Download release build
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: archive-release
       - name: Set up Docker
@@ -177,7 +177,7 @@ jobs:
           VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Download release build
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: archive-release
       - name: Create Release
@@ -252,7 +252,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Download Site
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: archive-site
           path: target/staging
@@ -260,7 +260,7 @@ jobs:
         run: ls -R
         working-directory: target
       - name: Deploy gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.7.4
+        uses: JamesIves/github-pages-deploy-action@v4.7.6
         with:
           branch: gh-pages
           folder: target/staging
