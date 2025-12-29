@@ -101,6 +101,24 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
         </testResources>
         <plugins>
             <plugin>
+                <groupId>io.github.download-maven-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-published-suppressions</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://dependency-check.github.io/DependencyCheck/suppressions/publishedSuppressions.xml</url>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                            <outputFileName>dependencycheck-hosted-suppression-snapshot.xml</outputFileName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.jsonschema2pojo</groupId>
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
 
