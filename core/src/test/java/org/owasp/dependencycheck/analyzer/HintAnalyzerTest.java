@@ -64,10 +64,8 @@ class HintAnalyzerTest extends BaseDBTestCase {
      */
     @Test
     void testAnalyze() throws Exception {
-        //File guice = new File(this.getClass().getClassLoader().getResource("guice-3.0.jar").getPath());
-        File guice = BaseTest.getResourceAsFile(this, "guice-3.0.jar");
+        File guice = BaseTest.getResourceAsFile(this, "maven-lib/guice-3.0.jar");
         //Dependency guice = new EngineDependency(fileg);
-        //File spring = new File(this.getClass().getClassLoader().getResource("spring-core-3.0.0.RELEASE.jar").getPath());
         File spring = BaseTest.getResourceAsFile(this, "spring-core-3.0.0.RELEASE.jar");
         //Dependency spring = new Dependency(files);
         getSettings().setBoolean(Settings.KEYS.AUTO_UPDATE, false);
