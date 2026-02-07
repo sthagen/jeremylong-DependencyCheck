@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   action:
+    if: github.repository_owner == 'dependency-check'
     runs-on: ubuntu-latest
     steps:
       - uses: dessant/lock-threads@v6
