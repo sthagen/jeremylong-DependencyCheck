@@ -18,6 +18,7 @@ on:
 
 jobs:
   build:
+    if: github.repository_owner == 'dependency-check'
     name: Build dependency-check
     runs-on: ubuntu-latest 
     steps:
