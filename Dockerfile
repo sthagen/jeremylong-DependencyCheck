@@ -7,8 +7,9 @@ RUN "$JAVA_HOME/bin/jlink" --compress=zip-6 --module-path /opt/java/openjdk/jmod
 FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine
 
 ARG VERSION
-ARG POSTGRES_DRIVER_VERSION=42.7.9
-ARG MYSQL_DRIVER_VERSION=9.6.0
+ARG POSTGRES_DRIVER_VERSION
+ARG MYSQL_DRIVER_VERSION
+ARG MAVEN_REPOSITORY_URL="https://repo1.maven.org/maven2"
 ARG UID=1000
 ARG GID=1000
 
@@ -34,10 +35,8 @@ RUN apk update                                                                  
     unzip dependency-check-${VERSION}-release.zip -d /usr/share/                                     && \
     rm dependency-check-${VERSION}-release.zip                                                       && \
     cd /usr/share/dependency-check/plugins                                                           && \
-    curl -Os "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar"        && \
-    curl -Ls "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-${MYSQL_DRIVER_VERSION}.tar.gz" \
-        | tar -xz --directory "/usr/share/dependency-check/plugins" --strip-components=1 --no-same-owner \
-            "mysql-connector-j-${MYSQL_DRIVER_VERSION}/mysql-connector-j-${MYSQL_DRIVER_VERSION}.jar" && \
+    curl -fSLO "${MAVEN_REPOSITORY_URL}/org/postgresql/postgresql/${POSTGRES_DRIVER_VERSION}/postgresql-${POSTGRES_DRIVER_VERSION}.jar"    && \
+    curl -fSLO "${MAVEN_REPOSITORY_URL}/com/mysql/mysql-connector-j/${MYSQL_DRIVER_VERSION}/mysql-connector-j-${MYSQL_DRIVER_VERSION}.jar" && \
     addgroup -S -g ${GID} ${user} && adduser -S -D -u ${UID} -G ${user} ${user}                      && \
     mkdir /usr/share/dependency-check/data                                                           && \
     chown -R ${user}:0 /usr/share/dependency-check                                                   && \

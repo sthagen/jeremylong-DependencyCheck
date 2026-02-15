@@ -1,15 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
-
-VERSION=$(mvn -q \
-    -Dexec.executable="echo" \
-    -Dexec.args='${project.version}' \
-    --non-recursive \
-    org.codehaus.mojo:exec-maven-plugin:3.5.1:exec)
+function mvn_prop() { mvn help:evaluate -q --non-recursive -DforceStdout -Dexpression="$1"; }
+read -r VERSION POSTGRES_DRIVER_VERSION MYSQL_DRIVER_VERSION <<< "$(mvn_prop project.version) $(mvn_prop driver.postgresql.version) $(mvn_prop driver.mysql.version)"
 
 FILE=./cli/target/dependency-check-$VERSION-release.zip
 if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist - run 'mvn package' first"
+    echo "$FILE does not exist - run 'mvn package -DskipTests' first"
     exit 1
 fi
 
@@ -22,6 +18,7 @@ fi
 
 extra_tag_args="$([[ ! $VERSION = *"SNAPSHOT"* ]] && echo "--tag owasp/dependency-check:latest" || echo "")"
 
+# shellcheck disable=SC2086
 docker buildx build --pull --load --platform linux/amd64,linux/arm64 . \
-    --build-arg VERSION=$VERSION \
+    --build-arg "VERSION=$VERSION" --build-arg "POSTGRES_DRIVER_VERSION=$POSTGRES_DRIVER_VERSION" --build-arg "MYSQL_DRIVER_VERSION=$MYSQL_DRIVER_VERSION" \
     --tag owasp/dependency-check:$VERSION ${extra_tag_args}

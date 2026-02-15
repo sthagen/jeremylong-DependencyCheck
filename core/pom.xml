@@ -421,6 +421,13 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
                     <name>mysql</name>
                 </property>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
+                    <version>${driver.mysql.version}</version>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -459,7 +466,7 @@ Copyright (c) 2012 Jeremy Long. All Rights Reserved.
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>42.7.9</version>
+                    <version>${driver.postgresql.version}</version>
                 </dependency>
             </dependencies>
             <build>

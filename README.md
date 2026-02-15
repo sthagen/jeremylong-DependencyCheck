@@ -356,7 +356,7 @@ To build dependency-check docker image run the command:
 
 ```
 mvn -s settings.xml install
-./build-docker.sh
+./docker-build.sh
 ```
 
 License
