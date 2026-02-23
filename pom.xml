@@ -135,7 +135,7 @@ Copyright (c) 2012 - Jeremy Long
         <!-- upgrading beyond 2.5 breaks maven site when aggregating for parent due to the ant module test dependency on core -->
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-        <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
+        <maven-surefire-report-plugin.version>3.5.5</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
         <spotbugs.maven.plugin.version>4.9.8.2</spotbugs.maven.plugin.version>
         <taglist-maven-plugin.version>3.2.2</taglist-maven-plugin.version>
@@ -165,7 +165,7 @@ Copyright (c) 2012 - Jeremy Long
         <maven-common-artifact-filters.version>3.4.0</maven-common-artifact-filters.version>
         <gmavenplus-plugin.version>4.3.1</gmavenplus-plugin.version>
         <com.h3xstream.retirejs.core.version>3.0.4</com.h3xstream.retirejs.core.version>
-        <jackson.version>2.21.0</jackson.version>
+        <jackson.version>2.21.1</jackson.version>
         <driver.postgresql.version>42.7.10</driver.postgresql.version>
         <driver.mysql.version>9.6.0</driver.mysql.version>
         <!--necessary for some IDEs to be able to execute test cases (Netbeans)-->
@@ -249,7 +249,7 @@ Copyright (c) 2012 - Jeremy Long
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.5.4</version>
+                    <version>3.5.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
