@@ -178,7 +178,7 @@ public class ProcessReader implements AutoCloseable {
         public void run() {
             try {
                 final InputStream inputStream = getInput();
-                text = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
+                text = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
 
             } catch (IOException ex) {
                 exception = ex;
