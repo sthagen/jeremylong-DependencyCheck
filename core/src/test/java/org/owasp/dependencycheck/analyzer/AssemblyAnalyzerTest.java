@@ -190,11 +190,11 @@ class AssemblyAnalyzerTest extends BaseTest {
         var expectedDescription = "Microsoft Azure.Identity Component\n\nThis is the implementation of the Azure SDK " +
                 "Client Library for Azure Identity";
         var expectedVersionEvidences = expectedAzureIdentityVersionEvidences();
-        var expectedVersion = "1.700.22.46903";
+        var expectedVersion = "1.7.0";
         var expectedProductEvidences = expectedAzureIdentityProductEvidences();
         var expectedVendorEvidences = expectedAzureIdentityVendorEvidences();
         var expectedName = "Azure.Identity";
-        var expectedIdentifiers = Set.of(new PurlIdentifier(new PackageURL("pkg:generic/Azure.Identity@1.700.22.46903"),
+        var expectedIdentifiers = Set.of(new PurlIdentifier(new PackageURL("pkg:generic/Azure.Identity@1.7.0"),
                 Confidence.MEDIUM));
         var expectedEcosystem = "dotnet";
 
