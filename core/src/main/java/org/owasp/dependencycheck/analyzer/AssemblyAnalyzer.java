@@ -194,7 +194,7 @@ public class AssemblyAnalyzer extends AbstractFileTypeAnalyzer {
      * @param data the assembly data
      * @param dependency the dependency to update
      */
-    private void updateDependency(final AssemblyData data, Dependency dependency) {
+    void updateDependency(final AssemblyData data, Dependency dependency) {
         final StringBuilder sb = new StringBuilder();
         if (!StringUtils.isBlank(data.getFileDescription())) {
             sb.append(data.getFileDescription());
