@@ -1,10 +1,11 @@
-name: Pull Requests
+name: Build Pull Request
 
 on: 
   pull_request:
     paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
+      - '*.md'            # Ignore only in root; we generally want to run build for `site/` changes
+      - '**/README.md'    # Ignore all READMEs
+      - '.github/**/*.md' # Ignore github config
 
 permissions: {}
 
