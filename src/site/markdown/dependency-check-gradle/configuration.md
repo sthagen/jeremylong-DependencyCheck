@@ -50,6 +50,7 @@ check.dependsOn dependencyCheckAnalyze
 | scanSet                          | A list of directories that will be scanned for additional dependencies.                                                                                                                                                                                                                                                                         | ['src/main/resources','src/main/webapp', './package.json', './package-lock.json', './npm-shrinkwrap.json', './Gopkg.lock', './go.mod'] |
 
 #### Example
+
 ```groovy
 dependencyCheck {
     autoUpdate = false
@@ -97,6 +98,7 @@ The following properties can be configured in the dependencyCheck task. However,
 | hostedSuppressions | validForHours              | The number of hours to wait before checking for new updates of the hosted suppressions file .                                                                                                 | 2                                                                                         |
 
 #### Example
+
 ```groovy
 dependencyCheck {
     data.directory = 'd:/nvd'
@@ -141,12 +143,13 @@ analyzers is likely not needed.
 | analyzers    | swiftPackageResolvedEnabled | Sets whether the [experimental](../analyzers/index.html) Swift Package Resolved Analyzer should be used. `experimentalEnabled` must be set to true.                                                                                                                        | true          |
 | analyzers    | bundleAuditEnabled          | Sets whether the Ruby Bundle Audit Analyzer should be used.                                                                                                                                                                                                                | true          |
 | analyzers    | pathToBundleAudit           | The path to bundle audit.                                                                                                                                                                                                                                                  | &nbsp;        |
-| analyzers    | retiredEnabled              | Sets whether the [retired analyzers](../analyzers/index.html) will be used. If not set to true the analyzers marked as Retired will not be used                                                                                                                            | false         |
 | analyzers    | golangDepEnabled            | Sets whether the [experimental](../analyzers/index.html) Golang Dependency Analyzer should be used. `experimentalEnabled` must be set to true.                                                                                                                             | true          |
 | analyzers    | golangModEnabled            | Sets whether the [experimental](../analyzers/index.html) Goland Module Analyzer should be used; requires `go` to be installed. `experimentalEnabled` must be set to true.                                                                                                  | true          |
 | analyzers    | pathToGo                    | The path to `go`.                                                                                                                                                                                                                                                          | &nbsp;        |
 
-#### Additional Configuration
+#### Analyzers Additional Configuration
+
+Within the `analyzers` group, the following sub-groups are configurable.
 
 | Config Group | Property               | Description                                                                                                                                                                                          | Default Value                                                                            |
 |--------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
@@ -188,6 +191,7 @@ analyzers is likely not needed.
 | ossIndex     | warnOnlyOnRemoteErrors | Sets whether remote errors from the OSS Index (e.g. BAD GATEWAY, RATE LIMIT EXCEEDED) will result in warnings only instead of failing execution.                                                     | false                                                                                    |
 
 #### Example
+
 ```groovy
 dependencyCheck {
     analyzers.assemblyEnabled = false
