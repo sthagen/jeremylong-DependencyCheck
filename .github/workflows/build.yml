@@ -5,8 +5,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
+      - '*.md'            # Ignore only in root; we generally want to run build for `site/` changes
+      - '**/README.md'    # Ignore all READMEs
+      - '.github/**/*.md' # Ignore github config
 
 permissions: {}
 
@@ -42,7 +43,7 @@ jobs:
         with:
           path: core/target/data
           key: odc-data
-      - uses: actions/setup-dotnet@v5.1.0
+      - uses: actions/setup-dotnet@v5.2.0
         with:
           dotnet-version: '8.0.x'
       - name: Set up JDKs
@@ -137,7 +138,7 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-docker-action@v5
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Build Docker Image
         run: ./docker-build.sh
       - name: build scan target
