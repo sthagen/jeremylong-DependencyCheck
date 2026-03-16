@@ -748,20 +748,20 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
      * Whether or not the Sonatype OSS Index analyzer is enabled.
      */
     @SuppressWarnings("CanBeFinal")
-    @Parameter(property = "ossindexAnalyzerEnabled")
-    private Boolean ossindexAnalyzerEnabled;
+    @Parameter(property = "ossIndexAnalyzerEnabled", alias = "ossindexAnalyzerEnabled")
+    private Boolean ossIndexAnalyzerEnabled;
     /**
      * Whether or not the Sonatype OSS Index analyzer should cache results.
      */
     @SuppressWarnings("CanBeFinal")
-    @Parameter(property = "ossindexAnalyzerUseCache")
-    private Boolean ossindexAnalyzerUseCache;
+    @Parameter(property = "ossIndexAnalyzerUseCache", alias = "ossindexAnalyzerUseCache")
+    private Boolean ossIndexAnalyzerUseCache;
     /**
      * URL of the Sonatype OSS Index service.
      */
     @SuppressWarnings("CanBeFinal")
-    @Parameter(property = "ossindexAnalyzerUrl")
-    private String ossindexAnalyzerUrl;
+    @Parameter(property = "ossIndexAnalyzerUrl", alias = "ossindexAnalyzerUrl")
+    private String ossIndexAnalyzerUrl;
 
     /**
      * The id of a server defined in the settings.xml to authenticate Sonatype
@@ -2446,15 +2446,15 @@ public abstract class BaseDependencyCheckMojo extends AbstractMojo implements Ma
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_CARTHAGE_ENABLED, carthageAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_SWIFT_PACKAGE_MANAGER_ENABLED, swiftPackageManagerAnalyzerEnabled);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_SWIFT_PACKAGE_RESOLVED_ENABLED, swiftPackageResolvedAnalyzerEnabled);
-        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_OSSINDEX_ENABLED, ossindexAnalyzerEnabled);
-        settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_URL, ossindexAnalyzerUrl);
+        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_OSSINDEX_ENABLED, ossIndexAnalyzerEnabled);
+        settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_URL, ossIndexAnalyzerUrl);
         if (StringUtils.isEmpty(ossIndexUsername) || StringUtils.isEmpty(ossIndexPassword)) {
             configureServerCredentials(ossIndexServerId, Settings.KEYS.ANALYZER_OSSINDEX_USER, Settings.KEYS.ANALYZER_OSSINDEX_PASSWORD);
         } else {
             settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_USER, ossIndexUsername);
             settings.setStringIfNotEmpty(Settings.KEYS.ANALYZER_OSSINDEX_PASSWORD, ossIndexPassword);
         }
-        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_OSSINDEX_USE_CACHE, ossindexAnalyzerUseCache);
+        settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_OSSINDEX_USE_CACHE, ossIndexAnalyzerUseCache);
         settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS, ossIndexWarnOnlyOnRemoteErrors);
         if (retirejs != null) {
             settings.setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_FILTER_NON_VULNERABLE, retirejs.getFilterNonVulnerable());

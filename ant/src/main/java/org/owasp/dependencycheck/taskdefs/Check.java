@@ -100,12 +100,12 @@ public class Check extends Update {
      * to exclude files that contain matching content..
      */
     @SuppressWarnings("CanBeFinal")
-    private final List<String> retirejsFilters = new ArrayList<>();
+    private final List<String> retireJsFilters = new ArrayList<>();
     /**
      * Whether or not the RetireJS Analyzer filters non-vulnerable JS files from
      * the report; default is false.
      */
-    private Boolean retirejsFilterNonVulnerable;
+    private Boolean retireJsFilterNonVulnerable;
     /**
      * Whether or not the Ruby Bundle Audit Analyzer is enabled.
      */
@@ -996,11 +996,23 @@ public class Check extends Update {
     /**
      * Set the value of retirejsFilterNonVulnerable.
      *
-     * @param retirejsFilterNonVulnerable new value of
+     * @param retireJsFilterNonVulnerable new value of
      * retirejsFilterNonVulnerable
+     * @deprecated Use {@link #setRetireJsFilterNonVulnerable(Boolean)} instead.
      */
-    public void setRetirejsFilterNonVulnerable(Boolean retirejsFilterNonVulnerable) {
-        this.retirejsFilterNonVulnerable = retirejsFilterNonVulnerable;
+    @Deprecated
+    public void setRetirejsFilterNonVulnerable(Boolean retireJsFilterNonVulnerable) {
+        this.retireJsFilterNonVulnerable = retireJsFilterNonVulnerable;
+    }
+
+    /**
+     * Set the value of retireJsFilterNonVulnerable.
+     *
+     * @param retireJsFilterNonVulnerable new value of
+     * retireJsFilterNonVulnerable
+     */
+    public void setRetireJsFilterNonVulnerable(Boolean retireJsFilterNonVulnerable) {
+        this.retireJsFilterNonVulnerable = retireJsFilterNonVulnerable;
     }
 
     /**
@@ -1008,11 +1020,25 @@ public class Check extends Update {
      * <p>
      * This is called by Ant.
      *
-     * @param retirejsFilter the regular expression used to filter based on file
+     * @param retireJsFilter the regular expression used to filter based on file
+     * content
+     * @deprecated Use {@link #addConfiguredRetireJsFilter(RetirejsFilter)} instead.
+     */
+    @Deprecated
+    public void addConfiguredRetirejsFilter(final RetirejsFilter retireJsFilter) {
+        retireJsFilters.add(retireJsFilter.getRegex());
+    }
+
+    /**
+     * Add a regular expression to the set of retire JS content filters.
+     * <p>
+     * This is called by Ant.
+     *
+     * @param retireJsFilter the regular expression used to filter based on file
      * content
      */
-    public void addConfiguredRetirejsFilter(final RetirejsFilter retirejsFilter) {
-        retirejsFilters.add(retirejsFilter.getRegex());
+    public void addConfiguredRetireJsFilter(final RetirejsFilter retireJsFilter) {
+        retireJsFilters.add(retireJsFilter.getRegex());
     }
 
     /**
@@ -1199,45 +1225,100 @@ public class Check extends Update {
      * Set value of {@link #ossindexAnalyzerEnabled}.
      *
      * @param ossindexAnalyzerEnabled new value of ossindexAnalyzerEnabled
+     * @deprecated Use {@link #setOssIndexAnalyzerEnabled(Boolean)} instead.
      */
+    @Deprecated
     public void setOssindexAnalyzerEnabled(Boolean ossindexAnalyzerEnabled) {
         this.ossindexAnalyzerEnabled = ossindexAnalyzerEnabled;
+    }
+
+    /**
+     * Set value of ossIndexAnalyzerEnabled.
+     *
+     * @param ossIndexAnalyzerEnabled new value of ossIndexAnalyzerEnabled
+     */
+    public void setOssIndexAnalyzerEnabled(Boolean ossIndexAnalyzerEnabled) {
+        this.ossindexAnalyzerEnabled = ossIndexAnalyzerEnabled;
     }
 
     /**
      * Set value of {@link #ossindexAnalyzerUseCache}.
      *
      * @param ossindexAnalyzerUseCache new value of ossindexAnalyzerUseCache
+     * @deprecated Use {@link #setOssIndexAnalyzerUseCache(Boolean)} instead.
      */
+    @Deprecated
     public void setOssindexAnalyzerUseCache(Boolean ossindexAnalyzerUseCache) {
         this.ossindexAnalyzerUseCache = ossindexAnalyzerUseCache;
+    }
+
+    /**
+     * Set value of ossIndexAnalyzerUseCache.
+     *
+     * @param ossIndexAnalyzerUseCache new value of ossIndexAnalyzerUseCache
+     */
+    public void setOssIndexAnalyzerUseCache(Boolean ossIndexAnalyzerUseCache) {
+        this.ossindexAnalyzerUseCache = ossIndexAnalyzerUseCache;
     }
 
     /**
      * Set value of {@link #ossindexAnalyzerUrl}.
      *
      * @param ossindexAnalyzerUrl new value of ossindexAnalyzerUrl
+     * @deprecated Use {@link #setOssIndexAnalyzerUrl(String)} instead.
      */
+    @Deprecated
     public void setOssindexAnalyzerUrl(String ossindexAnalyzerUrl) {
         this.ossindexAnalyzerUrl = ossindexAnalyzerUrl;
+    }
+
+    /**
+     * Set value of ossIndexAnalyzerUrl.
+     *
+     * @param ossIndexAnalyzerUrl new value of ossIndexAnalyzerUrl
+     */
+    public void setOssIndexAnalyzerUrl(String ossIndexAnalyzerUrl) {
+        this.ossindexAnalyzerUrl = ossIndexAnalyzerUrl;
     }
 
     /**
      * Set value of {@link #ossindexAnalyzerUsername}.
      *
      * @param ossindexAnalyzerUsername new value of ossindexAnalyzerUsername
+     * @deprecated Use {@link #setOssIndexAnalyzerUsername(String)} instead.
      */
+    @Deprecated
     public void setOssindexAnalyzerUsername(String ossindexAnalyzerUsername) {
         this.ossindexAnalyzerUsername = ossindexAnalyzerUsername;
+    }
+
+    /**
+     * Set value of ossIndexAnalyzerUsername.
+     *
+     * @param ossIndexAnalyzerUsername new value of ossIndexAnalyzerUsername
+     */
+    public void setOssIndexAnalyzerUsername(String ossIndexAnalyzerUsername) {
+        this.ossindexAnalyzerUsername = ossIndexAnalyzerUsername;
     }
 
     /**
      * Set value of {@link #ossindexAnalyzerPassword}.
      *
      * @param ossindexAnalyzerPassword new value of ossindexAnalyzerPassword
+     * @deprecated Use {@link #setOssIndexAnalyzerPassword(String)} instead.
      */
+    @Deprecated
     public void setOssindexAnalyzerPassword(String ossindexAnalyzerPassword) {
         this.ossindexAnalyzerPassword = ossindexAnalyzerPassword;
+    }
+
+    /**
+     * Set value of ossIndexAnalyzerPassword.
+     *
+     * @param ossIndexAnalyzerPassword new value of ossIndexAnalyzerPassword
+     */
+    public void setOssIndexAnalyzerPassword(String ossIndexAnalyzerPassword) {
+        this.ossindexAnalyzerPassword = ossIndexAnalyzerPassword;
     }
 
     /**
@@ -1489,8 +1570,8 @@ public class Check extends Update {
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_PNPM_AUDIT_ENABLED, pnpmAuditAnalyzerEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_USE_CACHE, nodeAuditAnalyzerUseCache);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_NODE_AUDIT_SKIPDEV, nodeAuditSkipDevDependencies);
-        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_FILTER_NON_VULNERABLE, retirejsFilterNonVulnerable);
-        getSettings().setArrayIfNotEmpty(Settings.KEYS.ANALYZER_RETIREJS_FILTERS, retirejsFilters);
+        getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_RETIREJS_FILTER_NON_VULNERABLE, retireJsFilterNonVulnerable);
+        getSettings().setArrayIfNotEmpty(Settings.KEYS.ANALYZER_RETIREJS_FILTERS, retireJsFilters);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_GOLANG_DEP_ENABLED, golangDepEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_GOLANG_MOD_ENABLED, golangModEnabled);
         getSettings().setBooleanIfNotNull(Settings.KEYS.ANALYZER_DART_ENABLED, dartAnalyzerEnabled);
