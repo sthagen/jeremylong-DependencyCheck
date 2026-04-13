@@ -37,7 +37,7 @@
 - test: [#8140](https://github.com/dependency-check/DependencyCheck/pull/8140) reproduce current behavior
 - test: avoid polluting test classpaths with sample dependencies to be scanned ([#8267](https://github.com/dependency-check/DependencyCheck/pull/8267))
 
-- See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/104?closed=1)
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/104?closed=1)
 
 ## [Version 12.2.0](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.2.0) (2026-01-09)
 
@@ -60,7 +60,7 @@
 - chore: remove suppression rules that were deleted from the generatedSuppression branch ([#8119](https://github.com/dependency-check/DependencyCheck/pull/8119))
 - build: transition dependency to `org.eclipse.parsson` groupId ([#8128](https://github.com/dependency-check/DependencyCheck/pull/8128))
 
-- See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/103?closed=1)
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/103?closed=1)
 
 ## [Version 12.1.9](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.9) (2025-11-11)
 
@@ -117,7 +117,7 @@ See the full listing of [changes](https://github.com/dependency-check/Dependency
 ## [Version 12.1.5](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.1.5) (2025-09-20)
 
 - **fix**: Update to support OSS Index Authentication Requirements ([#7920](https://github.com/dependency-check/DependencyCheck/pull/7920))
-  - Note: OSS Index will require authentication starting 9/22/2025. Users must configure a free account to continue using the OSS Index Analyzer. See https://ossindex.sonatype.org/doc/auth-required.
+  - Note: OSS Index will require authentication starting 9/22/2025. Users must configure a free account to continue using the OSS Index Analyzer.
 - fix: add CVSSv4 to suppressed entries in JSON report ([#7900](https://github.com/dependency-check/DependencyCheck/pull/7900))
 - fix: correctly utilize CVSSv4 from ossindex ([#7899](https://github.com/dependency-check/DependencyCheck/pull/7899))
 - fix: npe when processing cve with empty configuration ([#7888](https://github.com/dependency-check/DependencyCheck/pull/7888))
@@ -1334,7 +1334,7 @@ See the full listing of [resolved issues](https://github.com/dependency-check/De
 - **Breaking:** The NVD CVE data import now uses the JSON data feeds instead of the XML data feeds.
   - The parameter names have changed if you are mirroring the data feeds locally.
 - **Breaking:** For developers using the core engine the identifiers have been drastically changed;
-  ODC now uses [Package URL](https://github.com/package-url/packageurl-java) for software
+  ODC now uses [Package URL](https://github.com/package-url/purl-spec) for software
   identifiers and CPE objects from [CPE-Parser](https://github.com/stevespringett/CPE-Parser)
   for vulnerable library identifiers.
 - All of the report formats have been updated to include the additional data from the NVD CVE JSON data feeds.
