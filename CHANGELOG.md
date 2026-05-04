@@ -1,5 +1,37 @@
 # Change Log
 
+## [Version 12.2.2](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.2.2) (2026-05-03x)
+
+- fix: widen reference URL column to handle long Mozilla CVE URLs ([#8467](https://github.com/dependency-check/DependencyCheck/pull/8467))
+- fix: improve Sonatype Guide / OSS Index cache handling and insufficient credits error reporting ([#8451](https://github.com/dependency-check/DependencyCheck/pull/8451))
+- fix: de-duplicate and sort both `includedBy` and `projectReferences` in reports ([#8440](https://github.com/dependency-check/DependencyCheck/pull/8440))
+- fix: add corepack to docker image ([#8386](https://github.com/dependency-check/DependencyCheck/pull/8386))
+- fix: support and prefer githubID vuln identifiers from RetireJS ([#8419](https://github.com/dependency-check/DependencyCheck/pull/8419))
+- fix: bump open-vulnerability-clients to resolve NVD timestamp parsing errors ([#8427](https://github.com/dependency-check/DependencyCheck/pull/8427))
+- fix: migrate default OSS Index API URL to Sonatype Guide; supporting optional username ([#8404](https://github.com/dependency-check/DependencyCheck/pull/8404))
+- chore(fp): remove duplicate log4j FP suppressions ([#8468](https://github.com/dependency-check/DependencyCheck/pull/8468))
+- chore: remove spurious bundle-audit log line when there are no errors ([#8454](https://github.com/dependency-check/DependencyCheck/pull/8454))
+- docs: tweak docs site structure; documenting missing analyzers ([#8462](https://github.com/dependency-check/DependencyCheck/pull/8462))
+- docs: correct missing documentation for Gradle plugin ([#8431](https://github.com/dependency-check/DependencyCheck/pull/8431))
+- build(deps): bump the actions-deps group with 8 updates ([#8472](https://github.com/dependency-check/DependencyCheck/pull/8472))
+- build(deps): bump com.fasterxml.jackson:jackson-bom from 2.21.2 to 2.21.3 ([#8465](https://github.com/dependency-check/DependencyCheck/pull/8465))
+- build(deps): bump org.postgresql:postgresql from 42.7.10 to 42.7.11 ([#8463](https://github.com/dependency-check/DependencyCheck/pull/8463))
+- build(deps): bump commons-codec:commons-codec from 1.21.0 to 1.22.0 ([#8453](https://github.com/dependency-check/DependencyCheck/pull/8453))
+- build(deps): bump org.apache.maven.plugins:maven-invoker-plugin from 3.9.1 to 3.10.0 ([#8452](https://github.com/dependency-check/DependencyCheck/pull/8452))
+- build(deps): bump joda-time:joda-time from 2.14.1 to 2.14.2 ([#8464](https://github.com/dependency-check/DependencyCheck/pull/8464))
+- build(deps): bump com.mysql:mysql-connector-j from 9.6.0 to 9.7.0 ([#8445](https://github.com/dependency-check/DependencyCheck/pull/8445))
+- build(deps): bump commons-io:commons-io from 2.21.0 to 2.22.0 ([#8448](https://github.com/dependency-check/DependencyCheck/pull/8448))
+- build(deps): bump commons-io:commons-io from 2.21.0 to 2.22.0
+- build(deps): bump org.jsoup:jsoup from 1.22.1 to 1.22.2 ([#8437](https://github.com/dependency-check/DependencyCheck/pull/8437))
+- build(deps): bump com.google.guava:guava from 33.5.0-jre to 33.6.0-jre ([#8420](https://github.com/dependency-check/DependencyCheck/pull/8420))
+- build(deps): bump httpcomponents.client.version from 5.6 to 5.6.1 ([#8432](https://github.com/dependency-check/DependencyCheck/pull/8432))
+- build(deps): bump apache.ant.version from 1.10.16 to 1.10.17 ([#8416](https://github.com/dependency-check/DependencyCheck/pull/8416))
+
+
+- chore: tidy CHANGELOG formatting ([#8414](https://github.com/dependency-check/DependencyCheck/pull/8414))
+
+See the full listing of [changes](https://github.com/dependency-check/DependencyCheck/milestone/104?closed=1)
+
 ## [Version 12.2.1](https://github.com/dependency-check/DependencyCheck/releases/tag/v12.2.1) (2026-04-11)
 
 - build: improve GHA workflow experience for forks ([#8285](https://github.com/dependency-check/DependencyCheck/pull/8285))

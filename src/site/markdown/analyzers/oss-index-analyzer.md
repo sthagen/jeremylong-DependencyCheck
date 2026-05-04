@@ -22,7 +22,7 @@ During this migration users will need to make some minor changes.
     - login with OSS Index account credentials to the Sonatype Guide platform to validate your account has been migrated
     - migrate OSS Index analyzer base URL to Sonatype Guide platform
       - override Dependency-Check configuration OR
-      - upgrade to Dependency-Check `12.2.1` (if using defaults)
+      - upgrade to Dependency-Check `12.2.1`+ (if using defaults)
     - review API usage within Sonatype Guide to determine whether continued free usage is possible (new API limits apply from April 28 2026 onwards)
       - consider [cache/restore of Dependency-Check's data directory](../data/cacheh2.md) between runs to retain the OSS Index cache, and reduce API load 
   - _Before_ December 31, 2026 
