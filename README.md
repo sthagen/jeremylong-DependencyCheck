@@ -53,7 +53,7 @@ subsequent migration to Sonatype Guide began, kicking off a transition to use of
 planned to replace the legacy OSS Index API keys/tokens before the end of 2026.
 
 Without credentials, Dependency Check will **automatically disable the OSS Index analyzer**. Please see the documentation
-for the cli, maven, gradle, or ant integrations on how to set the analyzer credentials for use of a Sonatype Guide token
+for the CLI, Maven, Gradle, or Ant integrations on how to set the analyzer credentials for use of a Sonatype Guide token
 or legacy OSS Index API key.
 
 If you wish to use Sonatype OSS Index (via Guide) you must configure Dependency-Check and consider implications for the
