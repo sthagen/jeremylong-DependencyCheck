@@ -1135,7 +1135,7 @@ Copyright (c) 2012 - Jeremy Long
             <dependency>
                 <groupId>org.eclipse.parsson</groupId>
                 <artifactId>jakarta.json</artifactId>
-                <version>1.1.7</version>
+                <version>1.1.9</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
